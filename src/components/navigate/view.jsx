@@ -23,13 +23,11 @@ class Sider extends React.Component {
   render() {
     return (
       <div>
-        <Switch onChange={this.changeMode} /> 显示全部选项
-        <span className="ant-divider" style={{ margin: "0 1em" }} />
         <Switch onChange={this.changeTheme} /> 暗色主题
         <br />
         <br />
         <Menu
-          style={{ width: 256 }}
+          style={{ width: "100%" }}
           defaultSelectedKeys={["1"]}
           defaultOpenKeys={["sub1"]}
           mode={this.state.mode}
@@ -37,7 +35,7 @@ class Sider extends React.Component {
         >
           <Menu.Item key="1">
             <Icon type="mail" />
-            Navigation One
+            个人信息
           </Menu.Item>
           <Menu.Item key="2">
             <Icon type="calendar" />

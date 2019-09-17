@@ -11,7 +11,8 @@ import {
   Rate,
   Checkbox,
   Row,
-  Col
+  Col,
+  Spin
 } from "antd";
 import React from "react";
 import * as Actions from "./actions";
@@ -20,11 +21,6 @@ import { connect } from "react-redux";
 const { Option } = Select;
 
 class SelfInfo extends React.Component {
-  componentDidMount() {
-    //TODO 请求个人信息
-    this.props.onGetInfo();
-  }
-
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -49,18 +45,21 @@ class SelfInfo extends React.Component {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 }
     };
-    return (
+    const isLoad = !this.props.loading && !this.props.error && this.props.data;
+    return !isLoad ? (
+      <Spin></Spin>
+    ) : (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
         <Form.Item label="姓名">
-          <span className="ant-form-text">{String(this.props.data)}</span>
+          <span className="ant-form-text">{String(this.props.data.name)}</span>
         </Form.Item>
-        <Form.Item label="Select" hasFeedback>
-          {getFieldDecorator("select", {
-            rules: [{ required: true, message: "Please select your country!" }]
+        <Form.Item label="校区" hasFeedback>
+          {getFieldDecorator("location", {
+            rules: [{ required: true, message: "请选择你的校区" }]
           })(
-            <Select placeholder="Please select a country">
-              <Option value="china">China</Option>
-              <Option value="usa">U.S.A</Option>
+            <Select placeholder="请选择你的校区">
+              <Option value="XIAN_LIN">仙林</Option>
+              <Option value="GU_LOU">鼓楼</Option>
             </Select>
           )}
         </Form.Item>
@@ -214,18 +213,22 @@ class SelfInfo extends React.Component {
 }
 
 const mapState = state => {
-  
+  let loading = false,
+    error,
+    data;
+  if (state.mainPage && state.mainPage.userInfo) {
+    loading = state.mainPage.userInfo.loading;
+    error = state.mainPage.userInfo.error;
+    data = state.mainPage.userInfo.data;
+  }
   return {
-    loading: state.mainPage.userInfo.loading,
-    error: state.mainPage.userInfo.error,
-    data: state.mainPage.userInfo.data
+    loading,
+    error,
+    data
   };
 };
 
 const mapDispatch = dispatch => ({
-  onGetInfo: () => {
-    dispatch(Actions.fetchSelfInfo());
-  },
   onUpdateInfo: newInfo => {
     //TODO
   }

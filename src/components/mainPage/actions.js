@@ -9,13 +9,13 @@ export const changePage = newPage => ({
 
 const myFetch = createMyFetch();
 
-export const fetchStarted = () => ({ type: actionTypes.FETCH_STARTED });
+export const fetchStarted = () => ({ type: actionTypes.FETCH_USERINFO_STARTED });
 export const fetchSuccess = result => ({
-  type: actionTypes.FETCH_SUCCESS,
+  type: actionTypes.FETCH_USERINFO_SUCCESS,
   result
 });
 export const fetchFailure = error => ({
-  type: actionTypes.FETCH_FAILURE,
+  type: actionTypes.FETCH_USERINFO_FAILURE,
   error
 });
 

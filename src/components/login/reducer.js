@@ -22,6 +22,11 @@ export default (state = { isLogin: false }, action) => {
         isLogin: false,
         error: action.error
       };
+    case actionTypes.LOGOUT:
+      return {
+        ...state,
+        isLogin: false
+      };
     default:
       return state;
   }

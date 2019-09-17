@@ -1,5 +1,5 @@
-export const LOGIN = "login";
-export const LOGOUT = "logout";
+export const LOGIN = "LOGIN";
+export const LOGOUT = "LOGOUT";
 
 //网络请求
 export const FETCH_STARTED = "FETCH_STARTED";

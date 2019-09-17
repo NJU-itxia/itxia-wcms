@@ -14,8 +14,7 @@ const storeEnhancers = compose(
 );
 const reducer = combineReducers({
   login: loginReducer,
-  mainPage: mainPageReducer,
-  avatar: avatarReducer
+  mainPage: mainPageReducer
 });
 
 const initState = {

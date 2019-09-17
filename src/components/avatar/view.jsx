@@ -26,9 +26,20 @@ function AutosetAvatar({ name, onLogout }) {
   );
 }
 
-const mapState = state => ({
-  name: state.userInfo?state.userInfo.data?state.userInfo.data.name:"未知用户":"未知用户"
-});
+const mapState = state => {
+  let name = "未知用户";
+  if (
+    state.mainPage &&
+    state.mainPage.userInfo &&
+    state.mainPage.userInfo.data &&
+    state.mainPage.userInfo.data.name
+  ) {
+    name = state.mainPage.userInfo.data.name;
+  }
+  return {
+    name
+  };
+};
 
 const mapDispatch = dispatch => {
   return {

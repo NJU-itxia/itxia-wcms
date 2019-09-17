@@ -39,17 +39,21 @@ class MainPage extends React.Component {
                 float: "right"
               }}
             >
-              <Avatar name={this.props.userInfo.data.name}></Avatar>
+              <Avatar></Avatar>
             </Menu.Item>
           </Menu>
         </Header>
-        <Navigate></Navigate>
-        <div className="page">
-          {this.props.page === "selfInfo" ? (
-            <SelfInfo></SelfInfo>
-          ) : (
-            <div>功能开发中...</div>
-          )}
+        <div className="mid">
+          <aside className="navigate">
+            <Navigate></Navigate>
+          </aside>
+          <div className="page">
+            {this.props.page === "selfInfo" ? (
+              <SelfInfo></SelfInfo>
+            ) : (
+              <div>功能开发中...</div>
+            )}
+          </div>
         </div>
       </Layout>
     );
@@ -59,7 +63,7 @@ class MainPage extends React.Component {
 const mapState = state => {
   let page, userInfo;
   if (state.mainPage) {
-    page = state.mainPage;
+    page = state.mainPage.page;
     if (state.mainPage.userInfo) {
       userInfo = state.mainPage.userInfo;
     }
