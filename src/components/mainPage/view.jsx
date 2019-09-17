@@ -1,16 +1,25 @@
-import store from "../Store";
-import actions from "../Actions";
+import * as actions from "./actions";
 import React from "react";
-import "./MainPage.css";
-import Navigate from "./Navigate";
+import "./style.css";
+import { view as Navigate } from "../navigate/index";
 import { connect } from "react-redux";
 import { Layout, Menu } from "antd";
-import Avatar from "./Avatar";
-import SelfInfo from "./SelfInfo";
+import { view as Avatar } from "../avatar/index";
+import { view as SelfInfo } from "../selfInfo/index";
 
 const { Header } = Layout;
 
 class MainPage extends React.Component {
+  componentDidMount() {
+    //先获取个人信息(为了显示名字、头像...)
+    this.props.onGetUserInfo();
+
+    if (!this.props.page) {
+      //切换到默认页
+      this.props.onChangPage("selfInfo");
+    }
+    //获取个人信息
+  }
   render() {
     return (
       <Layout>
@@ -30,7 +39,7 @@ class MainPage extends React.Component {
                 float: "right"
               }}
             >
-              <Avatar></Avatar>
+              <Avatar name={this.props.userInfo.data.name}></Avatar>
             </Menu.Item>
           </Menu>
         </Header>
@@ -39,7 +48,7 @@ class MainPage extends React.Component {
           {this.props.page === "selfInfo" ? (
             <SelfInfo></SelfInfo>
           ) : (
-            <div>开发中...</div>
+            <div>功能开发中...</div>
           )}
         </div>
       </Layout>
@@ -48,11 +57,28 @@ class MainPage extends React.Component {
 }
 
 const mapState = state => {
+  let page, userInfo;
+  if (state.mainPage) {
+    page = state.mainPage;
+    if (state.mainPage.userInfo) {
+      userInfo = state.mainPage.userInfo;
+    }
+  }
   return {
-    user: state.user,
-    isLogin: state.isLogin,
-    page: state.page ? state.page : "selfInfo"
+    page,
+    userInfo
   };
 };
+const mapDispatch = dispatch => ({
+  onGetUserInfo: () => {
+    dispatch(actions.getUserInfo());
+  },
+  onChangPage: page => {
+    dispatch(actions.changePage(page));
+  }
+});
 
-export default connect(mapState)(MainPage);
+export default connect(
+  mapState,
+  mapDispatch
+)(MainPage);

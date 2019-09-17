@@ -1,6 +1,6 @@
 import React from "react";
-import Login from "./components/Login";
-import MainPage from "./components/MainPage";
+import { view as Login } from "./components/login";
+import { view as MainPage } from "./components/mainPage";
 import { connect } from "react-redux";
 //import "./App.css";
 
@@ -13,7 +13,7 @@ function App({ isLogin }) {
 }
 
 const mapState = state => {
-  return {isLogin: state.isLogin}
+  return { isLogin: state.login.isLogin ? state.login.isLogin : false };
 };
 
 export default connect(mapState)(App);

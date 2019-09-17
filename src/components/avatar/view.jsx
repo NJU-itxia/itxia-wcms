@@ -1,22 +1,19 @@
 import { Avatar, Button } from "antd";
 import React from "react";
 import { connect } from "react-redux";
-import * as actions from "../Actions";
-import "./Avatar.css";
+import * as actions from "./actions";
+import "./style.css";
 
-const UserList = ["U", "Lucy", "Tom", "Edward"];
-const colorList = ["#f56a00", "#7265e6", "#ffbf00", "#00a2ae"];
+const color = "#f56a00";
 
-const color = "#f56a00"
-
-function AutosetAvatar({user,onLogout}) {
+function AutosetAvatar({ name, onLogout }) {
   return (
     <div className="avatar">
       <Avatar
         style={{ backgroundColor: color, verticalAlign: "middle" }}
         size="large"
       >
-        {user}
+        {name}
       </Avatar>
       <Button
         size="small"
@@ -29,11 +26,9 @@ function AutosetAvatar({user,onLogout}) {
   );
 }
 
-const mapState = state => {
-  return {
-    user: state.user
-  };
-};
+const mapState = state => ({
+  name: state.userInfo?state.userInfo.data?state.userInfo.data.name:"未知用户":"未知用户"
+});
 
 const mapDispatch = dispatch => {
   return {

@@ -1,10 +1,9 @@
 import React from "react";
 import { Form, Icon, Input, Button, Checkbox } from "antd";
 import "antd/dist/antd.css";
-import "./Login.css";
-import store from "../Store";
-import * as actions from "../Actions"
-import {connect} from "react-redux"
+import "./style.css";
+import * as actions from "./actions";
+import { connect } from "react-redux";
 
 class LoginForm extends React.Component {
   handleSubmit = e => {
@@ -14,11 +13,10 @@ class LoginForm extends React.Component {
         console.log("Received values of form: ", values);
         //TODO 发送登录请求
         //store.dispatch(actions.login(values.username));
-        this.props.onLogin(values.username);
+        this.props.onLogin(values.username, values.password);
       }
     });
   };
-  
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -66,7 +64,6 @@ class LoginForm extends React.Component {
               type="primary"
               htmlType="submit"
               className="login-form-button"
-              
             >
               Log in
             </Button>
@@ -81,19 +78,23 @@ class LoginForm extends React.Component {
 const WrappedNormalLoginForm = Form.create({ name: "normal_login" })(LoginForm);
 //export default WrappedNormalLoginForm;
 
-function mapState(state, ownProps){
+function mapState(state, ownProps) {
   return {
-    username : state.username
-  }
+    username: state.login.user,
+    isLogin: state.login.isLogin
+  };
 }
 
-function mapDispatch(dispatch,ownProps){
-  return{
-    onLogin: (username)=>{
-      dispatch(actions.login(username));
+function mapDispatch(dispatch, ownProps) {
+  return {
+    onLogin: (username, password) => {
+      dispatch(actions.login(username, password));
     }
-  }
+  };
 }
 
-export default connect(mapState,mapDispatch)(WrappedNormalLoginForm);
+export default connect(
+  mapState,
+  mapDispatch
+)(WrappedNormalLoginForm);
 //ReactDOM.render(<WrappedNormalLoginForm />, mountNode);

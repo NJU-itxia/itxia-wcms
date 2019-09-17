@@ -14,7 +14,7 @@ import {
   Col
 } from "antd";
 import React from "react";
-import * as Actions from "../Actions";
+import * as Actions from "./actions";
 import { connect } from "react-redux";
 
 const { Option } = Select;
@@ -214,10 +214,11 @@ class SelfInfo extends React.Component {
 }
 
 const mapState = state => {
+  
   return {
-    loading: state.selfInfo.loading,
-    error: state.selfInfo.error,
-    data: state.selfInfo.data
+    loading: state.mainPage.userInfo.loading,
+    error: state.mainPage.userInfo.error,
+    data: state.mainPage.userInfo.data
   };
 };
 
