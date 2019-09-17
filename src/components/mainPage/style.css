@@ -10,7 +10,7 @@ aside.navigate {
   min-height: 100px;
   min-width: 260px;
   max-width: 300px;
-  width: 23%;
+  width: 20%;
   float: left;
 }
 div.page {
@@ -18,7 +18,8 @@ div.page {
   background-color: white;
   min-height: 100px;
   height: 100%;
-  width: 72%;
+  width: 75%;
+  padding-top:30px;
   float: right;
 }
 .main {

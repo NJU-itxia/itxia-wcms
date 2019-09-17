@@ -1,5 +1,6 @@
 import { Menu, Icon, Switch } from "antd";
 import React from "react";
+import "./style.css";
 const { SubMenu } = Menu;
 
 class Sider extends React.Component {
@@ -23,9 +24,9 @@ class Sider extends React.Component {
   render() {
     return (
       <div>
-        <Switch onChange={this.changeTheme} /> 暗色主题
-        <br />
-        <br />
+        <div className="navigateThemeSwitch">
+          <Switch onChange={this.changeTheme} /> 暗色主题
+        </div>
         <Menu
           style={{ width: "100%" }}
           defaultSelectedKeys={["1"]}
