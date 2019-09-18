@@ -5,11 +5,11 @@ import { connect } from "react-redux";
 import "./App.css";
 
 function App({ isLogin }) {
-  if (isLogin) {
-    return <MainPage></MainPage>;
-  } else {
-    return <Login></Login>;
-  }
+  return (
+    <div className="App">
+      {isLogin?<MainPage></MainPage>:<Login></Login>}
+    </div>
+  )
 }
 
 const mapState = state => {
