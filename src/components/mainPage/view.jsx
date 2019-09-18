@@ -7,7 +7,7 @@ import { Layout, Menu } from "antd";
 import { view as Avatar } from "../avatar/index";
 import { view as SelfInfo } from "../selfInfo/index";
 
-const { Header } = Layout;
+const { Header, Sider, Content, Footer } = Layout;
 
 class MainPage extends React.Component {
   componentDidMount() {
@@ -22,7 +22,7 @@ class MainPage extends React.Component {
   }
   render() {
     return (
-      <Layout className="mainPage">
+      <Layout>
         <Header>
           <div className="logo"></div>
           <Menu
@@ -43,18 +43,36 @@ class MainPage extends React.Component {
             </Menu.Item>
           </Menu>
         </Header>
-        <div className="mid">
-          <aside className="navigate">
+        <Layout>
+          <Sider
+            breakpoint="lg"
+            collapsedWidth="0"
+            onBreakpoint={broken => {
+              console.log(broken);
+            }}
+            onCollapse={(collapsed, type) => {
+              console.log(collapsed, type);
+            }}
+          >
             <Navigate></Navigate>
-          </aside>
-          <div className="page">
-            {this.props.page === "selfInfo" ? (
-              <SelfInfo></SelfInfo>
-            ) : (
-              <div>功能开发中...</div>
-            )}
-          </div>
-        </div>
+          </Sider>
+          <Layout>
+            <Content style={{ margin: "24px 16px 0" }}>
+              <div className="mid">
+                <div className="page">
+                  {this.props.page === "selfInfo" ? (
+                    <SelfInfo></SelfInfo>
+                  ) : (
+                    <div>功能开发中...</div>
+                  )}
+                </div>
+              </div>
+            </Content>
+            <Footer style={{ textAlign: "center" }}>
+              南京大学IT侠-web组 © 2019
+            </Footer>
+          </Layout>
+        </Layout>
       </Layout>
     );
   }

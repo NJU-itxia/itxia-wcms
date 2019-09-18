@@ -6,27 +6,12 @@ const { SubMenu } = Menu;
 class Sider extends React.Component {
   state = {
     mode: "inline",
-    theme: "light"
-  };
-
-  changeMode = value => {
-    this.setState({
-      mode: value ? "vertical" : "inline"
-    });
-  };
-
-  changeTheme = value => {
-    this.setState({
-      theme: value ? "dark" : "light"
-    });
+    theme: "dark"
   };
 
   render() {
     return (
       <div>
-        <div className="navigateThemeSwitch">
-          <Switch onChange={this.changeTheme} /> 暗色主题
-        </div>
         <Menu
           style={{ width: "100%" }}
           defaultSelectedKeys={["1"]}

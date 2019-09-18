@@ -1,4 +1,4 @@
-div.mid {
+div.midx {
   width: 100%;
   height: 100%;
   padding-left: 3%;
@@ -13,7 +13,7 @@ aside.navigate {
   width: 20%;
   float: left;
 }
-div.page {
+div.pagex {
   /*background-color: #282c34;*/
   background-color: white;
   min-height: 100px;
