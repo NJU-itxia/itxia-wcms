@@ -25,23 +25,7 @@ class MainPage extends React.Component {
       <Layout>
         <Header>
           <div className="logo"></div>
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={["1"]}
-            style={{ lineHeight: "64px" }}
-          >
-            <Menu.Item key="1">后台管理</Menu.Item>
-            <Menu.Item key="2">预约系统</Menu.Item>
-            <Menu.Item key="3">统计信息</Menu.Item>
-            <Menu.Item
-              style={{
-                float: "right"
-              }}
-            >
-              <Avatar></Avatar>
-            </Menu.Item>
-          </Menu>
+          <Avatar className="avatar"></Avatar>
         </Header>
         <Layout>
           <Sider
