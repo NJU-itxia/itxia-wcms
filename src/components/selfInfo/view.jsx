@@ -60,8 +60,8 @@ class SelfInfo extends React.Component {
           )}
         </Form.Item>
         <Form.Item label="预约单邮件提醒">
-          {getFieldDecorator("accept-email", { valuePropName: "unchecked" })(
-            <Switch />
+          {getFieldDecorator("acceptEmail", { valuePropName: "value" })(
+            <Switch defaultChecked={this.props.data.acceptEmail}/>
           )}
         </Form.Item>
 
@@ -76,8 +76,8 @@ class SelfInfo extends React.Component {
             ]
           })(
             <Select mode="multiple" placeholder="请选择关注的预约标签">
-              {orderTags.map(tag => (
-                <Option value={tag}>{tag}</Option>
+              {orderTags.map((tag,tagIndex) => (
+                <Option key={tagIndex} value={tag}>{tag}</Option>
               ))}
             </Select>
           )}
@@ -92,11 +92,6 @@ class SelfInfo extends React.Component {
         <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
           <Button type="primary" htmlType="submit">
             更新个人信息
-          </Button>
-        </Form.Item>
-        <Form.Item wrapperCol={{ span: 12, offset: 12 }}>
-          <Button type="primary" htmlType="submit">
-            撤销所有更改
           </Button>
         </Form.Item>
       </Form>
@@ -126,7 +121,20 @@ const mapDispatch = () => ({
   }
 });
 
-const WrappedSelfInfo = Form.create({ name: "validate_other" })(SelfInfo);
+const WrappedSelfInfo = Form.create({
+  mapPropsToFields: props => {
+    if (props.data && !props.error) {
+      const { location,email,acceptEmail } = props.data;
+      return {
+        location: Form.createFormField({ value: location }),
+        acceptEmail: Form.createFormField({ value: acceptEmail}), //??? 不生效
+        email: Form.createFormField({ value: email })
+      };
+    }
+    return {};
+  },
+  name: "validate_other"
+})(SelfInfo);
 
 export default connect(
   mapState,
