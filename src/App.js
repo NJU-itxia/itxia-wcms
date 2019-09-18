@@ -2,7 +2,7 @@ import React from "react";
 import { view as Login } from "./components/login";
 import { view as MainPage } from "./components/mainPage";
 import { connect } from "react-redux";
-//import "./App.css";
+import "./App.css";
 
 function App({ isLogin }) {
   if (isLogin) {

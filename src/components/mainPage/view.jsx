@@ -22,7 +22,7 @@ class MainPage extends React.Component {
   }
   render() {
     return (
-      <Layout>
+      <Layout className="mainPage">
         <Header>
           <div className="logo"></div>
           <Menu
