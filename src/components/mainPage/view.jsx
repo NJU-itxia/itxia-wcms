@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { Layout, Menu } from "antd";
 import { view as Avatar } from "../avatar/index";
 import { view as SelfInfo } from "../selfInfo/index";
+import config from "../../config/config";
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -53,7 +54,7 @@ class MainPage extends React.Component {
               </div>
             </Content>
             <Footer style={{ textAlign: "center" }}>
-              南京大学IT侠-web组 © 2019
+              {String(config.etc.footer.text)}
             </Footer>
           </Layout>
         </Layout>
