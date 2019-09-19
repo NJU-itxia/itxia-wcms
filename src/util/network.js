@@ -27,7 +27,7 @@ const createMyFetch = () => {
       });
 
       console.debug(`fetching:${uri}`);
-      dispatchIfVaild(startAction);
+      dispatchIfVaild(startAction());
       fetch(uri, fetchConfig)
         .then(response => {
           if (response.ok) {
