@@ -5,14 +5,31 @@ import "./style.css";
 import * as actions from "./actions";
 import { connect } from "react-redux";
 
+const localStorageKeys = {
+  isRememberAccount: "isRememberAccount",
+  rememberAccount: "rememberAccount"
+};
+
 class LoginForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log("Received values of form: ", values);
-        //TODO 发送登录请求
-        //store.dispatch(actions.login(values.username));
+        //记住用户名
+        localStorage.setItem(
+          localStorageKeys.isRememberAccount,
+          values.rememberAccount
+        );
+        if (values.rememberAccount === true) {
+          localStorage.setItem(
+            localStorageKeys.rememberAccount,
+            values.username
+          );
+        } else {
+          localStorage.removeItem(localStorageKeys.rememberAccount);
+        }
+
         this.props.onLogin(values.username, values.password);
       }
     });
@@ -25,49 +42,48 @@ class LoginForm extends React.Component {
         <Form onSubmit={this.handleSubmit} className="login-form">
           <Form.Item>
             {getFieldDecorator("username", {
-              rules: [
-                { required: true, message: "Please input your username!" }
-              ]
+              initialValue: localStorage.getItem("rememberAccount")
+                ? localStorage.getItem("rememberAccount")
+                : "",
+              rules: [{ required: true, message: "请输入登录账号" }]
             })(
               <Input
                 prefix={
                   <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
                 }
-                placeholder="Username"
+                placeholder=""
               />
             )}
           </Form.Item>
           <Form.Item>
             {getFieldDecorator("password", {
-              rules: [
-                { required: true, message: "Please input your Password!" }
-              ]
+              rules: [{ required: true, message: "请输入密码" }]
             })(
               <Input
                 prefix={
                   <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
                 }
                 type="password"
-                placeholder="Password"
+                placeholder=""
               />
             )}
           </Form.Item>
           <Form.Item>
-            {getFieldDecorator("remember", {
+            {getFieldDecorator("rememberAccount", {
               valuePropName: "checked",
-              initialValue: true
-            })(<Checkbox>Remember me</Checkbox>)}
-            <a className="login-form-forgot" href="">
-              Forgot password
-            </a>
+              initialValue:
+                localStorage.getItem(localStorageKeys.isRememberAccount) ===
+                "true"
+                  ? true
+                  : false
+            })(<Checkbox>记住账号</Checkbox>)}
             <Button
               type="primary"
               htmlType="submit"
               className="login-form-button"
             >
-              Log in
+              登录
             </Button>
-            Or <a href="">register now!</a>
           </Form.Item>
         </Form>
       </div>
