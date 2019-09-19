@@ -2,7 +2,7 @@ import { createStore, compose, applyMiddleware, combineReducers } from "redux";
 import thunkMiddleware from "redux-thunk";
 import { reducer as loginReducer } from "./components/login/index";
 import { reducer as mainPageReducer } from "./components/mainPage/index";
-//import { reducer as selfInfoReducer } from "./components/selfInfo";
+import { reducer as selfInfoReducer } from "./components/selfInfo";
 import { reducer as avatarReducer } from "./components/avatar/index";
 //import { reducer as navigateReducer } from "./components/navigate";
 
@@ -14,7 +14,8 @@ const storeEnhancers = compose(
 );
 const reducer = combineReducers({
   login: loginReducer,
-  mainPage: mainPageReducer
+  mainPage: mainPageReducer,
+  selfInfo: selfInfoReducer
 });
 
 const initState = {

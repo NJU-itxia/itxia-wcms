@@ -1,6 +1,7 @@
 import { Form, Select, Input, Switch, Button, Spin } from "antd";
 import React from "react";
 import { connect } from "react-redux";
+import * as actions from "./actions";
 
 const { Option } = Select;
 
@@ -19,6 +20,10 @@ class SelfInfo extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log("Received values of form: ", values);
+        if(values.acceptEmail===null || values.acceptEmail===undefined){
+          values.acceptEmail = false;
+        }
+        this.props.onUpdateInfo(values);
       }
     });
   };
@@ -54,14 +59,14 @@ class SelfInfo extends React.Component {
             rules: [{ required: true, message: "请选择你的校区" }]
           })(
             <Select placeholder="请选择你的校区">
-              <Option value="XIAN_LIN">仙林</Option>
-              <Option value="GU_LOU">鼓楼</Option>
+              <Option value="仙林">仙林</Option>
+              <Option value="鼓楼">鼓楼</Option>
             </Select>
           )}
         </Form.Item>
         <Form.Item label="预约单邮件提醒">
           {getFieldDecorator("acceptEmail", { valuePropName: "value" })(
-            <Switch defaultChecked={this.props.data.acceptEmail}/>
+            <Switch defaultChecked={this.props.data.acceptEmail} />
           )}
         </Form.Item>
 
@@ -76,8 +81,10 @@ class SelfInfo extends React.Component {
             ]
           })(
             <Select mode="multiple" placeholder="请选择关注的预约标签">
-              {orderTags.map((tag,tagIndex) => (
-                <Option key={tagIndex} value={tag}>{tag}</Option>
+              {orderTags.map((tag, tagIndex) => (
+                <Option key={tagIndex} value={tag}>
+                  {tag}
+                </Option>
               ))}
             </Select>
           )}
@@ -90,10 +97,15 @@ class SelfInfo extends React.Component {
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-          <Button type="primary" htmlType="submit">
+          <Button
+            type="primary"
+            loading={this.props.update.isUpdating}
+            htmlType="submit"
+          >
             更新个人信息
           </Button>
         </Form.Item>
+        <span>{this.props.update.error ? this.props.update.error : 0}</span>
       </Form>
     );
   }
@@ -103,6 +115,7 @@ const mapState = state => {
   let loading = false,
     error,
     data;
+  const { isUpdating, success, error: updateError } = state.selfInfo;
   if (state.mainPage && state.mainPage.userInfo) {
     loading = state.mainPage.userInfo.loading;
     error = state.mainPage.userInfo.error;
@@ -111,23 +124,40 @@ const mapState = state => {
   return {
     loading,
     error,
-    data
+    data,
+    update: {
+      isUpdating,
+      success,
+      updateError
+    }
   };
 };
 
-const mapDispatch = () => ({
-  onUpdateInfo: () => {
-    //TODO
+const mapDispatch = dispatch => ({
+  onUpdateInfo: newInfo => {
+    dispatch(actions.updateUserInfo(newInfo));
   }
 });
 
 const WrappedSelfInfo = Form.create({
   mapPropsToFields: props => {
     if (props.data && !props.error) {
-      const { location,email,acceptEmail } = props.data;
+      const { locationRaw, email, acceptEmail } = props.data;
+      let location;
+      switch (locationRaw) {
+        case "GU_LOU":
+          location = "鼓楼";
+          break;
+
+        case "XIAN_LIN":
+          location = "仙林";
+          break;
+        default:
+            location = "鼓楼";
+      }
       return {
         location: Form.createFormField({ value: location }),
-        acceptEmail: Form.createFormField({ value: acceptEmail}), //??? 不生效
+        acceptEmail: Form.createFormField({ value: acceptEmail }), //??? 不生效
         email: Form.createFormField({ value: email })
       };
     }
