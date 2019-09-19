@@ -94,12 +94,6 @@ class LoginForm extends React.Component {
 const WrappedNormalLoginForm = Form.create({ name: "normal_login" })(LoginForm);
 //export default WrappedNormalLoginForm;
 
-function mapState(state, ownProps) {
-  return {
-    username: state.login.user,
-    isLogin: state.login.isLogin
-  };
-}
 
 function mapDispatch(dispatch, ownProps) {
   return {
@@ -110,7 +104,7 @@ function mapDispatch(dispatch, ownProps) {
 }
 
 export default connect(
-  mapState,
+  null,
   mapDispatch
 )(WrappedNormalLoginForm);
 //ReactDOM.render(<WrappedNormalLoginForm />, mountNode);
