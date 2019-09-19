@@ -1,4 +1,13 @@
-import { Form, Select, Input, Switch, Button, Spin, notification } from "antd";
+import {
+  Form,
+  Select,
+  Input,
+  Switch,
+  Button,
+  Spin,
+  notification,
+  Alert
+} from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import * as actions from "./actions";
@@ -27,13 +36,12 @@ class SelfInfo extends React.Component {
         description: String(updateError),
         duration: 0
       });
-    }else{
-      isNotificated=false;
+    } else {
+      isNotificated = false;
     }
-    if(isNotificated){
+    if (isNotificated) {
       this.props.onNotification();
     }
-
   }
 
   handleSubmit = e => {
@@ -109,6 +117,11 @@ class SelfInfo extends React.Component {
               ))}
             </Select>
           )}
+          <Alert
+            message="关注标签功能还未生效 (需要与新预约系统一起工作)"
+            type="warning"
+            closable
+          />
         </Form.Item>
 
         <Form.Item label="邮箱地址">
@@ -117,10 +130,10 @@ class SelfInfo extends React.Component {
           })(<Input />)}
         </Form.Item>
 
-        <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
+        <Form.Item wrapperCol={{ span: 12, offset: 9 }}>
           <Button
             type="primary"
-            loading={this.props.update.status===networkStatus.SENT}
+            loading={this.props.update.status === networkStatus.SENT}
             htmlType="submit"
           >
             更新个人信息
@@ -156,7 +169,7 @@ const mapDispatch = dispatch => ({
   onUpdateInfo: newInfo => {
     dispatch(actions.updateUserInfo(newInfo));
   },
-  onNotification:()=>{
+  onNotification: () => {
     dispatch(actions.nitificated());
   }
 });
