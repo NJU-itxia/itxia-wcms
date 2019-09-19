@@ -1,7 +1,8 @@
-import { Form, Select, Input, Switch, Button, Spin } from "antd";
+import { Form, Select, Input, Switch, Button, Spin, notification } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import * as actions from "./actions";
+import networkStatus from "./status";
 
 const { Option } = Select;
 
@@ -15,12 +16,32 @@ const orderTags = [
 ];
 
 class SelfInfo extends React.Component {
+  componentDidUpdate() {
+    const { status, updateError } = this.props.update;
+    let isNotificated = true;
+    if (status === networkStatus.SUCCESS) {
+      notification.success({ message: "更新个人信息成功" });
+    } else if (status === networkStatus.FAILURE) {
+      notification.error({
+        message: "更新个人信息失败",
+        description: String(updateError),
+        duration: 0
+      });
+    }else{
+      isNotificated=false;
+    }
+    if(isNotificated){
+      this.props.onNotification();
+    }
+
+  }
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log("Received values of form: ", values);
-        if(values.acceptEmail===null || values.acceptEmail===undefined){
+        if (values.acceptEmail === null || values.acceptEmail === undefined) {
           values.acceptEmail = false;
         }
         this.props.onUpdateInfo(values);
@@ -99,13 +120,12 @@ class SelfInfo extends React.Component {
         <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
           <Button
             type="primary"
-            loading={this.props.update.isUpdating}
+            loading={this.props.update.status===networkStatus.SENT}
             htmlType="submit"
           >
             更新个人信息
           </Button>
         </Form.Item>
-        <span>{this.props.update.error ? this.props.update.error : 0}</span>
       </Form>
     );
   }
@@ -115,19 +135,18 @@ const mapState = state => {
   let loading = false,
     error,
     data;
-  const { isUpdating, success, error: updateError } = state.selfInfo;
-  if (state.mainPage && state.mainPage.userInfo) {
-    loading = state.mainPage.userInfo.loading;
-    error = state.mainPage.userInfo.error;
-    data = state.mainPage.userInfo.data;
-  }
+  const { status, error: updateError } = state.selfInfo;
+  //if (state.mainPage && state.mainPage.userInfo) {
+  loading = state.mainPage.userInfo.loading;
+  error = state.mainPage.userInfo.error;
+  data = state.mainPage.userInfo.data;
+  //}
   return {
     loading,
     error,
     data,
     update: {
-      isUpdating,
-      success,
+      status,
       updateError
     }
   };
@@ -136,6 +155,9 @@ const mapState = state => {
 const mapDispatch = dispatch => ({
   onUpdateInfo: newInfo => {
     dispatch(actions.updateUserInfo(newInfo));
+  },
+  onNotification:()=>{
+    dispatch(actions.nitificated());
   }
 });
 
@@ -153,7 +175,7 @@ const WrappedSelfInfo = Form.create({
           location = "仙林";
           break;
         default:
-            location = "鼓楼";
+          location = "鼓楼";
       }
       return {
         location: Form.createFormField({ value: location }),

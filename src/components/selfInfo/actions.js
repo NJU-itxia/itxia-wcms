@@ -25,3 +25,7 @@ export const updateUserInfo = (newInfo) => {
     updateFailure
   );
 };
+
+export const nitificated = ()=>({
+  type: actionTypes.NOTIFICATED
+})
