@@ -4,6 +4,7 @@ import "antd/dist/antd.css";
 import "./style.css";
 import * as actions from "./actions";
 import { connect } from "react-redux";
+import config from "../../config/config";
 
 const localStorageKeys = {
   isRememberAccount: "isRememberAccount",
@@ -38,8 +39,13 @@ class LoginForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <div style={{ maxWidth: "300px" }}>
+      <div className="loginPage">
         <Form onSubmit={this.handleSubmit} className="login-form">
+        <div id="loginSystemName">
+          <span>{String(config.etc.name)}</span>
+          <br></br>
+          <br></br>
+        </div>
           <Form.Item>
             {getFieldDecorator("username", {
               initialValue: localStorage.getItem("rememberAccount")
