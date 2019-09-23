@@ -24,7 +24,7 @@ class MainPage extends React.Component {
   render() {
     return (
       <Layout className="mainPage">
-        <Header>
+        <Header className="header">
           <div className="logo"></div>
           <Avatar className="avatar"></Avatar>
         </Header>
