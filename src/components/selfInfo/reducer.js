@@ -1,5 +1,7 @@
 import * as actionTypes from "./actionTypes";
 import networkStatus from "./status";
+import { stat } from "fs";
+import requestStatus from "../../util/requestStatus";
 /**
  * 还没请求：isUpdating: false, success: false
  * 发送请求：isUpdating: true, success: false
@@ -37,6 +39,39 @@ export default (
         ...state,
         status: networkStatus.IDLE
       };
+    case actionTypes.UPDATE_SELFINFO:
+      if (action.payload.requestName !== "selfInfo") return state;
+      switch (action.payload.status) {
+        case requestStatus.idle:
+          return state;
+        case requestStatus.pending:
+          return { ...state, status: networkStatus.SENT, error: undefined };
+        case requestStatus.succ:
+          const response = action.payload.json;
+          console.debug(`23333${action}`);
+          console.debug(action);
+          if (response.success===true) {
+            return {
+              ...state,
+              status: networkStatus.SUCCESS,
+              error: undefined
+            };
+          } else {
+            return {
+              ...state,
+              status: networkStatus.FAILURE,
+              error: "身份验证失败，请尝试重新登录"
+            };
+          }
+        case requestStatus.error:
+          return {
+            ...state,
+            status: networkStatus.FAILURE,
+            error: action.payload.error
+          };
+        default:
+          return state;
+      }
     default:
       return state;
   }

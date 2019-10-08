@@ -167,7 +167,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => ({
   onUpdateInfo: newInfo => {
-    dispatch(actions.updateUserInfo(newInfo));
+    dispatch(actions.updateSelfInfo(newInfo));
   },
   onNotification: () => {
     dispatch(actions.nitificated());
