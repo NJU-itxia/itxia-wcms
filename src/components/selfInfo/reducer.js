@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import networkStatus from "./status";
+import requestStatus from "../../util/requestStatus";
 /**
  * 还没请求：isUpdating: false, success: false
  * 发送请求：isUpdating: true, success: false
@@ -8,35 +8,46 @@ import networkStatus from "./status";
  *
  */
 export default (
-  state = { status: networkStatus.IDLE, error: undefined },
+  state = { status: requestStatus.IDLE, error: undefined },
   action
 ) => {
   switch (action.type) {
-    case actionTypes.UPDATE_USERINFO_STARTED:
-      return { ...state, status: networkStatus.SENT, error: undefined };
-    case actionTypes.UPDATE_USERINFO_SUCCESS:
-      const response = JSON.parse(action.result);
-      if (response.success) {
-        return { ...state, status: networkStatus.SUCCESS, error: undefined };
-      } else {
-        console.debug("请求成功但被服务器拒绝");
-        return {
-          ...state,
-          status: networkStatus.FAILURE,
-          error: "身份验证失败，请尝试重新登录"
-        };
-      }
-    case actionTypes.UPDATE_USERINFO_FAILURE:
-      return {
-        ...state,
-        status: networkStatus.FAILURE,
-        error: action.error
-      };
     case actionTypes.NOTIFICATED:
       return {
         ...state,
-        status: networkStatus.IDLE
+        status: requestStatus.IDLE
       };
+    case actionTypes.UPDATE_SELFINFO:
+      if (action.payload.requestName !== "selfInfo") return state;
+      switch (action.payload.status) {
+        case requestStatus.IDLE:
+          return state;
+        case requestStatus.PENDING:
+          return { ...state, status: requestStatus.PENDING, error: undefined };
+        case requestStatus.SUCC:
+          const response = action.payload.json;
+          if (response.success === true) {
+            return {
+              ...state,
+              status: requestStatus.SUCC,
+              error: undefined
+            };
+          } else {
+            return {
+              ...state,
+              status: requestStatus.ERROR,
+              error: "身份验证失败，请尝试重新登录"
+            };
+          }
+        case requestStatus.ERROR:
+          return {
+            ...state,
+            status: requestStatus.ERROR,
+            error: action.payload.error
+          };
+        default:
+          return state;
+      }
     default:
       return state;
   }

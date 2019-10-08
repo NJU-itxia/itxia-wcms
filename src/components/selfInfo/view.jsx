@@ -11,7 +11,7 @@ import {
 import React from "react";
 import { connect } from "react-redux";
 import * as actions from "./actions";
-import networkStatus from "./status";
+import requestStatus from "../../util/requestStatus";
 
 const { Option } = Select;
 
@@ -28,9 +28,9 @@ class SelfInfo extends React.Component {
   componentDidUpdate() {
     const { status, updateError } = this.props.update;
     let isNotificated = true;
-    if (status === networkStatus.SUCCESS) {
+    if (status === requestStatus.SUCC) {
       notification.success({ message: "更新个人信息成功" });
-    } else if (status === networkStatus.FAILURE) {
+    } else if (status === requestStatus.ERROR) {
       notification.error({
         message: "更新个人信息失败",
         description: String(updateError),
@@ -133,7 +133,7 @@ class SelfInfo extends React.Component {
         <Form.Item wrapperCol={{ span: 12, offset: 9 }}>
           <Button
             type="primary"
-            loading={this.props.update.status === networkStatus.SENT}
+            loading={this.props.update.status === requestStatus.PENDING}
             htmlType="submit"
           >
             更新个人信息
@@ -167,7 +167,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => ({
   onUpdateInfo: newInfo => {
-    dispatch(actions.updateUserInfo(newInfo));
+    dispatch(actions.updateSelfInfo(newInfo));
   },
   onNotification: () => {
     dispatch(actions.nitificated());
