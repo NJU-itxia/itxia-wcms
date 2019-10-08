@@ -27,7 +27,7 @@ export const sendRequest = (requestName, uri, method, body, actionCreator) => {
       );
     };
 
-    dispatch(status.idle);
+    dispatch(status.PENDING);
 
     fetch(uri, fetchConfig)
       .then(response => {
@@ -40,17 +40,17 @@ export const sendRequest = (requestName, uri, method, body, actionCreator) => {
             .text()
             .then(responseJson => {
               //请求成功
-              dispatch(status.succ, JSON.parse(responseJson));
+              dispatch(status.SUCC, JSON.parse(responseJson));
             })
             .catch(error => {
-              dispatch(status.error, null, "JSON解析错误");
+              dispatch(status.ERROR, null, `未知错误:${error}`);
             });
         } else {
-          dispatch(status.error, null, "未知错误");
+          dispatch(status.ERROR, null, "未知错误");
         }
       })
       .catch(error => {
-        dispatch(status.error, null, error);
+        dispatch(status.ERROR, null, error);
       });
   };
 };

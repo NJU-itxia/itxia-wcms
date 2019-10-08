@@ -1,6 +1,6 @@
 export default {
-  idle: "IDLE",
-  pending: "PENDING",
-  succ: "SUCC",
-  error: "ERROR"
+  IDLE: "IDLE",
+  PENDING: "PENDING",
+  SUCC: "SUCC",
+  ERROR: "ERROR"
 };
