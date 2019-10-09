@@ -1,31 +1,43 @@
 import { Menu, Icon, Switch } from "antd";
 import React from "react";
+import { connect } from "react-redux";
 import "./style.css";
+import { changePage } from "./actions";
 const { SubMenu } = Menu;
 
 class Sider extends React.Component {
+  constructor(props) {
+    super(props);
+    this.pageSelectHandler = this.pageSelectHandler.bind(this);
+  }
   state = {
     mode: "inline",
     theme: "dark"
   };
+
+  pageSelectHandler(args) {
+    console.debug(args.key);
+    this.props.onPageSelect(args.key);
+  }
 
   render() {
     return (
       <div>
         <Menu
           style={{ width: "100%" }}
-          defaultSelectedKeys={["1"]}
+          defaultSelectedKeys={["selfInfo"]}
           defaultOpenKeys={["sub1"]}
           mode={this.state.mode}
           theme={this.state.theme}
+          onSelect={this.pageSelectHandler}
         >
-          <Menu.Item key="1">
+          <Menu.Item key="selfInfo">
             <Icon type="mail" />
             个人信息
           </Menu.Item>
-          <Menu.Item key="2">
+          <Menu.Item key="memberList">
             <Icon type="calendar" />
-            Navigation Two
+            成员列表
           </Menu.Item>
           <SubMenu
             key="sub1"
@@ -63,4 +75,14 @@ class Sider extends React.Component {
   }
 }
 
-export default Sider;
+const mapDispatch = dispatch => ({
+  onPageSelect: pageKey => {
+    //TODO
+    dispatch(changePage(pageKey));
+  }
+});
+
+export default connect(
+  null,
+  mapDispatch
+)(Sider);

@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { Layout, Menu } from "antd";
 import { view as Avatar } from "../avatar/index";
 import { view as SelfInfo } from "../selfInfo/index";
+import { view as MemberList } from "../memberList/index";
 import config from "../../config/config";
 
 const { Header, Sider, Content, Footer } = Layout;
@@ -22,6 +23,16 @@ class MainPage extends React.Component {
     //获取个人信息
   }
   render() {
+    const content = (() => {
+      switch (this.props.page) {
+        case "selfInfo":
+          return <SelfInfo></SelfInfo>;
+        case "memberList":
+          return <MemberList></MemberList>;
+        default:
+          return null;
+      }
+    })();
     return (
       <Layout className="mainPage">
         <Header className="header">
@@ -45,11 +56,7 @@ class MainPage extends React.Component {
             <Content style={{ margin: "24px 16px 0" }}>
               <div className="mid">
                 <div className="page">
-                  {this.props.page === "selfInfo" ? (
-                    <SelfInfo></SelfInfo>
-                  ) : (
-                    <div>功能开发中...</div>
-                  )}
+                  {content ? content : <div>功能开发中...</div>}
                 </div>
               </div>
             </Content>
