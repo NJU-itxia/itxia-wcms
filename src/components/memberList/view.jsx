@@ -1,14 +1,8 @@
-import { Table, Badge, Menu, Dropdown, Icon } from "antd";
+import { Table, Badge } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import * as actions from "./actions";
 import requestStatus from "../../util/requestStatus";
-const menu = (
-  <Menu>
-    <Menu.Item>Action 1</Menu.Item>
-    <Menu.Item>Action 2</Menu.Item>
-  </Menu>
-);
 
 function NestedTable(props) {
   const expandedRowRender = record => {
@@ -42,7 +36,9 @@ function NestedTable(props) {
         title: "问题描述",
         dataIndex: "problemDescription",
         key: "problemDescription"
-      },
+      }
+      /*
+      ,
       {
         title: "Action",
         dataIndex: "operation",
@@ -59,6 +55,7 @@ function NestedTable(props) {
           </span>
         )
       }
+      */
     ];
 
     const data = [];
@@ -91,8 +88,8 @@ function NestedTable(props) {
     { title: "校区", dataIndex: "location", key: "upgradeNum" },
     { title: "是否管理员", dataIndex: "admin", key: "admin" },
     { title: "邮箱", dataIndex: "email", key: "email" },
-    { title: "是否接收邮件提醒", dataIndex: "acceptEmail", key: "acceptEmail" },
-    { title: "禁用账号", key: "operation", render: () => <a>禁用账号</a> }
+    { title: "是否接收邮件提醒", dataIndex: "acceptEmail", key: "acceptEmail" }
+    //{ title: "禁用账号", key: "operation", render: () => <a>禁用账号</a> }
   ];
 
   const data = [];

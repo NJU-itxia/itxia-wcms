@@ -1,4 +1,4 @@
-import { Menu, Icon, Switch } from "antd";
+import { Menu, Icon } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import "./style.css";

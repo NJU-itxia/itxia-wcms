@@ -1,13 +1,4 @@
-import {
-  Form,
-  Select,
-  Input,
-  Switch,
-  Button,
-  Spin,
-  notification,
-  Alert
-} from "antd";
+import { Form, Select, Input, Switch, Button, notification, Alert } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import * as actions from "./actions";
