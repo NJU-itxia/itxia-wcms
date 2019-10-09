@@ -48,7 +48,6 @@ class SelfInfo extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
         if (values.acceptEmail === null || values.acceptEmail === undefined) {
           values.acceptEmail = false;
         }
@@ -57,16 +56,7 @@ class SelfInfo extends React.Component {
     });
   };
 
-  normFile = e => {
-    console.log("Upload event:", e);
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e && e.fileList;
-  };
-
   render() {
-    console.debug(this.props);
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: { span: 6 },

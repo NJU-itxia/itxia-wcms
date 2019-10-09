@@ -26,13 +26,11 @@ const createMyFetch = () => {
         credentials: "include"
       });
 
-      console.debug(`fetching:${uri}`);
       dispatchIfVaild(startAction());
       fetch(uri, fetchConfig)
         .then(response => {
           if (response.ok) {
             //请求成功
-            console.debug(`request succ`);
             if (response.body === "POST") {
               return;
             }
@@ -40,11 +38,10 @@ const createMyFetch = () => {
               .text()
               .then(responseJson => {
                 //返回json
-                console.debug(`收到json:${responseJson}`);
                 dispatchIfVaild(successAction(responseJson));
               })
               .catch(error => {
-                console.debug(`解析json出错:${error}`);
+                //TODO ???
                 //dispatchIfVaild(failureAction(error));
               });
           } else {

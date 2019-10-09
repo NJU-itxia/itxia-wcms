@@ -16,7 +16,6 @@ class Sider extends React.Component {
   };
 
   pageSelectHandler(args) {
-    console.debug(args.key);
     this.props.onPageSelect(args.key);
   }
 
