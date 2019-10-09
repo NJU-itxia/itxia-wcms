@@ -30,7 +30,7 @@ export default (
             return {
               ...state,
               status: requestStatus.ERROR,
-              error: "身份验证失败，请尝试重新登录"
+              error: response.data
             };
           }
         case requestStatus.ERROR:

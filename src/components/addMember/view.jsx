@@ -23,7 +23,7 @@ class AddMember extends React.Component {
       notification.success({ message: "添加成员成功", duration: 5 });
     } else if (status === requestStatus.ERROR) {
       notification.error({
-        message: "添加成员成功失败",
+        message: "添加成员失败",
         description: String(error),
         duration: 0
       });
@@ -39,11 +39,19 @@ class AddMember extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
         if (values.acceptEmail === null || values.acceptEmail === undefined) {
           values.acceptEmail = false;
         }
-        this.props.onAddMember(values);
+        //或许可以改成更好的方式来验证密码是否一致
+        if (values.password === values.confirmPassword) {
+          this.props.onAddMember(values);
+        } else {
+          notification.error({
+            message: "两次密码不一致",
+            description: "请检查输入的密码",
+            duration: 0
+          });
+        }
       }
     });
   };
@@ -125,9 +133,9 @@ class AddMember extends React.Component {
         <Form.Item label="邮箱地址">
           {getFieldDecorator("email", {
             rules: [
-              { required: true, message: "请填写您的邮箱地址" },
+              { required: false, initialValue: "" },
               {
-                pattern: /^[^@]*@[^@]*$/,
+                pattern: /^[^@]+@[^@]+$/,
                 message: "邮箱格式不正确"
               }
             ]
