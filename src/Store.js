@@ -7,11 +7,10 @@ import { reducer as memberListReducer } from "./components/memberList";
 import { reducer as addMemberReducer } from "./components/addMember";
 //import { reducer as navigateReducer } from "./components/navigate";
 
-const win = window;
 const middlewares = [thunkMiddleware];
-const storeEnhancers = compose(
-  applyMiddleware(...middlewares),
-  win && win.devToolsExtension ? win.devToolsExtension() : f => f
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const storeEnhancers = composeEnhancers(
+  applyMiddleware(...middlewares)
 );
 const reducer = combineReducers({
   login: loginReducer,
