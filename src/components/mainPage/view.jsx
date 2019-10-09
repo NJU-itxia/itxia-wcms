@@ -3,7 +3,7 @@ import React from "react";
 import "./style.css";
 import { view as Navigate } from "../navigate/index";
 import { connect } from "react-redux";
-import { Layout, Menu } from "antd";
+import { Layout, Alert } from "antd";
 import { view as Avatar } from "../avatar/index";
 import { view as SelfInfo } from "../selfInfo/index";
 import { view as MemberList } from "../memberList/index";
@@ -25,13 +25,29 @@ class MainPage extends React.Component {
   }
   render() {
     const content = (() => {
+
+      //验证是否有管理员权限
+      const requireAdmin = reactNode => {
+        if (this.props.userInfo.data.admin === true) {
+          return reactNode;
+        } else {
+          return (
+            <Alert
+              message="需要管理员权限"
+              description="此页面需要管理员权限才能查看."
+              type="warning"
+              showIcon
+            />
+          );
+        }
+      };
       switch (this.props.page) {
         case "selfInfo":
           return <SelfInfo></SelfInfo>;
         case "memberList":
-          return <MemberList></MemberList>;
+          return requireAdmin(<MemberList></MemberList>);
         case "addMember":
-          return <AddMember></AddMember>;
+          return requireAdmin(<AddMember></AddMember>);
         default:
           return null;
       }
