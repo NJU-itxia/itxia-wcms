@@ -17,14 +17,14 @@ const { Option } = Select;
 
 class AddMember extends React.Component {
   componentDidUpdate() {
-    const { status, updateError } = this.props.update;
+    const { status, error } = this.props;
     let isNotificated = true;
     if (status === requestStatus.SUCC) {
-      notification.success({ message: "添加成员成功" });
+      notification.success({ message: "添加成员成功", duration: 5 });
     } else if (status === requestStatus.ERROR) {
       notification.error({
         message: "添加成员成功失败",
-        description: String(updateError),
+        description: String(error),
         duration: 0
       });
     } else {
@@ -57,7 +57,6 @@ class AddMember extends React.Component {
   };
 
   render() {
-    console.debug(this.props);
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: { span: 6 },
@@ -67,18 +66,46 @@ class AddMember extends React.Component {
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
         <Form.Item label="姓名">
           {getFieldDecorator("name", {
-            rules: [{ required: true, message: "请填写姓名" }]
+            rules: [
+              { required: true, message: "请填写姓名" },
+              {
+                pattern: /^.{2,16}$/,
+                message: ""
+              }
+            ]
           })(<Input />)}
         </Form.Item>
         <Form.Item label="登录账号名">
           {getFieldDecorator("loginName", {
-            rules: [{ required: true, message: "请填写登录账号名" }]
+            rules: [
+              { required: true, message: "请填写登录账号名" },
+              {
+                pattern: /^\w{4,16}$/,
+                message: "账号格式不正确"
+              }
+            ]
           })(<Input />)}
+          <Alert
+            message="用于登录系统，4-16位字母、数字组合。"
+            type="info"
+            closable
+          />
         </Form.Item>
         <Form.Item label="密码">
           {getFieldDecorator("password", {
-            rules: [{ required: true, message: "请填写密码" }]
+            rules: [
+              { required: true, message: "请填写密码" },
+              {
+                pattern: /^\w{8,16}$/,
+                message: "密码格式不正确"
+              }
+            ]
           })(<Input />)}
+          <Alert
+            message="密码格式：8-16位字母、数字组合"
+            type="info"
+            closable
+          />
         </Form.Item>
         <Form.Item label="确认密码">
           {getFieldDecorator("confirmPassword", {
@@ -97,18 +124,25 @@ class AddMember extends React.Component {
         </Form.Item>
         <Form.Item label="邮箱地址">
           {getFieldDecorator("email", {
-            rules: [{ required: true, message: "请填写您的邮箱地址" }]
+            rules: [
+              { required: true, message: "请填写您的邮箱地址" },
+              {
+                pattern: /^[^@]*@[^@]*$/,
+                message: "邮箱格式不正确"
+              }
+            ]
           })(<Input />)}
         </Form.Item>
         <Form.Item label="预约单邮件提醒">
-          {getFieldDecorator("acceptEmail", { valuePropName: "value" })(
-            <Switch defaultChecked={this.props.data.acceptEmail} />
-          )}
+          {getFieldDecorator("acceptEmail", {
+            initialValue: false,
+            valuePropName: "value"
+          })(<Switch defaultChecked={false} />)}
         </Form.Item>
         <Form.Item wrapperCol={{ span: 12, offset: 9 }}>
           <Button
             type="primary"
-            loading={this.props.update.status === requestStatus.PENDING}
+            loading={this.props.status === requestStatus.PENDING}
             htmlType="submit"
           >
             添加成员
@@ -120,7 +154,7 @@ class AddMember extends React.Component {
 }
 
 const mapState = state => {
-  return {};
+  return state.addMember;
 };
 
 const mapDispatch = dispatch => ({
@@ -159,6 +193,6 @@ const WrappedAddMember = Form.create({
 })(AddMember);
 
 export default connect(
-  null,
+  mapState,
   mapDispatch
 )(WrappedAddMember);

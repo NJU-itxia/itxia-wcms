@@ -15,7 +15,7 @@ export const addMember = newMember => {
   return sendRequest(
     "addMember",
     "admin/member/create",
-    "POST",
+    "PUT",
     JSON.stringify(newMember),
     addMemberCallback
   );

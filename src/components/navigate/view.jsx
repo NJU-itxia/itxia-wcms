@@ -39,6 +39,10 @@ class Sider extends React.Component {
             <Icon type="calendar" />
             成员列表
           </Menu.Item>
+          <Menu.Item key="addMember">
+            <Icon type="user-add" />
+            添加成员
+          </Menu.Item>
           <SubMenu
             key="sub1"
             title={

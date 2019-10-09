@@ -4,6 +4,7 @@ import { reducer as loginReducer } from "./components/login/index";
 import { reducer as mainPageReducer } from "./components/mainPage/index";
 import { reducer as selfInfoReducer } from "./components/selfInfo";
 import { reducer as memberListReducer } from "./components/memberList";
+import { reducer as addMemberReducer } from "./components/addMember";
 //import { reducer as navigateReducer } from "./components/navigate";
 
 const win = window;
@@ -16,7 +17,8 @@ const reducer = combineReducers({
   login: loginReducer,
   mainPage: mainPageReducer,
   selfInfo: selfInfoReducer,
-  memberList: memberListReducer
+  memberList: memberListReducer,
+  addMember: addMemberReducer
 });
 
 const initState = {

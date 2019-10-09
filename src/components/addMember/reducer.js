@@ -11,7 +11,7 @@ export default (
         ...state,
         status: requestStatus.IDLE
       };
-    case actionTypes.UPDATE_SELFINFO:
+    case actionTypes.ADD_MEMBER:
       if (action.payload.requestName !== "addMember") return state;
       switch (action.payload.status) {
         case requestStatus.IDLE:

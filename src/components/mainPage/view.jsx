@@ -7,6 +7,7 @@ import { Layout, Menu } from "antd";
 import { view as Avatar } from "../avatar/index";
 import { view as SelfInfo } from "../selfInfo/index";
 import { view as MemberList } from "../memberList/index";
+import { view as AddMember } from "../addMember/index";
 import config from "../../config/config";
 
 const { Header, Sider, Content, Footer } = Layout;
@@ -29,6 +30,8 @@ class MainPage extends React.Component {
           return <SelfInfo></SelfInfo>;
         case "memberList":
           return <MemberList></MemberList>;
+        case "addMember":
+          return <AddMember></AddMember>;
         default:
           return null;
       }
