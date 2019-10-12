@@ -31,11 +31,11 @@ class Sider extends React.Component {
           onSelect={this.pageSelectHandler}
         >
           <Menu.Item key="selfInfo">
-            <Icon type="mail" />
+            <Icon type="smile" />
             个人信息
           </Menu.Item>
           <Menu.Item key="memberList">
-            <Icon type="calendar" />
+            <Icon type="ordered-list" />
             成员列表
           </Menu.Item>
           <Menu.Item key="addMember">
