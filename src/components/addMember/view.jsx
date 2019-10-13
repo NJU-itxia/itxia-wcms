@@ -1,4 +1,4 @@
-import { Form, Select, Input, Switch, Button, notification, Alert } from "antd";
+import { Form, Select, Input, Switch, Button, notification, Alert, Icon } from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import * as actions from "./actions";
@@ -72,7 +72,7 @@ class AddMember extends React.Component {
                 message: ""
               }
             ]
-          })(<Input />)}
+          })(<Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} type="text" placeholder="姓名"/>)}
         </Form.Item>
         <Form.Item label="登录账号名">
           {getFieldDecorator("loginName", {
@@ -83,7 +83,7 @@ class AddMember extends React.Component {
                 message: "账号格式不正确"
               }
             ]
-          })(<Input />)}
+          })(<Input prefix={<Icon type="user-add" style={{ color: 'rgba(0,0,0,.25)' }} />} type="text" placeholder="密码" autoComplete="new-password"/>)}
           <Alert
             message="用于登录系统，4-16位字母、数字组合。"
             type="info"
@@ -99,7 +99,7 @@ class AddMember extends React.Component {
                 message: "密码格式不正确"
               }
             ]
-          })(<Input />)}
+          })(<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="密码" autoComplete="new-password"/>)}
           <Alert
             message="密码格式：8-16位字母、数字组合"
             type="info"
@@ -109,7 +109,7 @@ class AddMember extends React.Component {
         <Form.Item label="确认密码">
           {getFieldDecorator("confirmPassword", {
             rules: [{ required: true, message: "请填写密码" }]
-          })(<Input />)}
+          })(<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="确认密码" autoComplete="new-password"/>)}
         </Form.Item>
         <Form.Item label="校区" hasFeedback>
           {getFieldDecorator("location", {
@@ -130,7 +130,7 @@ class AddMember extends React.Component {
                 message: "邮箱格式不正确"
               }
             ]
-          })(<Input />)}
+          })(<Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} type="email" placeholder="邮箱地址"/>)}
         </Form.Item>
         <Form.Item label="预约单邮件提醒">
           {getFieldDecorator("acceptEmail", {
