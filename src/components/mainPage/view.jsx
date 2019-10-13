@@ -72,7 +72,7 @@ class MainPage extends React.Component {
             <Navigate></Navigate>
           </Sider>
           <Layout>
-            <Content style={{ margin: "24px 24px 0",overflowX:"scroll",overflowY:"auto" }}>
+            <Content style={{ margin: "24px 24px 0",overflowX:"auto",overflowY:"auto" }}>
               <div className="mid">
                 <div className="page">
                   {content ? content : <div>功能开发中...</div>}
