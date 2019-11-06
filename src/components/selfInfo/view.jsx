@@ -167,21 +167,9 @@ const mapDispatch = dispatch => ({
 const WrappedSelfInfo = Form.create({
   mapPropsToFields: props => {
     if (props.data && !props.error) {
-      const { locationRaw, email, acceptEmail } = props.data;
-      let location;
-      switch (locationRaw) {
-        case "GU_LOU":
-          location = "鼓楼";
-          break;
-
-        case "XIAN_LIN":
-          location = "仙林";
-          break;
-        default:
-          location = "鼓楼";
-      }
+      const { locationRawValue, email, acceptEmail } = props.data;
       return {
-        location: Form.createFormField({ value: location }),
+        location: Form.createFormField({ value: locationRawValue }),
         acceptEmail: Form.createFormField({ value: acceptEmail }), //??? 不生效
         email: Form.createFormField({ value: email })
       };
