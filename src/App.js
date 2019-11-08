@@ -1,19 +1,20 @@
 import React from "react";
 import { view as Login } from "./components/login";
 import { view as MainPage } from "./components/mainPage";
-import { connect } from "react-redux";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
 
-function App({ isLogin }) {
+function App() {
   return (
-    <div className="App">
-      {isLogin?<MainPage></MainPage>:<Login></Login>}
-    </div>
-  )
+    <Router>
+      <Route path="/login">
+        <Login></Login>
+      </Route>
+      <Route path="/home">
+        <MainPage></MainPage>
+      </Route>
+    </Router>
+  );
 }
 
-const mapState = state => {
-  return { isLogin: state.login.isLogin ? state.login.isLogin : false };
-};
-
-export default connect(mapState)(App);
+export default App;
