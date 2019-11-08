@@ -2,6 +2,7 @@ import React from "react";
 import { view as Login } from "./components/login";
 import { view as MainPage } from "./components/mainPage";
 import { view as SelfInfo } from "./components/selfInfo";
+import { view as Navigate } from "./components/navigate";
 import {
   BrowserRouter as Router,
   Route,
@@ -22,19 +23,7 @@ function App() {
           <Login></Login>
         </Route>
         <Route path="/home">
-          <nav>
-            <ul>
-              <li>
-                <Link to="/home/self">个人信息</Link>
-              </li>
-              <li>
-                <Link to="/home/member">成员列表</Link>
-              </li>
-              <li>
-                <Link to="/login">注销</Link>
-              </li>
-            </ul>
-          </nav>
+          <Navigate></Navigate>
           <Switch>
             <Route exact={true} path="/home">
               <Redirect to="/home/self"></Redirect>
