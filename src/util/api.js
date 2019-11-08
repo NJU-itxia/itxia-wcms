@@ -6,7 +6,13 @@ const host = (() => {
 })();
 
 export const post = function(path, data) {
-  return axios.post(host + path, data,{
-      withCredentials:true
+  return axios.post(host + path, data, {
+    withCredentials: true
   });
-}
+};
+
+export const get = function(path) {
+  return axios.get(host + path, {
+    withCredentials: true
+  });
+};
