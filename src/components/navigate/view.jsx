@@ -32,21 +32,17 @@ class Sider extends React.Component {
         <Menu.Item key="selfInfo">
           <Icon type="smile" />
           个人信息
+          <Link to="/home/self"></Link>
         </Menu.Item>
         <Menu.Item key="memberList">
           <Icon type="ordered-list" />
           成员列表
+          <Link to="/home/member"></Link>
         </Menu.Item>
         <Menu.Item key="addMember">
           <Icon type="user-add" />
           添加成员
-        </Menu.Item>
-        <Menu.Item key="logout">
-            <Icon type="logout" />
-            <span>
-          <Link to="/login">
-            注销
-          </Link></span>
+          <Link to="/home/addMember"></Link>
         </Menu.Item>
       </Menu>
     );

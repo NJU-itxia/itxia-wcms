@@ -1,8 +1,9 @@
 import React from "react";
 import { view as Login } from "./components/login";
-import { view as MainPage } from "./components/mainPage";
 import { view as SelfInfo } from "./components/selfInfo";
 import { view as Navigate } from "./components/navigate";
+import { view as MemberList } from "./components/memberList";
+import { view as AddMember } from "./components/addMember";
 import {
   BrowserRouter as Router,
   Route,
@@ -87,6 +88,12 @@ class App extends React.Component {
                     </Route>
                     <Route path="/home/self">
                       <SelfInfo></SelfInfo>
+                    </Route>
+                    <Route path="/home/member">
+                      <MemberList></MemberList>
+                    </Route>
+                    <Route path="/home/addMember">
+                      <AddMember></AddMember>
                     </Route>
                     <Route path="*">
                       <span>page not found</span>
