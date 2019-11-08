@@ -12,7 +12,7 @@ class Sider extends React.Component {
     this.pageSelectHandler = this.pageSelectHandler.bind(this);
   }
   state = {
-    mode: "horizontal",
+    mode: "inline",
     theme: "dark"
   };
 
@@ -23,7 +23,6 @@ class Sider extends React.Component {
   render() {
     return (
       <Menu
-        style={{ width: "100%" }}
         defaultSelectedKeys={["selfInfo"]}
         defaultOpenKeys={["sub1"]}
         mode={this.state.mode}
@@ -43,10 +42,11 @@ class Sider extends React.Component {
           添加成员
         </Menu.Item>
         <Menu.Item key="logout">
-          <Link to="/login">
             <Icon type="logout" />
+            <span>
+          <Link to="/login">
             注销
-          </Link>
+          </Link></span>
         </Menu.Item>
       </Menu>
     );
