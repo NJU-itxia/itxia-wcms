@@ -11,7 +11,7 @@ import {
   Link
 } from "react-router-dom";
 import "./App.css";
-import { Layout, Menu, Icon } from "antd";
+import { Layout, Menu, Icon, Button, Avatar } from "antd";
 const { Sider, Header, Content } = Layout;
 
 class App extends React.Component {
@@ -35,17 +35,22 @@ class App extends React.Component {
             <Login></Login>
           </Route>
           <Route path="/home">
-            <Layout style={{
-              height: "100%"
-            }}>
+            <Layout
+              style={{
+                height: "100%"
+              }}
+            >
               <Sider
                 trigger={null}
                 collapsible
                 collapsed={this.state.collapsed}
                 collapsedWidth="0"
-                breakpoint="sm" //TODO 不生效?
+                breakpoint="md"
+                onCollapse={isCollapsed => {
+                  this.setState({ collapsed: isCollapsed });
+                }}
               >
-                <div className="logo" />
+                <div id="sider-logo" />
                 <Navigate></Navigate>
               </Sider>
               <Layout>
@@ -55,6 +60,18 @@ class App extends React.Component {
                     type={this.state.collapsed ? "menu-unfold" : "menu-fold"}
                     onClick={this.toggle}
                   />
+                  <div
+                    id="header-right"
+                    style={{
+                      display: "inline",
+                      float: "right",
+                      marginRight: "2em"
+                    }}
+                  >
+                    <Button type="danger">
+                      <Link to="/login">退出登录</Link>
+                    </Button>
+                  </div>
                 </Header>
                 <Content
                   style={{
@@ -69,7 +86,6 @@ class App extends React.Component {
                       <Redirect to="/home/self"></Redirect>
                     </Route>
                     <Route path="/home/self">
-                      <span>self</span>
                       <SelfInfo></SelfInfo>
                     </Route>
                     <Route path="*">
