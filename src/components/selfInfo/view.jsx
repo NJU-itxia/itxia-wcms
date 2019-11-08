@@ -12,6 +12,7 @@ import React from "react";
 import { connect } from "react-redux";
 import * as actions from "./actions";
 import requestStatus from "../../util/requestStatus";
+import * as api from "../../util/api";
 
 const { Option } = Select;
 
@@ -25,6 +26,17 @@ const orderTags = [
 ];
 
 class SelfInfo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selfInfo: {
+        isLoad: false,
+        payload: undefined
+      }
+    };
+    this.fetchSelfInfo = this.fetchSelfInfo.bind(this);
+  }
+
   componentDidUpdate() {
     const { status, updateError } = this.props.update;
     let isNotificated = true;
@@ -44,6 +56,10 @@ class SelfInfo extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.fetchSelfInfo();
+  }
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -55,6 +71,20 @@ class SelfInfo extends React.Component {
       }
     });
   };
+
+  fetchSelfInfo() {
+    api.post("/admin/info", "").then(res => {
+      console.log(res.data);
+      this.setState({
+        selfInfo: {
+          isLoad: true,
+          payload: res.data.data
+        }
+      });
+    }).catch(()=>{
+      //TODO onReject
+    });
+  }
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -134,35 +164,7 @@ class SelfInfo extends React.Component {
   }
 }
 
-const mapState = state => {
-  let loading = false,
-    error,
-    data;
-  const { status, error: updateError } = state.selfInfo;
-  //if (state.mainPage && state.mainPage.userInfo) {
-  loading = state.mainPage.userInfo.loading;
-  error = state.mainPage.userInfo.error;
-  data = state.mainPage.userInfo.data;
-  //}
-  return {
-    loading,
-    error,
-    data,
-    update: {
-      status,
-      updateError
-    }
-  };
-};
 
-const mapDispatch = dispatch => ({
-  onUpdateInfo: newInfo => {
-    dispatch(actions.updateSelfInfo(newInfo));
-  },
-  onNotification: () => {
-    dispatch(actions.nitificated());
-  }
-});
 
 const WrappedSelfInfo = Form.create({
   mapPropsToFields: props => {
@@ -179,7 +181,4 @@ const WrappedSelfInfo = Form.create({
   name: "validate_other"
 })(SelfInfo);
 
-export default connect(
-  mapState,
-  mapDispatch
-)(WrappedSelfInfo);
+export default WrappedSelfInfo;
