@@ -5,6 +5,8 @@ import "./style.css";
 import * as actions from "./actions";
 import { connect } from "react-redux";
 import config from "../../config/config";
+import * as api from "../../util/api";
+import {Redirect} from "react-router-dom"
 
 const localStorageKeys = {
   isRememberAccount: "isRememberAccount",
@@ -12,6 +14,14 @@ const localStorageKeys = {
 };
 
 class LoginForm extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      isLogin: false
+    };
+  }
+
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -29,13 +39,24 @@ class LoginForm extends React.Component {
         } else {
           localStorage.removeItem(localStorageKeys.rememberAccount);
         }
-
-        this.props.onLogin(values.username, values.password);
+        //处理登录逻辑
+        this.handleLogin(values.username, values.password);
       }
     });
   };
 
+  handleLogin(username,password){
+    api.post("/admin/login",{id:username,password}).then(res=>{
+      if(res.data["success"]===true){
+         this.setState({isLogin:true})
+      }
+    })
+  }
+
   render() {
+    if(this.state.isLogin===true){
+       return (<Redirect to="/home"></Redirect>)
+    }
     const { getFieldDecorator } = this.props.form;
     return (
       <div className="loginPage">
