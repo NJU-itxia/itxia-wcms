@@ -80,6 +80,7 @@ class App extends React.Component {
                     padding: 24,
                     background: "#fff",
                     minHeight: 280
+                    flexShrink: 0
                   }}
                 >
                   <Switch>
