@@ -44,6 +44,16 @@ class Sider extends React.Component {
           添加成员
           <Link to="/home/addMember"></Link>
         </Menu.Item>
+        <Menu.Item key="requestOrder">
+          <Icon type="user-add" />
+          发起预约
+          <Link to="/home/request"></Link>
+        </Menu.Item>
+        <Menu.Item key="handleOrder">
+          <Icon type="user-add" />
+          查看预约
+          <Link to="/home/handle"></Link>
+        </Menu.Item>
       </Menu>
     );
   }

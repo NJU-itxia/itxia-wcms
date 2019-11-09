@@ -4,6 +4,8 @@ import { view as SelfInfo } from "./components/selfInfo";
 import { view as Navigate } from "./components/navigate";
 import { view as MemberList } from "./components/memberList";
 import { view as AddMember } from "./components/addMember";
+import { view as RequestOrder } from "./components/requestOrder";
+import { view as HandleOrder } from "./components/handleOrder";
 import {
   BrowserRouter as Router,
   Route,
@@ -79,7 +81,7 @@ class App extends React.Component {
                     margin: "24px 16px",
                     padding: 24,
                     background: "#fff",
-                    minHeight: 280
+                    minHeight: 280,
                     flexShrink: 0
                   }}
                 >
@@ -95,6 +97,12 @@ class App extends React.Component {
                     </Route>
                     <Route path="/home/addMember">
                       <AddMember></AddMember>
+                    </Route>
+                    <Route path="/home/request">
+                      <RequestOrder></RequestOrder>
+                    </Route>
+                    <Route path="/home/handle">
+                      <HandleOrder></HandleOrder>
                     </Route>
                     <Route path="*">
                       <span>page not found</span>
