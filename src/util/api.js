@@ -9,11 +9,12 @@ const host = (() => {
 
 const request = (path, method, data) => {
   const emitter = new EventEmitter();
-  axios
-    .post(host + path, data, {
-      method,
-      withCredentials: true
-    })
+  axios({
+    method,
+    url: host + path,
+    data,
+    withCredentials: true
+  })
     .then(res => {
       const json = res.data;
       if (json && json.errorCode === 0) {
