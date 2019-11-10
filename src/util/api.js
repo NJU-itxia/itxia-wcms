@@ -28,7 +28,7 @@ const request = (path, method, data) => {
       //请求失败，网络、json原因...
       emitter.emit("error", e);
     });
-  return myEmitter;
+  return emitter;
 };
 
 export const post = (path, data) => {
