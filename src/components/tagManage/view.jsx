@@ -1,4 +1,4 @@
-import { Table, Form } from "antd";
+import { Table, Button, Form } from "antd";
 import React from "react";
 import * as timeUtil from "../../util/time";
 import * as api from "../../util/api";
@@ -86,7 +86,7 @@ class TagManage extends React.Component {
         </Form>
         <Table
           columns={columns.map(item => ({ ...item }))}
-          dataSource={data}
+          dataSource={this.data}
           loading={this.loading}
         />
       </div>
