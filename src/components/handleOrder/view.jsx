@@ -143,10 +143,11 @@ for (let i = 1; i <= 10; i++) {
 
 const expandedRowRender = record => {
   return (
-    <div>
-      <div>
+    <div style={{ display: "flex", flexDirection: "row" }}>
+      <div style={{width:"40%"}}>
         描述:<TextArea disabled value={record.description}></TextArea>
       </div>
+      <span>ok</span>
     </div>
   );
 };
@@ -189,8 +190,8 @@ class Demo extends React.Component {
   render() {
     const { state } = this;
     return (
-      <div>
-        <Form layout="inline" style={{ marginBottom: 16 }}>
+      <div style={{ overflow: "auto" }}>
+        <Form layout="inline" style={{ marginBottom: 16 }} scroll={{ x: true }}>
           <Form.Item label="显示边框">
             <Switch
               checked={state.bordered}
