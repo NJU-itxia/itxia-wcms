@@ -54,6 +54,11 @@ class Sider extends React.Component {
           查看预约
           <Link to="/home/handle"></Link>
         </Menu.Item>
+        <Menu.Item key="tagManage">
+          <Icon type="user-add" />
+          管理标签
+          <Link to="/home/tag"></Link>
+        </Menu.Item>
       </Menu>
     );
   }

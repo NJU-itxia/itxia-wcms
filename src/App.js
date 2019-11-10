@@ -6,6 +6,7 @@ import { view as MemberList } from "./components/memberList";
 import { view as AddMember } from "./components/addMember";
 import { view as RequestOrder } from "./components/requestOrder";
 import { view as HandleOrder } from "./components/handleOrder";
+import { view as TagManage } from "./components/tagManage";
 import {
   BrowserRouter as Router,
   Route,
@@ -103,6 +104,9 @@ class App extends React.Component {
                     </Route>
                     <Route path="/home/handle">
                       <HandleOrder></HandleOrder>
+                    </Route>
+                    <Route path="/home/tag">
+                      <TagManage></TagManage>
                     </Route>
                     <Route path="*">
                       <span>page not found</span>
