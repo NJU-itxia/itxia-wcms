@@ -1,12 +1,12 @@
 import React from "react";
-import { Form, Icon, Input, Button, Checkbox } from "antd";
+import { Form, Icon, Input, Button, Checkbox, Modal } from "antd";
 import "antd/dist/antd.css";
 import "./style.css";
 import * as actions from "./actions";
 import { connect } from "react-redux";
 import config from "../../config/config";
 import * as api from "../../util/api";
-import {Redirect} from "react-router-dom"
+import { Redirect } from "react-router-dom";
 
 const localStorageKeys = {
   isRememberAccount: "isRememberAccount",
@@ -14,13 +14,12 @@ const localStorageKeys = {
 };
 
 class LoginForm extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       isLogin: false
     };
   }
-
 
   handleSubmit = e => {
     e.preventDefault();
@@ -45,27 +44,38 @@ class LoginForm extends React.Component {
     });
   };
 
-  handleLogin(username,password){
-    api.post("/admin/login",{id:username,password}).then(res=>{
-      if(res.data["success"]===true){
-         this.setState({isLogin:true})
-      }
-    })
+  handleLogin(username, password) {
+    api
+      .post("/admin/login", { loginName: username, password })
+      .on("succ", () => {
+        this.setState({ isLogin: true });
+      })
+      .on("fail", () => {
+        Modal.error({
+          title: "用户名或密码不匹配"
+        });
+      })
+      .on("error", (e) => {
+        Modal.error({
+          title: "网络请求失败",
+          content: e.toString()
+        });
+      });
   }
 
   render() {
-    if(this.state.isLogin===true){
-       return (<Redirect to="/home"></Redirect>)
+    if (this.state.isLogin === true) {
+      return <Redirect to="/home"></Redirect>;
     }
     const { getFieldDecorator } = this.props.form;
     return (
       <div className="loginPage">
         <Form onSubmit={this.handleSubmit} className="login-form">
-        <div id="loginSystemName">
-          <span>{String(config.etc.name)}</span>
-          <br></br>
-          <br></br>
-        </div>
+          <div id="loginSystemName">
+            <span>{String(config.etc.name)}</span>
+            <br></br>
+            <br></br>
+          </div>
           <Form.Item>
             {getFieldDecorator("username", {
               initialValue: localStorage.getItem("rememberAccount")
@@ -119,7 +129,6 @@ class LoginForm extends React.Component {
 
 const WrappedNormalLoginForm = Form.create({ name: "normal_login" })(LoginForm);
 //export default WrappedNormalLoginForm;
-
 
 function mapDispatch(dispatch, ownProps) {
   return {
