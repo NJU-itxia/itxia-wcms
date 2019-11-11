@@ -1,7 +1,18 @@
-import { Table, Icon, Switch, Radio, Form, Divider, Tag, Timeline } from "antd";
+import {
+  Table,
+  Icon,
+  Switch,
+  Radio,
+  Form,
+  Divider,
+  Tag,
+  notification
+} from "antd";
 import React from "react";
 import * as timeUtil from "../../util/time";
 import TextArea from "antd/lib/input/TextArea";
+import * as api from "../../util/api";
+
 const columns = [
   {
     title: "姓名",
@@ -144,7 +155,7 @@ for (let i = 1; i <= 10; i++) {
 const expandedRowRender = record => {
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>
-      <div style={{width:"40%"}}>
+      <div style={{ width: "40%" }}>
         描述:<TextArea disabled value={record.description}></TextArea>
       </div>
       <span>ok</span>
@@ -159,6 +170,10 @@ const scroll = { y: 240 };
 const pagination = { position: "bottom" };
 
 class Demo extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   state = {
     bordered: false,
     loading: false,
@@ -172,8 +187,41 @@ class Demo extends React.Component {
     scroll: undefined,
     hasData: true,
     tableLayout: undefined,
-    campus: 0
+    campus: 0,
+    data
   };
+
+  componentDidMount() {
+    this.updateData();
+  }
+
+  updateData() {
+    this.setState({
+      loading: true
+    });
+    api
+      .get("/order")
+      .on("succ", payload => {
+        this.setState({
+          loading: false,
+          data: payload
+        });
+      })
+      .on("fail", data => {
+        notification.error({
+          message: "返回值错误",
+          description: data.errorMessage,
+          duration: 0
+        });
+      })
+      .on("error", e => {
+        notification.error({
+          message: "网络请求失败",
+          description: e.toString(),
+          duration: 0
+        });
+      });
+  }
 
   handleToggle = prop => enable => {
     this.setState({ [prop]: enable });
@@ -218,7 +266,7 @@ class Demo extends React.Component {
         <Table
           {...this.state}
           columns={columns.map(item => ({ ...item, ellipsis: state.ellipsis }))}
-          dataSource={state.hasData ? data : null}
+          dataSource={this.state.data}
         />
       </div>
     );
