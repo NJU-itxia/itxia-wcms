@@ -1,21 +1,7 @@
-import {
-  Form,
-  Select,
-  Input,
-  InputNumber,
-  Switch,
-  Radio,
-  Slider,
-  Button,
-  Upload,
-  Icon,
-  Rate,
-  Checkbox,
-  Row,
-  Col
-} from "antd";
+import { Form, Select, Input, Button, Upload } from "antd";
 import React from "react";
-import axios from "axios";
+import config from "../../config/config";
+import * as api from "../../util/api";
 const { Option } = Select;
 
 class Demo extends React.Component {
@@ -23,20 +9,35 @@ class Demo extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
+        //TODO 处理预约成功跳转
+        api
+          .post("/order", values)
+          .on("succ", payload => {
+            console.log(payload);
+          })
+          .on("fail", json => {
+            console.log(json);
+          });
       }
-      axios.post("http://localhost:3000/order",values,{
-        withCredentials:true
-      })
-      .then(res=>{
-        console.log(res.status)
-        console.log(res.data)
-      })
-      .catch((e)=>{
-        console.log(e)
-      })
     });
   };
+
+  state = {
+    tagList: []
+  };
+
+  componentDidMount() {
+    api.get("/tag").on("succ", payload => {
+      //按名字排序
+      Array.prototype.sort.call(payload, (t1, t2) => {
+        return t1.tagName > t2.tagName;
+      });
+      this.setState({
+        tagList: payload
+      });
+    });
+    //TODO 处理错误
+  }
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -73,20 +74,24 @@ class Demo extends React.Component {
         <Form.Item label="是否在保修期内" hasFeedback>
           {getFieldDecorator("warranty", {
             rules: [{ required: true, message: "请选择保修情况" }]
-          })(<Select placeholder="请选择保修情况">
-          <Option value={0}>不确定</Option>
-          <Option value={1}>在保</Option>
-          <Option value={2}>过保</Option>
-        </Select>)}
+          })(
+            <Select placeholder="请选择保修情况">
+              <Option value={0}>不确定</Option>
+              <Option value={1}>在保</Option>
+              <Option value={2}>过保</Option>
+            </Select>
+          )}
         </Form.Item>
 
         <Form.Item label="校区" hasFeedback>
           {getFieldDecorator("campus", {
             rules: [{ required: true, message: "请选择校区" }]
-          })(<Select placeholder="请选择校区">
-          <Option value={1}>仙林</Option>
-          <Option value={2}>鼓楼</Option>
-        </Select>)}
+          })(
+            <Select placeholder="请选择校区">
+              <Option value={1}>仙林</Option>
+              <Option value={2}>鼓楼</Option>
+            </Select>
+          )}
         </Form.Item>
 
         <Form.Item label="标签">
@@ -94,18 +99,17 @@ class Demo extends React.Component {
             rules: [
               {
                 required: false,
-                message: "Please select your favourite colors!",
+                message: "请选择相关标签",
                 type: "array"
               }
             ]
           })(
-            <Select
-              mode="multiple"
-              placeholder="请选择相关标签"
-            >
-              <Option value="red">Red</Option>
-              <Option value="green">Green</Option>
-              <Option value="blue">Blue</Option>
+            <Select mode="multiple" placeholder="请选择相关标签">
+              {this.state.tagList.map(tag => (
+                <Option key={tag.id} value={tag.id}>
+                  {tag.tagName}
+                </Option>
+              ))}
             </Select>
           )}
         </Form.Item>
@@ -113,15 +117,51 @@ class Demo extends React.Component {
         <Form.Item label="问题详细描述" hasFeedback>
           {getFieldDecorator("description", {
             rules: [{ required: true, message: "请详细描述你遇到的问题" }]
-          })(<Input.TextArea autoSize={
-            {minRows: 3,
-            maxRows:6}
-          } allowClear={true}/>)}
+          })(
+            <Input.TextArea
+              autoSize={{ minRows: 3, maxRows: 6 }}
+              allowClear={true}
+            />
+          )}
+        </Form.Item>
+
+        <Form.Item label="附件上传" hasFeedback>
+          {getFieldDecorator("attachments", {
+            initialValue: [],
+            getValueFromEvent: event => {
+              const uploadIDArr = [];
+              for (const file of event["fileList"]) {
+                if (file.percent === 100 && file.status === "done") {
+                  const { errorCode, payload } = file.response;
+                  if (errorCode === 0) {
+                    uploadIDArr.push(payload.id);
+                  }
+                }
+              }
+              return uploadIDArr;
+            }
+          })(
+            <Upload
+              action={
+                config.network.api.protocol +
+                "://" +
+                config.network.api.host +
+                "/upload"
+              }
+              headers={{
+                "X-Requested-With": null
+              }}
+              withCredentials
+              listType="picture"
+            >
+              <Button>上传</Button>
+            </Upload>
+          )}
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
           <Button type="primary" htmlType="submit">
-            Submit
+            发起预约
           </Button>
         </Form.Item>
       </Form>
