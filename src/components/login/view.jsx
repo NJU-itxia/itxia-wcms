@@ -46,19 +46,22 @@ class LoginForm extends React.Component {
 
   handleLogin(username, password) {
     api
-      .post("/admin/login", { loginName: username, password })
+      .post("/login", { loginName: username, password })
       .on("succ", () => {
         this.setState({ isLogin: true });
       })
-      .on("fail", () => {
+      .on("fail", json => {
         Modal.error({
-          title: "用户名或密码不匹配"
+          title: "登录失败",
+          content: json.errorMessage,
+          centered: true
         });
       })
-      .on("error", (e) => {
+      .on("error", e => {
         Modal.error({
           title: "网络请求失败",
-          content: e.toString()
+          content: e.toString(),
+          centered: true
         });
       });
   }
