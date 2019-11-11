@@ -125,7 +125,7 @@ class Demo extends React.Component {
           )}
         </Form.Item>
 
-        <Form.Item label="附件上传" hasFeedback>
+        <Form.Item label="附件上传">
           {getFieldDecorator("attachments", {
             initialValue: [],
             getValueFromEvent: event => {
