@@ -1,4 +1,4 @@
-import { Table, Button, Form } from "antd";
+import { Table, Button, Form, Modal, Input, notification } from "antd";
 import React from "react";
 import * as timeUtil from "../../util/time";
 import * as api from "../../util/api";
@@ -43,6 +43,7 @@ class TagManage extends React.Component {
       data: null
     };
     this.reload = this.reload.bind(this);
+    this.add = this.add.bind(this);
   }
 
   componentDidMount() {
@@ -57,6 +58,7 @@ class TagManage extends React.Component {
     api
       .get("/tag")
       .on("succ", payload => {
+        console.log(payload)
         this.setState({
           loading: false,
           data: payload
@@ -70,24 +72,86 @@ class TagManage extends React.Component {
       });
   }
 
+  add() {
+    let tagName;
+    const onSubmit = () => {
+      const key = "addTagNotification";
+      notification.info({
+        key,
+        duration: 0,
+        message: "正在添加标签",
+        description: `添加标签"${tagName}"中...`
+      });
+      api
+        .post("/tag", { tagName })
+        .on("succ", () => {
+          notification.success({
+            key,
+            duration: 5,
+            message: "添加标签成功",
+            description: `成功添加标签：${tagName}`
+          });
+          this.reload();
+        })
+        .on("error", e => {
+          notification.error({
+            key,
+            duration: 0,
+            message: "添加标签失败",
+            description: `添加标签"${tagName}"失败:${e.message}`
+          });
+        });
+    };
+    Modal.confirm({
+      title: "填写新标签信息",
+      content: (
+        <Form>
+          <Form.Item label="标签名">
+            <Input
+              onChange={e => {
+                tagName = e.target.value;
+              }}
+            ></Input>
+          </Form.Item>
+        </Form>
+      ),
+      centered: true,
+      okCancel: true,
+      onOk: () => {
+        onSubmit();
+      }
+    });
+  }
+
   render() {
-    const { state } = this;
     return (
       <div style={{ overflow: "auto" }}>
         <Form layout="inline" style={{ marginBottom: 16 }} scroll={{ x: true }}>
-          <Button
-            type="primary"
-            onClick={this.reload}
-            disabled={false}
-            loading={this.loading}
-          >
-            刷新
-          </Button>
+          <Form.Item>
+            <Button
+              type="primary"
+              icon="reload"
+              onClick={this.reload}
+              loading={this.state.loading}
+            >
+              刷新
+            </Button>
+          </Form.Item>
+          <Form.Item>
+            <Button
+              type="primary"
+              icon="plus"
+              onClick={this.add}
+              loading={this.state.loading}
+            >
+              添加
+            </Button>
+          </Form.Item>
         </Form>
         <Table
           columns={columns.map(item => ({ ...item }))}
-          dataSource={this.data}
-          loading={this.loading}
+          dataSource={this.state.data}
+          loading={this.state.loading}
         />
       </div>
     );
