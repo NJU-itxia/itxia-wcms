@@ -95,7 +95,7 @@ class Demo extends React.Component {
         </Form.Item>
 
         <Form.Item label="标签">
-          {getFieldDecorator("tag", {
+          {getFieldDecorator("tags", {
             rules: [
               {
                 required: false,
