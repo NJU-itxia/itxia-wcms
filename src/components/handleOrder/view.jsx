@@ -20,9 +20,19 @@ const columns = [
     key: "name"
   },
   {
-    title: "电话",
-    dataIndex: "customerPhone",
-    key: "phone"
+    title: "校区",
+    dataIndex: "campus",
+    key: "campus",
+    render: campus => {
+      switch (campus) {
+        case 1:
+          return <Tag color="orange">仙林</Tag>;
+        case 2:
+          return <Tag color="cyan">鼓楼</Tag>;
+        default:
+          return <span>未知错误</span>;
+      }
+    }
   },
   {
     title: "电脑型号",
@@ -47,19 +57,12 @@ const columns = [
     }
   },
   {
-    title: "校区",
-    dataIndex: "campus",
-    key: "campus",
-    render: campus => {
-      switch (campus) {
-        case 1:
-          return <Tag color="orange">仙林</Tag>;
-        case 2:
-          return <Tag color="cyan">鼓楼</Tag>;
-        default:
-          return <span>未知错误</span>;
-      }
-    }
+    title: "标签",
+    dataIndex: "tags",
+    key: "tags",
+    render: tags => (
+      <div>{tags ? tags.map(value => <Tag>{value.tagName}</Tag>) : ""}</div>
+    )
   },
   {
     title: "预约时间",
@@ -177,7 +180,8 @@ class HandleOrder extends React.Component {
     hasData: true,
     tableLayout: undefined,
     campus: 0,
-    data
+    data,
+    tagList: []
   };
 
   componentDidMount() {
@@ -210,6 +214,14 @@ class HandleOrder extends React.Component {
           duration: 0
         });
       });
+
+    //获取标签信息
+    api.get("/tag").on("succ", payload => {
+      this.setState({
+        tagList: payload
+      });
+    });
+    //TODO 处理获取标签失败
   }
 
   handleToggle = prop => enable => {
