@@ -1,140 +1,10 @@
-import {
-  Table,
-  Icon,
-  Switch,
-  Radio,
-  Form,
-  Divider,
-  Tag,
-  notification
-} from "antd";
+import { Switch, Radio, Form, notification } from "antd";
 import React from "react";
-import * as timeUtil from "../../util/time";
 import TextArea from "antd/lib/input/TextArea";
 import * as api from "../../util/api";
+import HandleOrderForm from "./HandleOrderForm";
 
-const columns = [
-  {
-    title: "姓名",
-    dataIndex: "customerName",
-    key: "name"
-  },
-  {
-    title: "校区",
-    dataIndex: "campus",
-    key: "campus",
-    render: campus => {
-      switch (campus) {
-        case 1:
-          return <Tag color="orange">仙林</Tag>;
-        case 2:
-          return <Tag color="cyan">鼓楼</Tag>;
-        default:
-          return <span>未知错误</span>;
-      }
-    }
-  },
-  {
-    title: "电脑型号",
-    dataIndex: "model",
-    key: "model"
-  },
-  {
-    title: "保修",
-    dataIndex: "warranty",
-    key: "warranty",
-    render: warranty => {
-      switch (warranty) {
-        case 0:
-          return <Tag color="gray">不清楚</Tag>;
-        case 1:
-          return <Tag color="red">在保</Tag>;
-        case 2:
-          return <Tag color="blue">过保</Tag>;
-        default:
-          return <span>未知错误</span>;
-      }
-    }
-  },
-  {
-    title: "标签",
-    dataIndex: "tags",
-    key: "tags",
-    render: tags => (
-      <div>{tags ? tags.map(value => <Tag>{value.tagName}</Tag>) : ""}</div>
-    )
-  },
-  {
-    title: "预约时间",
-    dataIndex: "time",
-    key: "time",
-    render: time => {
-      return <span>{timeUtil.unixToText(time)}</span>;
-    }
-  },
-  {
-    title: "状态",
-    dataIndex: "status",
-    key: "status",
-    render: status => {
-      switch (status) {
-        case 0:
-          return (
-            <span>
-              <Icon type="smile" theme="twoTone" />
-              &nbsp;等待接单
-            </span>
-          );
-        case 1:
-          return (
-            <span>
-              <Icon type="clock-circle" theme="twoTone" spin />
-              &nbsp;处理中
-            </span>
-          );
-        case 2:
-          return (
-            <span>
-              <Icon
-                type="check-circle"
-                theme="twoTone"
-                twoToneColor="#52c41a"
-              />
-              &nbsp;已完成
-            </span>
-          );
-        case 3:
-          return (
-            <span>
-              <Icon type="close-circle" theme="twoTone" twoToneColor="red" />
-              &nbsp;已取消
-            </span>
-          );
-        case 4:
-          return (
-            <span>
-              <Icon type="delete" theme="twoTone" twoToneColor="red" />
-              &nbsp;已废弃
-            </span>
-          );
-        default:
-          return <span>未知错误</span>;
-      }
-    }
-  },
-  {
-    title: "我来处理",
-    key: "action",
-    render: (text, record) => (
-      <span>
-        <a>接单</a>
-        <Divider type="vertical" />
-        <a>废弃</a>
-      </span>
-    )
-  }
-];
-
+//假数据
 const data = [];
 for (let i = 1; i <= 10; i++) {
   data.push({
@@ -264,14 +134,7 @@ class HandleOrder extends React.Component {
             </Radio.Group>
           </Form.Item>
         </Form>
-        <Table
-          {...this.state}
-          columns={columns.map(item => ({ ...item, ellipsis: state.ellipsis }))}
-          dataSource={this.state.data.map(value => ({
-            key: value.id,
-            ...value
-          }))}
-        />
+        <HandleOrderForm data={this.state.data} tagList={this.state.tagList} />
       </div>
     );
   }
