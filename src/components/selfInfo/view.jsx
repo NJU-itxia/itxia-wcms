@@ -13,15 +13,6 @@ import * as api from "../../util/api";
 
 const { Option } = Select;
 
-const orderTags = [
-  "重装系统",
-  "安装固态",
-  "进水",
-  "linux",
-  "windows",
-  "无法开机"
-];
-
 class SelfInfo extends React.Component {
   constructor(props) {
     super(props);

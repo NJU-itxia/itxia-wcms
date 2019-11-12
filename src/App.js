@@ -15,7 +15,7 @@ import {
   Link
 } from "react-router-dom";
 import "./App.css";
-import { Layout, Menu, Icon, Button, Avatar } from "antd";
+import { Layout, Icon, Button } from "antd";
 import routePath from "./util/routePath";
 
 const { Sider, Header, Content } = Layout;
