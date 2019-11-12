@@ -1,6 +1,8 @@
 import React from "react";
-import { Table, Icon, Divider, Tag } from "antd";
+import { Table, Icon, Divider, Tag, Input } from "antd";
 import * as timeUtil from "../../util/time";
+import config from "../../config/config";
+import "./style.css";
 
 export default class HandleOrderForm extends React.Component {
   //生成表的列信息
@@ -24,7 +26,19 @@ export default class HandleOrderForm extends React.Component {
             default:
               return <span>未知错误</span>;
           }
-        }
+        },
+        filters: [
+          {
+            text: "仙林",
+            value: 1
+          },
+          {
+            text: "鼓楼",
+            value: 2
+          }
+        ],
+        filterMultiple: true,
+        onFilter: (filterValue, record) => filterValue === record.campus
       },
       {
         title: "电脑型号",
@@ -46,7 +60,23 @@ export default class HandleOrderForm extends React.Component {
             default:
               return <span>未知错误</span>;
           }
-        }
+        },
+        filters: [
+          {
+            text: "不清楚",
+            value: 0
+          },
+          {
+            text: "在保",
+            value: 1
+          },
+          {
+            text: "过保",
+            value: 2
+          }
+        ],
+        filterMultiple: true,
+        onFilter: (filterValue, record) => filterValue === record.warranty
       },
       {
         title: "标签",
@@ -151,9 +181,39 @@ export default class HandleOrderForm extends React.Component {
       }
     ];
   }
+
+  expandedRowRender = record => {
+    const imagePrefix =
+      config.network.api.protocol +
+      "://" +
+      config.network.api.host +
+      "/upload/";
+    return (
+      <div>
+        <div style={{ width: "50%" }}>
+          描述:
+          <Input.TextArea disabled value={record.description} />
+        </div>
+        {record.attachments
+          ? record.attachments.map(attachment => {
+              return (
+                <a href={imagePrefix + attachment.id} target="_self">
+                  <img
+                    className="attachment"
+                    src={imagePrefix + attachment.id}
+                    alt="无法显示附件"
+                  ></img>
+                </a>
+              );
+            })
+          : ""}
+      </div>
+    );
+  };
   render() {
     return (
       <Table
+        expandedRowRender={this.expandedRowRender}
         columns={this.generateColumns()}
         dataSource={this.props.data.map(value => ({
           key: value.id,

@@ -25,24 +25,12 @@ for (let i = 1; i <= 10; i++) {
   });
 }
 
-const expandedRowRender = record => {
-  return (
-    <div style={{ display: "flex", flexDirection: "row" }}>
-      <div style={{ width: "40%" }}>
-        描述:<TextArea disabled value={record.description}></TextArea>
-      </div>
-      <span>ok</span>
-    </div>
-  );
-};
-
 class HandleOrder extends React.Component {
   state = {
     bordered: false,
     loading: false,
     pagination: { position: "bottom" },
     size: "default",
-    expandedRowRender,
     title: () => "预约单列表",
     showHeader: true,
     rowSelection: {},

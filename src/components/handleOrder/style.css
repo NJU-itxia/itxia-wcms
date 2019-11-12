@@ -1,0 +1,7 @@
+img.attachment{
+    width: auto;
+    height: auto;
+    display: block;
+    max-width: 40%;
+    max-height: 40%;
+}
