@@ -4,7 +4,8 @@ import * as api from "../../util/api";
 
 class NestedTable extends React.Component {
   state = {
-    loading: false
+    loading: false,
+    data: []
   };
 
   componentDidMount() {
@@ -13,8 +14,7 @@ class NestedTable extends React.Component {
 
   updateData() {
     this.setState({
-      loading: true,
-      data: null
+      loading: true
     });
     api
       .get("/member/all")
@@ -42,9 +42,25 @@ class NestedTable extends React.Component {
   columns = [
     { title: "ID", dataIndex: "id", key: "id" },
     { title: "姓名", dataIndex: "realName", key: "realName" },
-    { title: "账号", dataIndex: "loginNmae", key: "loginNmae" },
+    { title: "登录名", dataIndex: "loginName", key: "loginName" },
     { title: "校区", dataIndex: "campus", key: "campus" },
-    { title: "身份", dataIndex: "role", key: "role" },
+    {
+      title: "身份",
+      dataIndex: "role",
+      key: "role",
+      render: role => {
+        switch (role) {
+          case 0:
+            return "游客";
+          case 1:
+            return "成员";
+          case 2:
+            return "管理员";
+          default:
+            return "未知";
+        }
+      }
+    },
     { title: "邮箱", dataIndex: "email", key: "email" },
     { title: "是否接收邮件提醒", dataIndex: "acceptEmail", key: "acceptEmail" }
   ];
@@ -53,7 +69,10 @@ class NestedTable extends React.Component {
     return (
       <Table
         columns={this.columns}
-        dataSource={this.state.data}
+        dataSource={this.state.data.map(value => ({
+          key: value.id,
+          ...value
+        }))}
         loading={this.state.loading}
       />
     );
