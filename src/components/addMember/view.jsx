@@ -43,63 +43,54 @@ class AddMember extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      if (!err) {
-        if (values.acceptEmail === null || values.acceptEmail === undefined) {
-          values.acceptEmail = false;
+      if (err) {
+        //表单验证未通过
+        return;
+      }
+      //提交表单
+      this.setState({
+        submit: {
+          loading: true
         }
-        //或许可以改成更好的方式来验证密码是否一致
-        if (values.password === values.confirmPassword) {
+      });
+      api
+        .post("/member", values)
+        .on("succ", payload => {
           this.setState({
             submit: {
-              loading: true
+              loading: false,
+              payload
             }
           });
-          api
-            .post("/member", values)
-            .on("succ", payload => {
-              this.setState({
-                submit: {
-                  loading: false,
-                  payload
-                }
-              });
-              localStorage.removeItem("addMember");
-              this.props.form.setFieldsValue({});
-            })
-            .on("fail", json => {
-              notification.error({
-                message: "添加成员失败",
-                description: json.errorMessage,
-                duration: 0
-              });
-              this.setState({
-                submit: {
-                  loading: false,
-                  error: json.errorMessage
-                }
-              });
-            })
-            .on("error", e => {
-              notification.error({
-                message: "网络请求失败",
-                description: e.toString(),
-                duration: 0
-              });
-              this.setState({
-                submit: {
-                  loading: false,
-                  error: e
-                }
-              });
-            });
-        } else {
+          localStorage.removeItem("addMember");
+          this.props.form.setFieldsValue({});
+        })
+        .on("fail", json => {
           notification.error({
-            message: "两次密码不一致",
-            description: "请检查输入的密码",
+            message: "添加成员失败",
+            description: json.errorMessage,
             duration: 0
           });
-        }
-      }
+          this.setState({
+            submit: {
+              loading: false,
+              error: json.errorMessage
+            }
+          });
+        })
+        .on("error", e => {
+          notification.error({
+            message: "网络请求失败",
+            description: e.toString(),
+            duration: 0
+          });
+          this.setState({
+            submit: {
+              loading: false,
+              error: e
+            }
+          });
+        });
     });
   };
 
@@ -144,7 +135,7 @@ class AddMember extends React.Component {
               { required: true, message: "请填写姓名" },
               {
                 pattern: /^.{2,16}$/,
-                message: ""
+                message: "2-16个字符"
               }
             ]
           })(
