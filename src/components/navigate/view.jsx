@@ -1,27 +1,15 @@
 import { Menu, Icon } from "antd";
 import React from "react";
-import { connect } from "react-redux";
 import "./style.css";
-import { changePage } from "./actions";
 import { Link } from "react-router-dom";
 import routePath from "../../util/routePath";
 
-const { SubMenu } = Menu;
-
 class Sider extends React.Component {
-  constructor(props) {
-    super(props);
-    this.pageSelectHandler = this.pageSelectHandler.bind(this);
-  }
   state = {
     mode: "inline",
     theme: "dark",
     path: window.location.pathname
   };
-
-  pageSelectHandler(args) {
-    this.props.onPageSelect(args.key);
-  }
 
   render() {
     return (
@@ -66,14 +54,4 @@ class Sider extends React.Component {
   }
 }
 
-const mapDispatch = dispatch => ({
-  onPageSelect: pageKey => {
-    //TODO
-    dispatch(changePage(pageKey));
-  }
-});
-
-export default connect(
-  null,
-  mapDispatch
-)(Sider);
+export default Sider;

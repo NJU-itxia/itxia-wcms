@@ -1,3 +1,0 @@
-export const ADD_MEMBER = "ADD_MEMBER";
-
-export const NOTIFICATED = "ADD_MEMBER_RESULT_NOTIFICATED";

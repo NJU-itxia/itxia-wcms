@@ -2,11 +2,10 @@ import React from "react";
 import { Form, Icon, Input, Button, Checkbox, Modal } from "antd";
 import "antd/dist/antd.css";
 import "./style.css";
-import * as actions from "./actions";
-import { connect } from "react-redux";
 import config from "../../config/config";
 import * as api from "../../util/api";
 import { Redirect } from "react-router-dom";
+import routePath from "../../util/routePath";
 
 const localStorageKeys = {
   isRememberAccount: "isRememberAccount",
@@ -68,7 +67,7 @@ class LoginForm extends React.Component {
 
   render() {
     if (this.state.isLogin === true) {
-      return <Redirect to="/home"></Redirect>;
+      return <Redirect to={routePath.HOME}></Redirect>;
     }
     const { getFieldDecorator } = this.props.form;
     return (
@@ -131,18 +130,5 @@ class LoginForm extends React.Component {
 }
 
 const WrappedNormalLoginForm = Form.create({ name: "normal_login" })(LoginForm);
-//export default WrappedNormalLoginForm;
 
-function mapDispatch(dispatch, ownProps) {
-  return {
-    onLogin: (username, password) => {
-      dispatch(actions.login(username, password));
-    }
-  };
-}
-
-export default connect(
-  null,
-  mapDispatch
-)(WrappedNormalLoginForm);
-//ReactDOM.render(<WrappedNormalLoginForm />, mountNode);
+export default WrappedNormalLoginForm;
