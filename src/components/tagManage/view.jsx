@@ -58,7 +58,6 @@ class TagManage extends React.Component {
     api
       .get("/tag")
       .on("succ", payload => {
-        console.log(payload)
         this.setState({
           loading: false,
           data: payload
@@ -150,7 +149,14 @@ class TagManage extends React.Component {
         </Form>
         <Table
           columns={columns.map(item => ({ ...item }))}
-          dataSource={this.state.data}
+          dataSource={
+            this.state.data
+              ? this.state.data.map(value => ({
+                  key: value.id,
+                  ...value
+                }))
+              : []
+          }
           loading={this.state.loading}
         />
       </div>

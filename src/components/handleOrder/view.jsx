@@ -163,26 +163,15 @@ const expandedRowRender = record => {
   );
 };
 
-const title = () => "Here is title";
-const showHeader = true;
-const footer = () => "Here is footer";
-const scroll = { y: 240 };
-const pagination = { position: "bottom" };
-
-class Demo extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
+class HandleOrder extends React.Component {
   state = {
     bordered: false,
     loading: false,
-    pagination,
+    pagination: { position: "bottom" },
     size: "default",
     expandedRowRender,
-    title: undefined,
-    showHeader,
-    footer,
+    title: () => "预约单列表",
+    showHeader: true,
     rowSelection: {},
     scroll: undefined,
     hasData: true,
@@ -266,11 +255,14 @@ class Demo extends React.Component {
         <Table
           {...this.state}
           columns={columns.map(item => ({ ...item, ellipsis: state.ellipsis }))}
-          dataSource={this.state.data}
+          dataSource={this.state.data.map(value => ({
+            key: value.id,
+            ...value
+          }))}
         />
       </div>
     );
   }
 }
 
-export default Demo;
+export default HandleOrder;
