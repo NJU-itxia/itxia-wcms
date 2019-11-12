@@ -46,21 +46,28 @@ class SelfInfo extends React.Component {
       }
     });
     api
-      .post("/admin/info", "")
-      .then(res => {
-        if (res.data.success === true) {
-          this.setState({
-            selfInfo: {
-              isLoad: true,
-              payload: res.data.data
-            }
-          });
-        } else {
-          //TODO
-        }
+      .get("/member")
+      .on("succ", payload => {
+        this.setState({
+          selfInfo: {
+            isLoad: true,
+            payload
+          }
+        });
       })
-      .catch(() => {
-        //TODO onReject
+      .on("fail", message => {
+        notification.error({
+          message: "返回值错误",
+          description: message,
+          duration: 0
+        });
+      })
+      .on("error", e => {
+        notification.error({
+          message: "网络请求失败",
+          description: e.toString(),
+          duration: 0
+        });
       });
   }
 
@@ -114,26 +121,29 @@ class SelfInfoForm extends React.Component {
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
         <Form.Item label="姓名">
-          <span className="ant-form-text">{String(payload.name)}</span>
+          <span>{String(payload.realName)}</span>
+        </Form.Item>
+        <Form.Item label="登录名">
+          <span className="ant-form-text">{String(payload.loginName)}</span>
         </Form.Item>
         <Form.Item label="账户ID">
           <span className="ant-form-text">{String(payload.id)}</span>
         </Form.Item>
         <Form.Item label="校区" hasFeedback>
-          {getFieldDecorator("location", {
+          {getFieldDecorator("campus", {
             rules: [{ required: true, message: "请选择你的校区" }]
           })(
             <Select placeholder="请选择你的校区">
-              <Option value="仙林">仙林</Option>
-              <Option value="鼓楼">鼓楼</Option>
+              <Option value={1}>仙林</Option>
+              <Option value={2}>鼓楼</Option>
             </Select>
           )}
         </Form.Item>
         <Form.Item label="预约单邮件提醒">
-          {getFieldDecorator("acceptEmail", { valuePropName: "value" })(
-            //TODO
-            <Switch defaultChecked={payload.acceptEmail} />
-          )}
+          {getFieldDecorator("acceptEmail", {
+            valuePropName: "checked",
+            initialValue: payload.acceptEmail
+          })(<Switch />)}
         </Form.Item>
 
         <Form.Item label="关注的预约标签">
@@ -163,7 +173,7 @@ class SelfInfoForm extends React.Component {
 
         <Form.Item label="邮箱地址">
           {getFieldDecorator("email", {
-            rules: [{ required: true, message: "请填写您的邮箱地址" }]
+            rules: [{ required: false, message: "请填写您的邮箱地址" }]
           })(<Input />)}
         </Form.Item>
 
@@ -182,15 +192,7 @@ class SelfInfoForm extends React.Component {
 }
 
 const WrappedSelfInfoForm = Form.create({
-  mapPropsToFields: props => {
-    const { locationRawValue, email, acceptEmail } = props.selfInfoPayload;
-    return {
-      location: Form.createFormField({ value: locationRawValue }),
-      acceptEmail: Form.createFormField({ value: acceptEmail }), //??? 不生效
-      email: Form.createFormField({ value: email })
-    };
-  },
-  name: "validate_other"
+  name: "self_info"
 })(SelfInfoForm);
 
 export default SelfInfo;
