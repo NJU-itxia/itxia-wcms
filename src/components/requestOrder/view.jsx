@@ -31,10 +31,24 @@ class Demo extends React.Component {
         api
           .post("/order", values)
           .on("succ", payload => {
-            console.log(payload);
+            Modal.success({
+              title: "预约成功",
+              centered: true
+            });
           })
-          .on("fail", json => {
-            console.log(json);
+          .on("fail", message => {
+            Modal.error({
+              title: "请求失败",
+              content: message,
+              centered: true
+            });
+          })
+          .on("error", e => {
+            Modal.error({
+              title: "网络请求失败",
+              content: e.toString(),
+              centered: true
+            });
           });
       }
     });

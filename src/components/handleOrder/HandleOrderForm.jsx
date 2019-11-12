@@ -197,11 +197,11 @@ export default class HandleOrderForm extends React.Component {
         {record.attachments
           ? record.attachments.map(attachment => {
               return (
-                <a href={imagePrefix + attachment.id} target="_self">
+                <a href={imagePrefix + attachment.id} target="_parent">
                   <img
                     className="attachment"
                     src={imagePrefix + attachment.id}
-                    alt="无法显示附件"
+                    alt="非图片附件"
                   ></img>
                 </a>
               );
