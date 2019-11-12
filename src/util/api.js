@@ -22,7 +22,11 @@ const request = (path, method, data) => {
         emitter.emit("succ", json.payload);
       } else {
         //请求成功，但返回值错误
-        emitter.emit("fail", json);
+        let message = json.errorMessage;
+        if (json.payload) {
+          message += ": " + json.payload.toString().substring(0, 32); //避免过长的错误信息.
+        }
+        emitter.emit("fail", message, json);
       }
     })
     .catch(e => {
