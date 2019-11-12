@@ -29,6 +29,10 @@ class SelfInfo extends React.Component {
       selfInfo: {
         isLoad: false,
         payload: undefined
+      },
+      tag: {
+        loading: false,
+        payload: []
       }
     };
     this.fetchSelfInfo = this.fetchSelfInfo.bind(this);
@@ -43,6 +47,10 @@ class SelfInfo extends React.Component {
     this.setState({
       selfInfo: {
         isLoad: false
+      },
+      tag: {
+        loading: true,
+        payload: []
       }
     });
     api
@@ -69,6 +77,14 @@ class SelfInfo extends React.Component {
           duration: 0
         });
       });
+    api.get("/tag").on("succ", payload => {
+      this.setState({
+        tag: {
+          loading: false,
+          payload
+        }
+      });
+    });
   }
 
   /**
@@ -93,6 +109,7 @@ class SelfInfo extends React.Component {
       <WrappedSelfInfoForm
         selfInfoPayload={this.state.selfInfo.payload}
         onUpdateInfo={this.handleUpdateSelfInfo}
+        tagList={this.state.tag.payload}
       ></WrappedSelfInfoForm>
     );
   }
@@ -103,9 +120,6 @@ class SelfInfoForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        if (values.acceptEmail === null || values.acceptEmail === undefined) {
-          values.acceptEmail = false;
-        }
         this.props.onUpdateInfo(values);
       }
     });
@@ -157,9 +171,9 @@ class SelfInfoForm extends React.Component {
             ]
           })(
             <Select mode="multiple" placeholder="请选择关注的预约标签">
-              {orderTags.map((tag, tagIndex) => (
-                <Option key={tagIndex} value={tag}>
-                  {tag}
+              {this.props.tagList.map(tag => (
+                <Option key={tag.id} value={tag.id}>
+                  {tag.tagName}
                 </Option>
               ))}
             </Select>
