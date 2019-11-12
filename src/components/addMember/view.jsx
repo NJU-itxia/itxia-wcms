@@ -1,29 +1,44 @@
-import { Form, Select, Input, Switch, Button, notification, Alert, Icon } from "antd";
+import {
+  Form,
+  Select,
+  Input,
+  Switch,
+  Button,
+  notification,
+  Alert,
+  Icon
+} from "antd";
 import React from "react";
 import { connect } from "react-redux";
 import * as actions from "./actions";
-import requestStatus from "../../util/requestStatus";
+import * as api from "../../util/api";
 
 const { Option } = Select;
 
 class AddMember extends React.Component {
-  componentDidUpdate() {
-    const { status, error } = this.props;
-    let isNotificated = true;
-    if (status === requestStatus.SUCC) {
-      notification.success({ message: "添加成员成功", duration: 5 });
-    } else if (status === requestStatus.ERROR) {
-      notification.error({
-        message: "添加成员失败",
-        description: String(error),
-        duration: 0
-      });
-    } else {
-      isNotificated = false;
+  state = {
+    submit: {
+      loading: false,
+      payload: undefined,
+      error: undefined
     }
-    if (isNotificated) {
-      this.props.onNotification();
+  };
+
+  componentDidMount() {
+    const savedFormValues = localStorage.getItem("addMember");
+    if (savedFormValues) {
+      try {
+        this.props.form.setFieldsValue(JSON.parse(savedFormValues));
+      } catch (e) {
+        console.log("cannot set fields from local storage.");
+        localStorage.removeItem("addMember");
+      }
     }
+  }
+
+  componentWillUnmount() {
+    const values = this.props.form.getFieldsValue();
+    localStorage.setItem("addMember", JSON.stringify(values));
   }
 
   handleSubmit = e => {
@@ -35,7 +50,51 @@ class AddMember extends React.Component {
         }
         //或许可以改成更好的方式来验证密码是否一致
         if (values.password === values.confirmPassword) {
-          this.props.onAddMember(values);
+          this.setState({
+            submit: {
+              loading: true
+            }
+          });
+          api
+            .post("/member", values)
+            .on("succ", payload => {
+              notification.success({ message: "添加成员成功", duration: 5 });
+              this.setState({
+                submit: {
+                  loading: false,
+                  payload
+                }
+              });
+              localStorage.removeItem("addMember");
+              this.props.form.setFieldsValue({});
+              //TODO
+            })
+            .on("fail", json => {
+              notification.error({
+                message: "添加成员失败",
+                description: json.errorMessage,
+                duration: 0
+              });
+              this.setState({
+                submit: {
+                  loading: false,
+                  error: json.errorMessage
+                }
+              });
+            })
+            .on("error", e => {
+              notification.error({
+                message: "网络请求失败",
+                description: e.toString(),
+                duration: 0
+              });
+              this.setState({
+                submit: {
+                  loading: false,
+                  error: e
+                }
+              });
+            });
         } else {
           notification.error({
             message: "两次密码不一致",
@@ -47,14 +106,6 @@ class AddMember extends React.Component {
     });
   };
 
-  normFile = e => {
-    console.log("Upload event:", e);
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e && e.fileList;
-  };
-
   render() {
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
@@ -64,7 +115,7 @@ class AddMember extends React.Component {
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
         <Form.Item label="姓名">
-          {getFieldDecorator("name", {
+          {getFieldDecorator("realName", {
             rules: [
               { required: true, message: "请填写姓名" },
               {
@@ -72,7 +123,13 @@ class AddMember extends React.Component {
                 message: ""
               }
             ]
-          })(<Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} type="text" placeholder="姓名"/>)}
+          })(
+            <Input
+              prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
+              type="text"
+              placeholder="姓名"
+            />
+          )}
         </Form.Item>
         <Form.Item label="登录账号名">
           {getFieldDecorator("loginName", {
@@ -83,7 +140,16 @@ class AddMember extends React.Component {
                 message: "账号格式不正确"
               }
             ]
-          })(<Input prefix={<Icon type="user-add" style={{ color: 'rgba(0,0,0,.25)' }} />} type="text" placeholder="密码" autoComplete="new-password"/>)}
+          })(
+            <Input
+              prefix={
+                <Icon type="user-add" style={{ color: "rgba(0,0,0,.25)" }} />
+              }
+              type="text"
+              placeholder="登录账号名"
+              autoComplete="new-password"
+            />
+          )}
           <Alert
             message="用于登录系统，4-16位字母、数字组合。"
             type="info"
@@ -99,7 +165,12 @@ class AddMember extends React.Component {
                 message: "密码格式不正确"
               }
             ]
-          })(<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="密码" autoComplete="new-password"/>)}
+          })(
+            <Input.Password
+              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
+              placeholder="密码"
+            />
+          )}
           <Alert
             message="密码格式：8-16位字母、数字组合"
             type="info"
@@ -108,16 +179,28 @@ class AddMember extends React.Component {
         </Form.Item>
         <Form.Item label="确认密码">
           {getFieldDecorator("confirmPassword", {
-            rules: [{ required: true, message: "请填写密码" }]
-          })(<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="确认密码" autoComplete="new-password"/>)}
+            rules: [
+              (rules, value, callback) => {
+                if (this.props.form.getFieldsValue().password === value) {
+                  callback();
+                }
+                callback("两次密码不一致");
+              }
+            ]
+          })(
+            <Input.Password
+              prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
+              placeholder="确认密码"
+            />
+          )}
         </Form.Item>
         <Form.Item label="校区" hasFeedback>
-          {getFieldDecorator("location", {
+          {getFieldDecorator("campus", {
             rules: [{ required: true, message: "请选择你的校区" }]
           })(
             <Select placeholder="请选择你的校区">
-              <Option value="仙林">仙林</Option>
-              <Option value="鼓楼">鼓楼</Option>
+              <Option value="1">仙林</Option>
+              <Option value="2">鼓楼</Option>
             </Select>
           )}
         </Form.Item>
@@ -130,18 +213,24 @@ class AddMember extends React.Component {
                 message: "邮箱格式不正确"
               }
             ]
-          })(<Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} type="email" placeholder="邮箱地址"/>)}
+          })(
+            <Input
+              prefix={<Icon type="mail" style={{ color: "rgba(0,0,0,.25)" }} />}
+              type="email"
+              placeholder="邮箱地址"
+            />
+          )}
         </Form.Item>
         <Form.Item label="预约单邮件提醒">
           {getFieldDecorator("acceptEmail", {
             initialValue: false,
-            valuePropName: "value"
-          })(<Switch defaultChecked={false} />)}
+            valuePropName: "checked"
+          })(<Switch />)}
         </Form.Item>
         <Form.Item wrapperCol={{ span: 12, offset: 9 }}>
           <Button
             type="primary"
-            loading={this.props.status === requestStatus.PENDING}
+            loading={this.state.submit.loading}
             htmlType="submit"
           >
             添加成员
@@ -152,46 +241,8 @@ class AddMember extends React.Component {
   }
 }
 
-const mapState = state => {
-  return state.addMember;
-};
-
-const mapDispatch = dispatch => ({
-  onAddMember: newMember => {
-    dispatch(actions.addMember(newMember));
-  },
-  onNotification: () => {
-    dispatch(actions.nitificated());
-  }
-});
-
 const WrappedAddMember = Form.create({
-  mapPropsToFields: props => {
-    if (props.data && !props.error) {
-      const { locationRaw, email, acceptEmail } = props.data;
-      let location;
-      switch (locationRaw) {
-        case "GU_LOU":
-          location = "鼓楼";
-          break;
-        case "XIAN_LIN":
-          location = "仙林";
-          break;
-        default:
-          location = "鼓楼";
-      }
-      return {
-        location: Form.createFormField({ value: location }),
-        acceptEmail: Form.createFormField({ value: acceptEmail }), //??? 不生效
-        email: Form.createFormField({ value: email })
-      };
-    }
-    return {};
-  },
   name: "validate_other"
 })(AddMember);
 
-export default connect(
-  mapState,
-  mapDispatch
-)(WrappedAddMember);
+export default WrappedAddMember;
