@@ -16,6 +16,8 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import { Layout, Menu, Icon, Button, Avatar } from "antd";
+import routePath from "./util/routePath";
+
 const { Sider, Header, Content } = Layout;
 
 class App extends React.Component {
@@ -33,12 +35,12 @@ class App extends React.Component {
       <Router>
         <Switch>
           <Route exact={true} path="/">
-            <Redirect to="/login"></Redirect>
+            <Redirect to={routePath.LOGIN}></Redirect>
           </Route>
-          <Route path="/login">
+          <Route path={routePath.LOGIN}>
             <Login></Login>
           </Route>
-          <Route path="/home">
+          <Route path={routePath.HOME}>
             <Layout
               style={{
                 height: "100%"
@@ -73,7 +75,7 @@ class App extends React.Component {
                     }}
                   >
                     <Button type="danger">
-                      <Link to="/login">退出登录</Link>
+                      <Link to={routePath.LOGIN}>退出登录</Link>
                     </Button>
                   </div>
                 </Header>
@@ -87,30 +89,30 @@ class App extends React.Component {
                   }}
                 >
                   <Switch>
-                    <Route exact={true} path="/home">
-                      <Redirect to="/home/self"></Redirect>
+                    <Route exact={true} path={routePath.HOME}>
+                      <Redirect to={routePath.SELF_INFO}></Redirect>
                     </Route>
-                    <Route path="/home/self">
+                    <Route path={routePath.SELF_INFO}>
                       <SelfInfo></SelfInfo>
                     </Route>
-                    <Route path="/home/member">
+                    <Route path={routePath.MEMBER_LIST}>
                       <MemberList></MemberList>
                     </Route>
-                    <Route path="/home/addMember">
+                    <Route path={routePath.ADD_MEMBER}>
                       <AddMember></AddMember>
                     </Route>
-                    <Route path="/home/request">
+                    <Route path={routePath.REQUEST_ORDER}>
                       <RequestOrder></RequestOrder>
                     </Route>
-                    <Route path="/home/handle">
+                    <Route path={routePath.HANDLE_ORDER}>
                       <HandleOrder></HandleOrder>
                     </Route>
-                    <Route path="/home/tag">
+                    <Route path={routePath.TAG_MANAGE}>
                       <TagManage></TagManage>
                     </Route>
                     <Route path="*">
                       <span>page not found</span>
-                      <Link to="/home/self">back</Link>
+                      <Link to={routePath.SELF_INFO}>back</Link>
                     </Route>
                   </Switch>
                 </Content>
