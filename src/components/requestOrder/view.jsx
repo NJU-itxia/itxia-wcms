@@ -1,4 +1,4 @@
-import { Form, Select, Input, Button, Upload } from "antd";
+import { Form, Select, Input, Button, Upload, Modal } from "antd";
 import React from "react";
 import config from "../../config/config";
 import * as api from "../../util/api";
@@ -9,6 +9,24 @@ class Demo extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        //检查附件是否全部上传.
+        const uploadIDArr = [];
+        for (const file of values.attachments) {
+          if (file.percent === 100 && file.status === "done") {
+            const { errorCode, payload } = file.response;
+            if (errorCode === 0) {
+              uploadIDArr.push(payload.id);
+            }
+          } else {
+            Modal.error({
+              title: "附件未全部上传",
+              content: "请等待附件全部上传，或删除上传失败的附件.",
+              centered: true
+            });
+            return;
+          }
+        }
+        values.attachments = uploadIDArr;
         //TODO 处理预约成功跳转
         api
           .post("/order", values)
@@ -127,18 +145,12 @@ class Demo extends React.Component {
 
         <Form.Item label="附件上传">
           {getFieldDecorator("attachments", {
-            initialValue: [],
-            getValueFromEvent: event => {
-              const uploadIDArr = [];
-              for (const file of event["fileList"]) {
-                if (file.percent === 100 && file.status === "done") {
-                  const { errorCode, payload } = file.response;
-                  if (errorCode === 0) {
-                    uploadIDArr.push(payload.id);
-                  }
-                }
+            valuePropName: "fileList",
+            getValueFromEvent: e => {
+              if (Array.isArray(e)) {
+                return e;
               }
-              return uploadIDArr;
+              return e && e.fileList;
             }
           })(
             <Upload
