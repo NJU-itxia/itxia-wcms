@@ -6,11 +6,10 @@ import {
   Button,
   notification,
   Alert,
+  Result,
   Icon
 } from "antd";
 import React from "react";
-import { connect } from "react-redux";
-import * as actions from "./actions";
 import * as api from "../../util/api";
 
 const { Option } = Select;
@@ -58,7 +57,6 @@ class AddMember extends React.Component {
           api
             .post("/member", values)
             .on("succ", payload => {
-              notification.success({ message: "添加成员成功", duration: 5 });
               this.setState({
                 submit: {
                   loading: false,
@@ -67,7 +65,6 @@ class AddMember extends React.Component {
               });
               localStorage.removeItem("addMember");
               this.props.form.setFieldsValue({});
-              //TODO
             })
             .on("fail", json => {
               notification.error({
@@ -112,6 +109,33 @@ class AddMember extends React.Component {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 }
     };
+    const { payload } = this.state.submit;
+    if (payload) {
+      return (
+        <Result
+          status="success"
+          title="添加成功"
+          subTitle={`成功添加新成员:${payload.realName}, ID:${payload.id}`}
+          extra={[
+            <Button
+              type="primary"
+              onClick={() => {
+                this.setState({
+                  submit: {
+                    loading: false,
+                    payload: undefined,
+                    error: undefined
+                  }
+                });
+              }}
+            >
+              返回
+            </Button>
+          ]}
+        />
+      );
+    }
+
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
         <Form.Item label="姓名">
