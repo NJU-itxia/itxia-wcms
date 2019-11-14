@@ -11,6 +11,9 @@ class Demo extends React.Component {
       if (!err) {
         //检查附件是否全部上传.
         const uploadIDArr = [];
+        if (values.attachments) {
+          values.attachments = [];
+        }
         for (const file of values.attachments) {
           if (file.percent === 100 && file.status === "done") {
             const { errorCode, payload } = file.response;
