@@ -204,7 +204,7 @@ export default class HandleOrderForm extends React.Component {
         {record.attachments
           ? record.attachments.map(attachment => {
               return (
-                <a href={getImageUrl(attachment.sha256sum)} target="_parent">
+                <a key={attachment.id} href={getImageUrl(attachment.sha256sum)} target="_parent">
                   <img
                     className="attachment"
                     src={getImageUrl(attachment.sha256sum, true)}
