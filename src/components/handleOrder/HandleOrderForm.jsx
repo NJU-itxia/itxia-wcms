@@ -3,6 +3,7 @@ import { Table, Icon, Divider, Tag, Input } from "antd";
 import * as timeUtil from "../../util/time";
 import config from "../../config/config";
 import "./style.css";
+import HandleOrderAction from "./HandleOrderAction";
 
 export default class HandleOrderForm extends React.Component {
   //生成表的列信息
@@ -171,13 +172,9 @@ export default class HandleOrderForm extends React.Component {
       {
         title: "我来处理",
         key: "action",
-        render: (text, record) => (
-          <span>
-            <a>接单</a>
-            <Divider type="vertical" />
-            <a>废弃</a>
-          </span>
-        )
+        render: (text, record) => {
+          return <HandleOrderAction {...record} onActionDone={this.props.onRequireUpdate}></HandleOrderAction>;
+        }
       }
     ];
   }
@@ -204,7 +201,11 @@ export default class HandleOrderForm extends React.Component {
         {record.attachments
           ? record.attachments.map(attachment => {
               return (
-                <a key={attachment.id} href={getImageUrl(attachment.sha256sum)} target="_parent">
+                <a
+                  key={attachment.id}
+                  href={getImageUrl(attachment.sha256sum)}
+                  target="_parent"
+                >
                   <img
                     className="attachment"
                     src={getImageUrl(attachment.sha256sum, true)}

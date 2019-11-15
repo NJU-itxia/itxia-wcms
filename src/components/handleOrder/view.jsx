@@ -1,31 +1,15 @@
 import { Switch, Radio, Form, notification } from "antd";
 import React from "react";
-import TextArea from "antd/lib/input/TextArea";
 import * as api from "../../util/api";
 import HandleOrderForm from "./HandleOrderForm";
 
-//假数据
 const data = [];
-for (let i = 1; i <= 10; i++) {
-  data.push({
-    id: 16 + i,
-    customerName: "someone",
-    customerPhone: "10086",
-    customerQQ: "886",
-    model: "MiBook Pro 😁",
-    warranty: Math.floor(Math.random() * 3),
-    campus: Math.floor(Math.random() * 2) + 1,
-    description: "没事",
-    status: Math.floor(Math.random() * 4),
-    summary: null,
-    time: 1573282420,
-    history: [],
-    handlerID: 0,
-    handlerName: null
-  });
-}
 
 class HandleOrder extends React.Component {
+  constructor(props) {
+    super(props);
+    this.updateData = this.updateData.bind(this);
+  }
   state = {
     bordered: false,
     loading: false,
@@ -122,7 +106,11 @@ class HandleOrder extends React.Component {
             </Radio.Group>
           </Form.Item>
         </Form>
-        <HandleOrderForm data={this.state.data} tagList={this.state.tagList} />
+        <HandleOrderForm
+          data={this.state.data}
+          tagList={this.state.tagList}
+          onRequireUpdate={this.updateData}
+        />
       </div>
     );
   }
