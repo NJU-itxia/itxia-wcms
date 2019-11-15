@@ -66,8 +66,8 @@ class HandleOrder extends React.Component {
     //TODO 处理获取标签失败
   }
 
-  handleToggle = prop => enable => {
-    this.setState({ [prop]: enable });
+  handleToggle = enable => {
+    this.setState({ bordered: enable });
   };
 
   handleCampusChange = e => {
@@ -84,29 +84,11 @@ class HandleOrder extends React.Component {
       <div style={{ overflow: "auto" }}>
         <Form layout="inline" style={{ marginBottom: 16 }} scroll={{ x: true }}>
           <Form.Item label="显示边框">
-            <Switch
-              checked={state.bordered}
-              onChange={this.handleToggle("bordered")}
-            />
-          </Form.Item>
-          <Form.Item label="显示已完成">
-            <Switch
-              checked={!!state.showFinish}
-              onChange={this.handleShowFinishChange}
-            />
-          </Form.Item>
-          <Form.Item label="校区">
-            <Radio.Group
-              value={state.campus}
-              onChange={this.handleCampusChange}
-            >
-              <Radio.Button value={0}>全部</Radio.Button>
-              <Radio.Button value={1}>仙林</Radio.Button>
-              <Radio.Button value={2}>鼓楼</Radio.Button>
-            </Radio.Group>
+            <Switch checked={state.bordered} onChange={this.handleToggle} />
           </Form.Item>
         </Form>
         <HandleOrderForm
+          bordered={this.state.bordered}
           data={this.state.data}
           tagList={this.state.tagList}
           onRequireUpdate={this.updateData}

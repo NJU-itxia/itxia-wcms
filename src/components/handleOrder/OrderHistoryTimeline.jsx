@@ -50,16 +50,18 @@ export default class OrderHistoryTimeline extends React.Component {
           break;
         default:
       }
-      info.text = info.text +" " + timeUtil.unixToText(value.time);
+      info.text = info.text + " " + timeUtil.unixToText(value.time);
       historyInfo.push(info);
     });
 
     return (
       <div>
         <Timeline mode="alternate">
-          {historyInfo.map(value => {
+          {historyInfo.map((value, index) => {
             return (
-              <Timeline.Item color={value.color}>{value.text}</Timeline.Item>
+              <Timeline.Item key={index} color={value.color}>
+                {value.text}
+              </Timeline.Item>
             );
           })}
         </Timeline>
