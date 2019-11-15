@@ -20,6 +20,7 @@ const request = (path, method, data) => {
       if (json && json.errorCode === 0) {
         //请求成功
         emitter.emit("succ", json.payload);
+        emitter.emit("any");
       } else {
         //请求成功，但返回值错误
         let message = json.errorMessage;
@@ -27,11 +28,13 @@ const request = (path, method, data) => {
           message += ": " + json.payload.toString().substring(0, 32); //避免过长的错误信息.
         }
         emitter.emit("fail", message, json);
+        emitter.emit("any");
       }
     })
     .catch(e => {
       //请求失败，网络、json原因...
       emitter.emit("error", e);
+      emitter.emit("any");
     });
   return emitter;
 };
