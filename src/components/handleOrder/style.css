@@ -8,3 +8,7 @@ a.attachment {
 div.attachment {
   margin-bottom: 5em;
 }
+
+.orderDescription {
+  font-size: 1.25em;
+}

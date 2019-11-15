@@ -4,6 +4,7 @@ import * as timeUtil from "../../util/time";
 import config from "../../config/config";
 import OrderHistoryTimeline from "./OrderHistoryTimeline";
 import AttachmentContainer from "./AttachmentContainer";
+import "./style.css";
 
 export default function render(record) {
   const getImageUrl = (sha256sum, isThumbnail) => {
@@ -28,7 +29,8 @@ export default function render(record) {
             <Input.TextArea
               disabled
               value={record.description}
-              autosize={true}
+              autoSize={true}
+              className="orderDescription"
             />
           </div>
         </Panel>
