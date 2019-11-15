@@ -4,6 +4,8 @@ import * as timeUtil from "../../util/time";
 import config from "../../config/config";
 import "./style.css";
 import HandleOrderAction from "./HandleOrderAction";
+import OrderHistoryTimeline from "./OrderHistoryTimeline";
+import ExpandedRow from "./ExpandedRow";
 
 export default class HandleOrderForm extends React.Component {
   //生成表的列信息
@@ -173,55 +175,20 @@ export default class HandleOrderForm extends React.Component {
         title: "我来处理",
         key: "action",
         render: (text, record) => {
-          return <HandleOrderAction {...record} onActionDone={this.props.onRequireUpdate}></HandleOrderAction>;
+          return (
+            <HandleOrderAction
+              {...record}
+              onActionDone={this.props.onRequireUpdate}
+            ></HandleOrderAction>
+          );
         }
       }
     ];
   }
-
-  expandedRowRender = record => {
-    const getImageUrl = (sha256sum, isThumbnail) => {
-      const url =
-        config.network.api.protocol +
-        "://" +
-        config.network.api.host +
-        "/upload/" +
-        sha256sum;
-      if (isThumbnail) {
-        return url + "/thumbnail";
-      }
-      return url;
-    };
-    return (
-      <div>
-        <div style={{ width: "50%" }}>
-          描述:
-          <Input.TextArea disabled value={record.description} />
-        </div>
-        {record.attachments
-          ? record.attachments.map(attachment => {
-              return (
-                <a
-                  key={attachment.id}
-                  href={getImageUrl(attachment.sha256sum)}
-                  target="_parent"
-                >
-                  <img
-                    className="attachment"
-                    src={getImageUrl(attachment.sha256sum, true)}
-                    alt="非图片附件"
-                  ></img>
-                </a>
-              );
-            })
-          : ""}
-      </div>
-    );
-  };
   render() {
     return (
       <Table
-        expandedRowRender={this.expandedRowRender}
+        expandedRowRender={ExpandedRow}
         columns={this.generateColumns()}
         dataSource={this.props.data.map(value => ({
           key: value.id,

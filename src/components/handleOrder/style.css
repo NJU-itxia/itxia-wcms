@@ -1,7 +1,10 @@
-img.attachment{
-    width: auto;
-    height: auto;
-    display: block;
-    max-width: 40%;
-    max-height: 40%;
+a.attachment {
+  overflow: none;
+  max-width: 600px;
+  max-height: 600px;
+  display: block;
+}
+
+div.attachment {
+  margin-bottom: 5em;
 }
