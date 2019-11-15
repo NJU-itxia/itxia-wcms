@@ -59,7 +59,7 @@ export default class HandleOrderForm extends React.Component {
             case 1:
               return <Tag color="red">在保</Tag>;
             case 2:
-              return <Tag color="blue">过保</Tag>;
+              return <Tag color="orange">过保</Tag>;
             default:
               return <span>未知错误</span>;
           }
