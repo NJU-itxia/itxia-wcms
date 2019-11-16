@@ -49,10 +49,10 @@ class LoginForm extends React.Component {
       .on("succ", () => {
         this.setState({ isLogin: true });
       })
-      .on("fail", json => {
+      .on("fail", message => {
         Modal.error({
           title: "登录失败",
-          content: json.errorMessage,
+          content: message,
           centered: true
         });
       })
