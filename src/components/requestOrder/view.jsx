@@ -1,4 +1,4 @@
-import { Form, Select, Input, Button, Upload, Modal } from "antd";
+import { Form, Select, Input, Button, Upload, Modal, Checkbox } from "antd";
 import React from "react";
 import config from "../../config/config";
 import * as api from "../../util/api";
@@ -188,6 +188,25 @@ class Demo extends React.Component {
             >
               <Button>上传</Button>
             </Upload>
+          )}
+        </Form.Item>
+        <Form.Item label="预约须知、服务条款">
+          {getFieldDecorator("agreement", {
+            valuePropName: "checked",
+            initialValue: false,
+            rules:[(rules, value, callback) => {
+              if (value===true) {
+                callback();
+              }
+              callback("必须同意才能发起预约");
+            }]
+          })(
+            <Checkbox>
+              我已了解并同意
+              <a href="https://itxia.club/service" target="_blank" rel="noopener noreferrer">
+                预约须知和服务条款
+              </a>
+            </Checkbox>
           )}
         </Form.Item>
 
