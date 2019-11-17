@@ -39,6 +39,10 @@ const request = (path, method, data) => {
   return emitter;
 };
 
+export const put = (path, data) => {
+  return request(path, "PUT", data);
+};
+
 export const post = (path, data) => {
   return request(path, "POST", data);
 };
