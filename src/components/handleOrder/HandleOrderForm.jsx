@@ -186,6 +186,7 @@ export default class HandleOrderForm extends React.Component {
   render() {
     return (
       <Table
+        loading={this.props.loading}
         bordered={this.props.bordered}
         expandedRowRender={ExpandedRow}
         columns={this.generateColumns()}

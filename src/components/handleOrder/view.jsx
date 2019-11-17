@@ -88,6 +88,7 @@ class HandleOrder extends React.Component {
           </Form.Item>
         </Form>
         <HandleOrderForm
+          loading={this.state.loading}
           bordered={this.state.bordered}
           data={this.state.data}
           tagList={this.state.tagList}
