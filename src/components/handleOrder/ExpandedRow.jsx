@@ -23,7 +23,7 @@ export default function render(record) {
   const { Panel } = Collapse;
   return (
     <div>
-      <Collapse>
+      <Collapse defaultActiveKey={["description", "attachments"]}>
         <Panel header="问题描述" key="description">
           <div style={{ maxWidth: "60em" }}>
             <Input.TextArea
