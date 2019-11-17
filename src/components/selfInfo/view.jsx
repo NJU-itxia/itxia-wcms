@@ -1,19 +1,8 @@
-import {
-  Form,
-  Select,
-  Input,
-  Switch,
-  Button,
-  Spin,
-  notification,
-  Alert,
-  Divider
-} from "antd";
+import { Form, Spin, notification, Divider } from "antd";
 import React from "react";
 import * as api from "../../util/api";
 import MemberSettings from "./MemberSettings";
 import PasswordReset from "./PasswordReset";
-import "./style.css";
 
 class SelfInfo extends React.Component {
   constructor(props) {
@@ -22,10 +11,6 @@ class SelfInfo extends React.Component {
       selfInfo: {
         isLoad: false,
         payload: undefined
-      },
-      tag: {
-        loading: false,
-        payload: []
       }
     };
     this.fetchSelfInfo = this.fetchSelfInfo.bind(this);
@@ -40,10 +25,6 @@ class SelfInfo extends React.Component {
     this.setState({
       selfInfo: {
         isLoad: false
-      },
-      tag: {
-        loading: true,
-        payload: []
       }
     });
     api
@@ -70,14 +51,6 @@ class SelfInfo extends React.Component {
           duration: 0
         });
       });
-    api.get("/tag").on("succ", payload => {
-      this.setState({
-        tag: {
-          loading: false,
-          payload
-        }
-      });
-    });
   }
 
   /**
@@ -96,7 +69,6 @@ class SelfInfo extends React.Component {
       <WrappedSelfInfoForm
         selfInfoPayload={this.state.selfInfo.payload}
         onUpdateInfo={this.handleUpdateSelfInfo}
-        tagList={this.state.tag.payload}
       ></WrappedSelfInfoForm>
     );
   }
@@ -129,8 +101,17 @@ class SelfInfoForm extends React.Component {
             <Form.Item label="登录名">
               <span className="ant-form-text">{String(payload.loginName)}</span>
             </Form.Item>
-            <Form.Item label="账户ID">
+            <Form.Item label="账号ID">
               <span className="ant-form-text">{String(payload.id)}</span>
+            </Form.Item>
+            <Form.Item label="账号身份">
+              <span className="ant-form-text">
+                {payload.role === 1
+                  ? "普通成员"
+                  : payload.role === 2
+                  ? "管理员"
+                  : "未知"}
+              </span>
             </Form.Item>
           </Form>
         </section>
