@@ -6,12 +6,14 @@ import {
   Button,
   Spin,
   notification,
-  Alert
+  Alert,
+  Divider
 } from "antd";
 import React from "react";
 import * as api from "../../util/api";
-
-const { Option } = Select;
+import MemberSettings from "./MemberSettings";
+import PasswordReset from "./PasswordReset";
+import "./style.css";
 
 class SelfInfo extends React.Component {
   constructor(props) {
@@ -81,14 +83,8 @@ class SelfInfo extends React.Component {
   /**
    * 请求API更新个人信息.
    */
-  handleUpdateSelfInfo(info) {
-    api.post("/admin/updateInfo", info).then(res => {
-      //TODO
-      if (res.data.success === true) {
-        notification.success({ message: "ok!" });
-      }
-      this.fetchSelfInfo(); //从服务器更新信息
-    });
+  handleUpdateSelfInfo() {
+    this.fetchSelfInfo(); //从服务器更新信息
   }
 
   render() {
@@ -117,81 +113,44 @@ class SelfInfoForm extends React.Component {
   };
 
   render() {
-    const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: { span: 6 },
-      wrapperCol: { span: 14 }
+      wrapperCol: { span: 10 }
     };
     const payload = this.props.selfInfoPayload;
     return (
-      <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-        <Form.Item label="姓名">
-          <span>{String(payload.realName)}</span>
-        </Form.Item>
-        <Form.Item label="登录名">
-          <span className="ant-form-text">{String(payload.loginName)}</span>
-        </Form.Item>
-        <Form.Item label="账户ID">
-          <span className="ant-form-text">{String(payload.id)}</span>
-        </Form.Item>
-        <Form.Item label="校区" hasFeedback>
-          {getFieldDecorator("campus", {
-            rules: [{ required: true, message: "请选择你的校区" }]
-          })(
-            <Select placeholder="请选择你的校区">
-              <Option value={1}>仙林</Option>
-              <Option value={2}>鼓楼</Option>
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item label="预约单邮件提醒">
-          {getFieldDecorator("acceptEmail", {
-            valuePropName: "checked",
-            initialValue: payload.acceptEmail
-          })(<Switch />)}
-        </Form.Item>
-
-        <Form.Item label="关注的预约标签">
-          {getFieldDecorator("listen-tags", {
-            rules: [
-              {
-                required: false,
-                message: "请选择关注的预约标签",
-                type: "array"
-              }
-            ]
-          })(
-            <Select mode="multiple" placeholder="请选择关注的预约标签">
-              {this.props.tagList.map(tag => (
-                <Option key={tag.id} value={tag.id}>
-                  {tag.tagName}
-                </Option>
-              ))}
-            </Select>
-          )}
-          <Alert
-            message="关注标签功能还未生效 (需要与新预约系统一起工作)"
-            type="warning"
-            closable
+      <div>
+        <h1>基本信息</h1>
+        <section className="member-section">
+          <Form {...formItemLayout}>
+            <Form.Item label="姓名">
+              <span>{String(payload.realName)}</span>
+            </Form.Item>
+            <Form.Item label="登录名">
+              <span className="ant-form-text">{String(payload.loginName)}</span>
+            </Form.Item>
+            <Form.Item label="账户ID">
+              <span className="ant-form-text">{String(payload.id)}</span>
+            </Form.Item>
+          </Form>
+        </section>
+        <Divider dashed></Divider>
+        <h1>个人设置</h1>
+        <section>
+          <MemberSettings
+            payload={payload}
+            onUpdateInfo={this.props.onUpdateInfo}
           />
-        </Form.Item>
-
-        <Form.Item label="邮箱地址">
-          {getFieldDecorator("email", {
-            rules: [{ required: false, message: "请填写您的邮箱地址" }]
-          })(<Input />)}
-        </Form.Item>
-
-        <Form.Item wrapperCol={{ span: 12, offset: 9 }}>
-          <Button
-            type="primary"
-            loading={false} //TODO
-            htmlType="submit"
-          >
-            更新个人信息
-          </Button>
-        </Form.Item>
-      </Form>
+        </section>
+        <Divider dashed></Divider>
+        <h1>重置密码</h1>
+        <section>
+          <PasswordReset
+            payload={payload}
+            onUpdateInfo={this.props.onUpdateInfo}
+          />
+        </section>
+      </div>
     );
   }
 }
