@@ -1,6 +1,5 @@
 import React from "react";
-import { Table, Icon, Divider, Tag, Input, Collapse } from "antd";
-import * as timeUtil from "../../util/time";
+import { Input, Collapse, Alert } from "antd";
 import config from "../../config/config";
 import OrderHistoryTimeline from "./OrderHistoryTimeline";
 import AttachmentContainer from "./AttachmentContainer";
@@ -34,18 +33,23 @@ export default function render(record) {
           </div>
         </Panel>
         <Panel header="附件" key="attachments">
-          {record.attachments
-            ? record.attachments.map(attachment => {
-                return (
-                  <AttachmentContainer
-                    key={attachment.id}
-                    originUrl={getImageUrl(attachment.sha256sum)}
-                    thumbnailUrl={getImageUrl(attachment.sha256sum, true)}
-                    fileName={attachment.fileName}
-                  />
-                );
-              })
-            : ""}
+          {Array.isArray(record.attachments)
+            ? record.attachments.length === 0
+              ? "无附件."
+              : record.attachments.map(attachment => {
+                  return (
+                    <AttachmentContainer
+                      key={attachment.id}
+                      originUrl={getImageUrl(attachment.sha256sum)}
+                      thumbnailUrl={getImageUrl(attachment.sha256sum, true)}
+                      fileName={attachment.fileName}
+                    />
+                  );
+                })
+            : null}
+        </Panel>
+        <Panel header="联系方式" key="contact">
+          <Alert message="正在考虑把联系方式做成：只有管理员，或接单之后才能查看. (保护隐私)" />
         </Panel>
         <Panel header="接单历史记录" key="history">
           <OrderHistoryTimeline history={record.history}></OrderHistoryTimeline>
