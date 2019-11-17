@@ -92,6 +92,15 @@ class TagManage extends React.Component {
           });
           this.reload();
         })
+        .on("fail", message => {
+          notification.error({
+            key,
+            duration: 0,
+            message: "添加标签失败",
+            description: message
+          });
+          this.reload();
+        })
         .on("error", e => {
           notification.error({
             key,
