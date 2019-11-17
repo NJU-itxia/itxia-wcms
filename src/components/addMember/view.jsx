@@ -1,18 +1,15 @@
 import {
   Form,
-  Select,
   Input,
-  Switch,
   Button,
   notification,
   Alert,
   Result,
-  Icon
+  Icon,
+  Radio
 } from "antd";
 import React from "react";
 import * as api from "../../util/api";
-
-const { Option } = Select;
 
 class AddMember extends React.Component {
   state = {
@@ -65,16 +62,16 @@ class AddMember extends React.Component {
           localStorage.removeItem("addMember");
           this.props.form.setFieldsValue({});
         })
-        .on("fail", json => {
+        .on("fail", message => {
           notification.error({
             message: "添加成员失败",
-            description: json.errorMessage,
+            description: message,
             duration: 0
           });
           this.setState({
             submit: {
               loading: false,
-              error: json.errorMessage
+              error: message
             }
           });
         })
@@ -209,38 +206,38 @@ class AddMember extends React.Component {
             />
           )}
         </Form.Item>
-        <Form.Item label="校区" hasFeedback>
+        <Form.Item label="校区">
           {getFieldDecorator("campus", {
-            rules: [{ required: true, message: "请选择你的校区" }]
+            rules: [{ required: true, message: "请选择你的校区" }],
+            initialValue: 1
           })(
-            <Select placeholder="请选择你的校区">
-              <Option value="1">仙林</Option>
-              <Option value="2">鼓楼</Option>
-            </Select>
+            <Radio.Group>
+              <Radio value={1}>仙林</Radio>
+              <Radio value={2}>鼓楼</Radio>
+            </Radio.Group>
           )}
         </Form.Item>
-        <Form.Item label="邮箱地址">
-          {getFieldDecorator("email", {
-            rules: [
-              { required: false, initialValue: "" },
-              {
-                pattern: /^[^@]+@[^@]+$/,
-                message: "邮箱格式不正确"
-              }
-            ]
+        <Form.Item label="身份">
+          {getFieldDecorator("role", {
+            rules: [{ required: true, message: "请选择成员身份" }],
+            initialValue: 1
           })(
-            <Input
-              prefix={<Icon type="mail" style={{ color: "rgba(0,0,0,.25)" }} />}
-              type="email"
-              placeholder="邮箱地址"
-            />
+            <Radio.Group>
+              <Radio value={1}>普通成员</Radio>
+              <Radio value={2}>管理员</Radio>
+            </Radio.Group>
           )}
         </Form.Item>
-        <Form.Item label="预约单邮件提醒">
-          {getFieldDecorator("acceptEmail", {
-            initialValue: false,
-            valuePropName: "checked"
-          })(<Switch />)}
+        <Form.Item label="账号状态">
+          {getFieldDecorator("status", {
+            rules: [{ required: true, message: "请选择状态" }],
+            initialValue: 1
+          })(
+            <Radio.Group>
+              <Radio value={0}>禁用</Radio>
+              <Radio value={1}>启用</Radio>
+            </Radio.Group>
+          )}
         </Form.Item>
         <Form.Item wrapperCol={{ span: 12, offset: 9 }}>
           <Button
