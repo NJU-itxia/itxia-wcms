@@ -1,10 +1,8 @@
 import React from "react";
-import { Table, Icon, Divider, Tag, Input } from "antd";
+import { Table, Icon, Tag } from "antd";
 import * as timeUtil from "../../util/time";
-import config from "../../config/config";
 import "./style.css";
 import HandleOrderAction from "./HandleOrderAction";
-import OrderHistoryTimeline from "./OrderHistoryTimeline";
 import ExpandedRow from "./ExpandedRow";
 
 export default class HandleOrderForm extends React.Component {

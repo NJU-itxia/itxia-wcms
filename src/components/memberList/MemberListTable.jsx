@@ -1,4 +1,4 @@
-import { Table, Modal, Button, Popconfirm, Tag, Icon } from "antd";
+import { Table, Tag, Icon } from "antd";
 import React from "react";
 import Action from "./Action";
 
@@ -74,14 +74,22 @@ export default class MemberListTable extends React.Component {
             case 0:
               return (
                 <span>
-                  <Icon type="close-circle" theme="twoTone" twoToneColor="red" />
+                  <Icon
+                    type="close-circle"
+                    theme="twoTone"
+                    twoToneColor="red"
+                  />
                   &nbsp;已禁用
                 </span>
               );
             case 1:
               return (
                 <span>
-                  <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
+                  <Icon
+                    type="check-circle"
+                    theme="twoTone"
+                    twoToneColor="#52c41a"
+                  />
                   &nbsp;正常
                 </span>
               );

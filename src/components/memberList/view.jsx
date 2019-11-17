@@ -1,4 +1,4 @@
-import { Table, Modal } from "antd";
+import { Modal } from "antd";
 import React from "react";
 import * as api from "../../util/api";
 import MemberListTable from "./MemberListTable";
