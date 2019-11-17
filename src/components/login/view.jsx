@@ -20,6 +20,12 @@ class LoginForm extends React.Component {
     };
   }
 
+  componentWillMount() {
+    //退出登录
+    //在这写简直丑死了...
+    api.get("/logout");
+  }
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
