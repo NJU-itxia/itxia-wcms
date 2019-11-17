@@ -35,17 +35,17 @@ class Sider extends React.Component {
           <Link to={routePath.ADD_MEMBER}></Link>
         </Menu.Item>
         <Menu.Item key={routePath.REQUEST_ORDER}>
-          <Icon type="user-add" />
+          <Icon type="calendar" />
           发起预约
           <Link to={routePath.REQUEST_ORDER}></Link>
         </Menu.Item>
         <Menu.Item key={routePath.HANDLE_ORDER}>
-          <Icon type="user-add" />
+          <Icon type="table" />
           查看预约
           <Link to={routePath.HANDLE_ORDER}></Link>
         </Menu.Item>
         <Menu.Item key={routePath.TAG_MANAGE}>
-          <Icon type="user-add" />
+          <Icon type="tags" />
           管理标签
           <Link to={routePath.TAG_MANAGE}></Link>
         </Menu.Item>
