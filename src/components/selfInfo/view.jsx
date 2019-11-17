@@ -75,15 +75,6 @@ class SelfInfo extends React.Component {
 }
 
 class SelfInfoForm extends React.Component {
-  handleSubmit = e => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        this.props.onUpdateInfo(values);
-      }
-    });
-  };
-
   render() {
     const formItemLayout = {
       labelCol: { span: 6 },

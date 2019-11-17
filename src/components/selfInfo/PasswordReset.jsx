@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Select, Button, Modal, Input, Icon, Alert } from "antd";
+import { Form, Button, Modal, Input, Icon, Alert } from "antd";
 import * as api from "../../util/api";
 
 class PasswordReset extends React.Component {
