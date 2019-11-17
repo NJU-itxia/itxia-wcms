@@ -27,7 +27,6 @@ export default function render(record) {
         <Panel header="问题描述" key="description">
           <div style={{ maxWidth: "60em" }}>
             <Input.TextArea
-              disabled
               value={record.description}
               autoSize={true}
               className="orderDescription"
