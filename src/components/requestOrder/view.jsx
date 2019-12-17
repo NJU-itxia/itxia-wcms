@@ -97,9 +97,9 @@ class Demo extends React.Component {
           })(<Input />)}
         </Form.Item>
 
-        <Form.Item label="QQ" hasFeedback>
-          {getFieldDecorator("qq", {
-            rules: [{ required: false, message: "请输入QQ号" }]
+        <Form.Item label="Email" hasFeedback>
+          {getFieldDecorator("email", {
+            rules: [{ required: false, message: "请输入邮箱地址" }]
           })(<Input />)}
         </Form.Item>
 
