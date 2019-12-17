@@ -13,7 +13,7 @@ class HandleOrder extends React.Component {
   state = {
     bordered: false,
     loading: false,
-    pagination: { position: "bottom" },
+    pagination: { current: 1 },
     size: "default",
     title: () => "预约单列表",
     showHeader: true,
@@ -31,11 +31,44 @@ class HandleOrder extends React.Component {
   }
 
   updateData() {
+    this.fetchTablePageCount();
+    this.fetchTags();
+  }
+
+  fetchTablePageCount() {
+    api
+      .get(`/order/count`)
+      .on("succ", payload => {
+        this.setState({
+          pagination: { ...this.state.pagination, total: payload }
+        });
+        this.fetchTableData();
+      })
+      .on("fail", data => {
+        notification.error({
+          message: "返回值错误",
+          description: data.errorMessage,
+          duration: 0
+        });
+      })
+      .on("error", e => {
+        notification.error({
+          message: "网络请求失败",
+          description: e.toString(),
+          duration: 0
+        });
+      });
+  }
+
+  fetchTableData(page) {
+    if (!!!page) {
+      page = 1;
+    }
     this.setState({
       loading: true
     });
     api
-      .get("/order")
+      .get(`/order?page=${page - 1}`) //api的页码从0开始数
       .on("succ", payload => {
         this.setState({
           loading: false,
@@ -56,7 +89,9 @@ class HandleOrder extends React.Component {
           duration: 0
         });
       });
+  }
 
+  fetchTags() {
     //获取标签信息
     api.get("/tag").on("succ", payload => {
       this.setState({
@@ -78,6 +113,15 @@ class HandleOrder extends React.Component {
     this.setState({ showFinish: enable });
   };
 
+  handlePageChange = (pagination, filters, sorter) => {
+    const pager = { ...this.state.pagination };
+    pager.current = pagination.current;
+    this.setState({
+      pagination: pager
+    });
+    this.fetchTableData(pagination.current);
+  };
+
   render() {
     const { state } = this;
     return (
@@ -91,8 +135,10 @@ class HandleOrder extends React.Component {
           loading={this.state.loading}
           bordered={this.state.bordered}
           data={this.state.data}
+          pagination={this.state.pagination}
           tagList={this.state.tagList}
           onRequireUpdate={this.updateData}
+          onPageChange={this.handlePageChange}
         />
       </div>
     );

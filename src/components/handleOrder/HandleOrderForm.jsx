@@ -183,6 +183,7 @@ export default class HandleOrderForm extends React.Component {
       }
     ];
   }
+
   render() {
     return (
       <Table
@@ -194,6 +195,8 @@ export default class HandleOrderForm extends React.Component {
           key: value.id,
           ...value
         }))}
+        pagination={this.props.pagination}
+        onChange={this.props.onPageChange}
       />
     );
   }
