@@ -13,7 +13,7 @@ class HandleOrder extends React.Component {
   state = {
     bordered: false,
     loading: false,
-    pagination: { current: 1 },
+    pagination: { current: 1, pageSize: 10 },
     size: "default",
     title: () => "预约单列表",
     showHeader: true,
@@ -23,6 +23,7 @@ class HandleOrder extends React.Component {
     tableLayout: undefined,
     campus: 0,
     data,
+    filters: {},
     tagList: []
   };
 
@@ -31,74 +32,80 @@ class HandleOrder extends React.Component {
   }
 
   updateData() {
-    this.fetchTablePageCount();
+    this.fetchTableData();
     this.fetchTags();
   }
-
-  fetchTablePageCount() {
-    api
-      .get(`/order/count`)
-      .on("succ", payload => {
-        this.setState({
-          pagination: { ...this.state.pagination, total: payload }
-        });
-        this.fetchTableData();
-      })
-      .on("fail", data => {
-        notification.error({
-          message: "返回值错误",
-          description: data.errorMessage,
-          duration: 0
-        });
-      })
-      .on("error", e => {
-        notification.error({
-          message: "网络请求失败",
-          description: e.toString(),
-          duration: 0
-        });
-      });
-  }
-
-  fetchTableData(page) {
-    if (!!!page) {
-      page = 1;
-    }
+  /**
+   *
+   * @param {number} page
+   * @param {Array} filters
+   * @param {*} sorter
+   */
+  async fetchTableData(pagination = this.state.pagination, filters, sorter) {
     this.setState({
       loading: true
     });
-    api
-      .get(`/order?page=${page - 1}`) //api的页码从0开始数
-      .on("succ", payload => {
-        this.setState({
-          loading: false,
-          data: payload
-        });
-      })
-      .on("fail", data => {
-        notification.error({
-          message: "返回值错误",
-          description: data.errorMessage,
-          duration: 0
-        });
-      })
-      .on("error", e => {
-        notification.error({
-          message: "网络请求失败",
-          description: e.toString(),
-          duration: 0
-        });
+    const { current: page = 1 } = pagination;
+
+    let pageCountPath = `/order/count?`;
+    let tableDataPath = `/order?page=${page - 1}`;
+
+    for (const filterName in filters) {
+      const filterValue = filters[filterName];
+      if (Array.isArray(filterValue) && filterValue.length === 0) {
+        //避免空array
+      } else {
+        pageCountPath += `&${filterName}=${filterValue}`;
+        tableDataPath += `&${filterName}=${filterValue}`;
+      }
+    }
+
+    if (sorter && sorter.column) {
+      const direction = sorter.order === "ascend" ? 1 : -1;
+      tableDataPath += `&sort=${sorter.field},${direction}`;
+    }
+
+    try {
+      //获取页数
+      const totalOrderCount = await api.GET(pageCountPath);
+      pagination.total = totalOrderCount;
+      //修正页码： 如果当前页码 > 总页，则页码变为最大允许的页码
+      let maxAllowPage = Math.floor(pagination.total / pagination.pageSize);
+      if (pagination.total % pagination.pageSize !== 0) {
+        ++maxAllowPage;
+      }
+      if (pagination.current > maxAllowPage) {
+        pagination.current = maxAllowPage;
+      }
+      //获取数据
+      const data = await api.GET(tableDataPath);
+      this.setState({
+        loading: false,
+        pagination,
+        data
       });
+    } catch (reason) {
+      notification.error({
+        message: "网络请求失败",
+        description: reason,
+        duration: 0
+      });
+    }
   }
 
-  fetchTags() {
-    //获取标签信息
-    api.get("/tag").on("succ", payload => {
+  async fetchTags() {
+    try {
+      const tagPayload = await api.GET("/tag");
       this.setState({
-        tagList: payload
+        tagList: tagPayload
       });
-    });
-    //TODO 处理获取标签失败
+    } catch (reason) {
+      notification.error({
+        message: "网络请求失败",
+        description: reason,
+        duration: 0
+      });
+    }
   }
 
   handleToggle = enable => {
@@ -113,13 +120,11 @@ class HandleOrder extends React.Component {
     this.setState({ showFinish: enable });
   };
 
+  /**
+   * 处理分页、筛选、排序
+   */
   handlePageChange = (pagination, filters, sorter) => {
-    const pager = { ...this.state.pagination };
-    pager.current = pagination.current;
-    this.setState({
-      pagination: pager
-    });
-    this.fetchTableData(pagination.current);
+    this.fetchTableData(pagination, filters, sorter);
   };
 
   render() {

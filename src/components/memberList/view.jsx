@@ -26,7 +26,7 @@ class NestedTable extends React.Component {
       loading: true
     });
     api
-      .get("/member/all")
+      .get("/user")
       .on("succ", payload => {
         this.setState({
           loading: false,

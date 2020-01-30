@@ -20,8 +20,9 @@ class Demo extends React.Component {
         for (const file of values.attachments) {
           if (file.percent === 100 && file.status === "done") {
             const { errorCode, payload } = file.response;
+            console.log(file.response);
             if (errorCode === 0) {
-              uploadIDArr.push(payload.id);
+              uploadIDArr.push(payload._id);
             }
           } else {
             Modal.error({
@@ -114,9 +115,9 @@ class Demo extends React.Component {
             rules: [{ required: true, message: "请选择保修情况" }]
           })(
             <Select placeholder="请选择保修情况">
-              <Option value={0}>不确定</Option>
-              <Option value={1}>在保</Option>
-              <Option value={2}>过保</Option>
+              <Option value={"不确定"}>不确定</Option>
+              <Option value={"在保"}>在保</Option>
+              <Option value={"过保"}>过保</Option>
             </Select>
           )}
         </Form.Item>
@@ -126,8 +127,8 @@ class Demo extends React.Component {
             rules: [{ required: true, message: "请选择校区" }]
           })(
             <Select placeholder="请选择校区">
-              <Option value={1}>仙林</Option>
-              <Option value={2}>鼓楼</Option>
+              <Option value={"仙林"}>仙林</Option>
+              <Option value={"鼓楼"}>鼓楼</Option>
             </Select>
           )}
         </Form.Item>
@@ -144,7 +145,7 @@ class Demo extends React.Component {
           })(
             <Select mode="multiple" placeholder="请选择相关标签">
               {this.state.tagList.map(tag => (
-                <Option key={tag.id} value={tag.id}>
+                <Option key={tag._id} value={tag._id}>
                   {tag.tagName}
                 </Option>
               ))}
@@ -194,16 +195,22 @@ class Demo extends React.Component {
           {getFieldDecorator("agreement", {
             valuePropName: "checked",
             initialValue: false,
-            rules:[(rules, value, callback) => {
-              if (value===true) {
-                callback();
+            rules: [
+              (rules, value, callback) => {
+                if (value === true) {
+                  callback();
+                }
+                callback("必须同意才能发起预约");
               }
-              callback("必须同意才能发起预约");
-            }]
+            ]
           })(
             <Checkbox>
               我已了解并同意
-              <a href="https://itxia.club/service" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://itxia.club/service"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 预约须知和服务条款
               </a>
             </Checkbox>

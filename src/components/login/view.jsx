@@ -23,7 +23,8 @@ class LoginForm extends React.Component {
   componentWillMount() {
     //退出登录
     //在这写简直丑死了...
-    api.get("/logout");
+    //TODO remove me
+    //api.get("/logout");
   }
 
   handleSubmit = e => {

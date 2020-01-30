@@ -15,9 +15,9 @@ export default class MemberListTable extends React.Component {
         key: "campus",
         render: campus => {
           switch (campus) {
-            case 1:
+            case "仙林":
               return <Tag color="cyan">仙林</Tag>;
-            case 2:
+            case "鼓楼":
               return <Tag color="orange">鼓楼</Tag>;
             default:
               return "未知";
@@ -26,11 +26,11 @@ export default class MemberListTable extends React.Component {
         filters: [
           {
             text: "仙林",
-            value: 1
+            value: "仙林"
           },
           {
             text: "鼓楼",
-            value: 2
+            value: "鼓楼"
           }
         ],
         filterMultiple: false,
@@ -129,7 +129,7 @@ export default class MemberListTable extends React.Component {
       <Table
         columns={this.getColumns()}
         dataSource={this.props.data.map(value => ({
-          key: value.id,
+          key: value._id,
           ...value
         }))}
         loading={this.props.loading}

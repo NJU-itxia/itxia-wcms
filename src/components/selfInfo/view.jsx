@@ -3,6 +3,7 @@ import React from "react";
 import * as api from "../../util/api";
 import MemberSettings from "./MemberSettings";
 import PasswordReset from "./PasswordReset";
+import OauthQQ from "./OauthQQ";
 
 class SelfInfo extends React.Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class SelfInfo extends React.Component {
       }
     });
     api
-      .get("/member")
+      .get("/whoami")
       .on("succ", payload => {
         this.setState({
           selfInfo: {
@@ -118,6 +119,14 @@ class SelfInfoForm extends React.Component {
         <h1>重置密码</h1>
         <section>
           <PasswordReset
+            payload={payload}
+            onUpdateInfo={this.props.onUpdateInfo}
+          />
+        </section>
+        <Divider dashed></Divider>
+        <h1>绑定QQ登录</h1>
+        <section>
+          <OauthQQ
             payload={payload}
             onUpdateInfo={this.props.onUpdateInfo}
           />

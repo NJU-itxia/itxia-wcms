@@ -10,10 +10,10 @@ class PasswordReset extends React.Component {
     this.setState({
       loading: true
     });
-    const { id } = this.props.payload;
-    let { confirmPassword, ...data } = values;
+    const { loginName } = this.props.payload;
+    let { password } = values;
     api
-      .put(`/member/${id}/password`, data)
+      .put(`/user/${loginName}/password`, { newPassword: password })
       .on("succ", () => {
         Modal.success({
           content: "更新成功",

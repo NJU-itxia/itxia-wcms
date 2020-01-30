@@ -39,7 +39,7 @@ export default function render(record) {
               : record.attachments.map(attachment => {
                   return (
                     <AttachmentContainer
-                      key={attachment.id}
+                      key={attachment._id}
                       originUrl={getImageUrl(attachment.sha256sum)}
                       thumbnailUrl={getImageUrl(attachment.sha256sum, true)}
                       fileName={attachment.fileName}

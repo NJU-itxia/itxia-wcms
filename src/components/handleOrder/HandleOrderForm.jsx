@@ -11,7 +11,7 @@ export default class HandleOrderForm extends React.Component {
     return [
       {
         title: "姓名",
-        dataIndex: "customerName",
+        dataIndex: "name",
         key: "name"
       },
       {
@@ -20,9 +20,9 @@ export default class HandleOrderForm extends React.Component {
         key: "campus",
         render: campus => {
           switch (campus) {
-            case 1:
+            case "仙林":
               return <Tag color="orange">仙林</Tag>;
-            case 2:
+            case "鼓楼":
               return <Tag color="cyan">鼓楼</Tag>;
             default:
               return <span>未知错误</span>;
@@ -31,15 +31,15 @@ export default class HandleOrderForm extends React.Component {
         filters: [
           {
             text: "仙林",
-            value: 1
+            value: "仙林"
           },
           {
             text: "鼓楼",
-            value: 2
+            value: "鼓楼"
           }
         ],
-        filterMultiple: true,
-        onFilter: (filterValue, record) => filterValue === record.campus
+        filterMultiple: false
+        //onFilter: (filterValue, record) => filterValue === record.campus
       },
       {
         title: "电脑型号",
@@ -52,11 +52,11 @@ export default class HandleOrderForm extends React.Component {
         key: "warranty",
         render: warranty => {
           switch (warranty) {
-            case 0:
-              return <Tag color="gray">不清楚</Tag>;
-            case 1:
+            case "不确定":
+              return <Tag color="gray">不确定</Tag>;
+            case "在保":
               return <Tag color="red">在保</Tag>;
-            case 2:
+            case "过保":
               return <Tag color="orange">过保</Tag>;
             default:
               return <span>未知错误</span>;
@@ -65,19 +65,19 @@ export default class HandleOrderForm extends React.Component {
         filters: [
           {
             text: "不清楚",
-            value: 0
+            value: "不清楚"
           },
           {
             text: "在保",
-            value: 1
+            value: "在保"
           },
           {
             text: "过保",
-            value: 2
+            value: "过保"
           }
         ],
         filterMultiple: true,
-        onFilter: (filterValue, record) => filterValue === record.warranty
+        //onFilter: (filterValue, record) => filterValue === record.warranty
       },
       {
         title: "标签",
@@ -86,34 +86,28 @@ export default class HandleOrderForm extends React.Component {
         render: tags => (
           <div>
             {tags
-              ? tags.map(value => <Tag key={value.id}>{value.tagName}</Tag>)
+              ? tags.map(value => <Tag key={value._id}>{value.tagName}</Tag>)
               : ""}
           </div>
         ),
         filters: this.props.tagList.map(value => ({
           text: value.tagName,
-          value: value.id
+          value: value._id
         })),
-        filterMultiple: true,
-        onFilter: (filterTagID, record) => {
-          const { tags } = record;
-          if (tags && Array.isArray(tags)) {
-            for (const tag of tags) {
-              if (tag.id === filterTagID) {
-                return true;
-              }
-            }
-          }
-          return false;
-        }
+        filterMultiple: true
       },
       {
         title: "预约时间",
-        dataIndex: "time",
+        dataIndex: "createTime",
         key: "time",
-        render: time => {
-          return <span>{timeUtil.unixToText(time)}</span>;
-        }
+        render: createTime => {
+          return <span>{timeUtil.utcDateToText(createTime)}</span>;
+        },
+        sorter: (a, b) => {
+          //console.log(a);
+          return new Date(a.createTime) - new Date(b.createTime);
+        },
+        //sortDirections: ["descend", "ascend"]
       },
       {
         title: "状态",
@@ -192,7 +186,7 @@ export default class HandleOrderForm extends React.Component {
         expandedRowRender={ExpandedRow}
         columns={this.generateColumns()}
         dataSource={this.props.data.map(value => ({
-          key: value.id,
+          key: value._id,
           ...value
         }))}
         pagination={this.props.pagination}

@@ -51,7 +51,7 @@ class AddMember extends React.Component {
         }
       });
       api
-        .post("/member", values)
+        .post("/user", values)
         .on("succ", payload => {
           this.setState({
             submit: {
@@ -209,11 +209,11 @@ class AddMember extends React.Component {
         <Form.Item label="校区">
           {getFieldDecorator("campus", {
             rules: [{ required: true, message: "请选择你的校区" }],
-            initialValue: 1
+            initialValue: 0
           })(
             <Radio.Group>
-              <Radio value={1}>仙林</Radio>
-              <Radio value={2}>鼓楼</Radio>
+              <Radio value={0}>仙林</Radio>
+              <Radio value={1}>鼓楼</Radio>
             </Radio.Group>
           )}
         </Form.Item>
@@ -225,17 +225,6 @@ class AddMember extends React.Component {
             <Radio.Group>
               <Radio value={1}>普通成员</Radio>
               <Radio value={2}>管理员</Radio>
-            </Radio.Group>
-          )}
-        </Form.Item>
-        <Form.Item label="账号状态">
-          {getFieldDecorator("status", {
-            rules: [{ required: true, message: "请选择状态" }],
-            initialValue: 1
-          })(
-            <Radio.Group>
-              <Radio value={0}>禁用</Radio>
-              <Radio value={1}>启用</Radio>
             </Radio.Group>
           )}
         </Form.Item>
