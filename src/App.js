@@ -7,6 +7,7 @@ import { view as AddMember } from "./components/addMember";
 import { view as RequestOrder } from "./components/requestOrder";
 import { view as HandleOrder } from "./components/handleOrder";
 import { view as TagManage } from "./components/tagManage";
+import { view as DashBoard } from "./components/dashboard";
 import {
   BrowserRouter as Router,
   Route,
@@ -17,6 +18,7 @@ import {
 import "./App.css";
 import { Layout, Icon, Button } from "antd";
 import routePath from "./util/routePath";
+import { view as Footer } from "./components/footer";
 
 const { Sider, Header, Content } = Layout;
 
@@ -110,12 +112,16 @@ class App extends React.Component {
                     <Route path={routePath.TAG_MANAGE}>
                       <TagManage></TagManage>
                     </Route>
+                    <Route path={routePath.DASHBOARD}>
+                      <DashBoard></DashBoard>
+                    </Route>
                     <Route path="*">
                       <span>page not found</span>
                       <Link to={routePath.SELF_INFO}>back</Link>
                     </Route>
                   </Switch>
                 </Content>
+                <Footer />
               </Layout>
             </Layout>
           </Route>

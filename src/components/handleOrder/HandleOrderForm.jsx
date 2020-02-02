@@ -76,7 +76,7 @@ export default class HandleOrderForm extends React.Component {
             value: "过保"
           }
         ],
-        filterMultiple: true,
+        filterMultiple: true
         //onFilter: (filterValue, record) => filterValue === record.warranty
       },
       {
@@ -106,7 +106,7 @@ export default class HandleOrderForm extends React.Component {
         sorter: (a, b) => {
           //console.log(a);
           return new Date(a.createTime) - new Date(b.createTime);
-        },
+        }
         //sortDirections: ["descend", "ascend"]
       },
       {
@@ -115,21 +115,21 @@ export default class HandleOrderForm extends React.Component {
         key: "status",
         render: status => {
           switch (status) {
-            case 0:
+            case "等待处理":
               return (
                 <span>
                   <Icon type="smile" theme="twoTone" />
-                  &nbsp;等待接单
+                  &nbsp;等待处理
                 </span>
               );
-            case 1:
+            case "正在处理":
               return (
                 <span>
                   <Icon type="clock-circle" theme="twoTone" spin />
-                  &nbsp;处理中
+                  &nbsp;正在处理
                 </span>
               );
-            case 2:
+            case "已完成":
               return (
                 <span>
                   <Icon
@@ -140,7 +140,7 @@ export default class HandleOrderForm extends React.Component {
                   &nbsp;已完成
                 </span>
               );
-            case 3:
+            case "已取消":
               return (
                 <span>
                   <Icon
@@ -151,11 +151,11 @@ export default class HandleOrderForm extends React.Component {
                   &nbsp;已取消
                 </span>
               );
-            case 4:
+            case "已删除":
               return (
                 <span>
                   <Icon type="delete" theme="twoTone" twoToneColor="red" />
-                  &nbsp;已废弃
+                  &nbsp;已删除
                 </span>
               );
             default:

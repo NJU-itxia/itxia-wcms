@@ -103,7 +103,7 @@ class AddMember extends React.Component {
         <Result
           status="success"
           title="添加成功"
-          subTitle={`成功添加新成员:${payload.realName}, ID:${payload.id}`}
+          subTitle={`成功添加新成员:${payload.realName}, ID:${payload._id}`}
           extra={[
             <Button
               type="primary"
@@ -209,22 +209,22 @@ class AddMember extends React.Component {
         <Form.Item label="校区">
           {getFieldDecorator("campus", {
             rules: [{ required: true, message: "请选择你的校区" }],
-            initialValue: 0
+            initialValue: "仙林"
           })(
             <Radio.Group>
-              <Radio value={0}>仙林</Radio>
-              <Radio value={1}>鼓楼</Radio>
+              <Radio value={"仙林"}>仙林</Radio>
+              <Radio value={"鼓楼"}>鼓楼</Radio>
             </Radio.Group>
           )}
         </Form.Item>
         <Form.Item label="身份">
           {getFieldDecorator("role", {
             rules: [{ required: true, message: "请选择成员身份" }],
-            initialValue: 1
+            initialValue: "普通成员"
           })(
             <Radio.Group>
-              <Radio value={1}>普通成员</Radio>
-              <Radio value={2}>管理员</Radio>
+              <Radio value={"普通成员"}>普通成员</Radio>
+              <Radio value={"管理员"}>管理员</Radio>
             </Radio.Group>
           )}
         </Form.Item>

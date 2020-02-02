@@ -42,11 +42,11 @@ export default class MemberListTable extends React.Component {
         key: "role",
         render: role => {
           switch (role) {
-            case 0:
+            case "超级用户":
               return <Tag color="gray">游客</Tag>;
-            case 1:
-              return <Tag color="cyan">成员</Tag>;
-            case 2:
+            case "普通成员":
+              return <Tag color="cyan">普通成员</Tag>;
+            case "管理员":
               return <Tag color="orange">管理员</Tag>;
             default:
               return "未知";
@@ -54,12 +54,12 @@ export default class MemberListTable extends React.Component {
         },
         filters: [
           {
-            text: "成员",
-            value: 1
+            text: "普通成员",
+            value: "普通成员"
           },
           {
             text: "管理员",
-            value: 2
+            value: "管理员"
           }
         ],
         filterMultiple: false,
@@ -67,11 +67,11 @@ export default class MemberListTable extends React.Component {
       },
       {
         title: "账号状态",
-        dataIndex: "status",
+        dataIndex: "disable",
         key: "status",
-        render: status => {
-          switch (status) {
-            case 0:
+        render: disable => {
+          switch (disable) {
+            case true:
               return (
                 <span>
                   <Icon
@@ -82,7 +82,7 @@ export default class MemberListTable extends React.Component {
                   &nbsp;已禁用
                 </span>
               );
-            case 1:
+            case false:
               return (
                 <span>
                   <Icon
@@ -100,11 +100,11 @@ export default class MemberListTable extends React.Component {
         filters: [
           {
             text: "禁用",
-            value: 0
+            value: true
           },
           {
             text: "正常",
-            value: 1
+            value: false
           }
         ],
         filterMultiple: false,

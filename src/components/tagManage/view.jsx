@@ -6,7 +6,7 @@ import * as api from "../../util/api";
 const columns = [
   {
     title: "标签ID",
-    dataIndex: "id",
+    dataIndex: "_id",
     key: "id"
   },
   {
@@ -24,14 +24,14 @@ const columns = [
     dataIndex: "addTime",
     key: "addTime",
     render: unixTime => {
-      const time = timeUtil.unixToText(unixTime);
+      const time = timeUtil.utcDateToText(unixTime);
       return <span>{time}</span>;
     }
   },
   {
     title: "添加人",
-    dataIndex: "addByMemberName",
-    key: "addByMemberName"
+    dataIndex: "addBy.realName",
+    key: "addBy"
   }
 ];
 
@@ -161,7 +161,7 @@ class TagManage extends React.Component {
           dataSource={
             this.state.data
               ? this.state.data.map(value => ({
-                  key: value.id,
+                  key: value._id,
                   ...value
                 }))
               : []

@@ -19,6 +19,11 @@ class Sider extends React.Component {
         theme={this.state.theme}
         onSelect={this.pageSelectHandler}
       >
+        <Menu.Item key={routePath.DASHBOARD}>
+          <Icon type="dashboard" />
+          DashBoard
+          <Link to={routePath.DASHBOARD}></Link>
+        </Menu.Item>
         <Menu.Item key={routePath.SELF_INFO}>
           <Icon type="smile" />
           个人信息

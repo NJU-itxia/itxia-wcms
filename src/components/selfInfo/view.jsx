@@ -94,17 +94,9 @@ class SelfInfoForm extends React.Component {
               <span className="ant-form-text">{String(payload.loginName)}</span>
             </Form.Item>
             <Form.Item label="账号ID">
-              <span className="ant-form-text">{String(payload.id)}</span>
+              <span className="ant-form-text">{String(payload._id)}</span>
             </Form.Item>
-            <Form.Item label="账号身份">
-              <span className="ant-form-text">
-                {payload.role === 1
-                  ? "普通成员"
-                  : payload.role === 2
-                  ? "管理员"
-                  : "未知"}
-              </span>
-            </Form.Item>
+            <Form.Item label="账号身份">{String(payload.role)}</Form.Item>
           </Form>
         </section>
         <Divider dashed></Divider>
@@ -126,10 +118,7 @@ class SelfInfoForm extends React.Component {
         <Divider dashed></Divider>
         <h1>绑定QQ登录</h1>
         <section>
-          <OauthQQ
-            payload={payload}
-            onUpdateInfo={this.props.onUpdateInfo}
-          />
+          <OauthQQ payload={payload} onUpdateInfo={this.props.onUpdateInfo} />
         </section>
       </div>
     );

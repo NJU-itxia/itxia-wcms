@@ -1,24 +1,10 @@
 import React from "react";
 import { Input, Collapse, Alert } from "antd";
-import config from "../../config/config";
-import OrderHistoryTimeline from "./OrderHistoryTimeline";
+//import OrderHistoryTimeline from "./OrderHistoryTimeline";
 import AttachmentContainer from "./AttachmentContainer";
 import "./style.css";
 
 export default function render(record) {
-  const getImageUrl = (sha256sum, isThumbnail) => {
-    const url =
-      config.network.api.protocol +
-      "://" +
-      config.network.api.host +
-      "/upload/" +
-      sha256sum;
-    if (isThumbnail) {
-      return url + "/thumbnail";
-    }
-    return url;
-  };
-
   const { Panel } = Collapse;
   return (
     <div>
@@ -40,19 +26,15 @@ export default function render(record) {
                   return (
                     <AttachmentContainer
                       key={attachment._id}
-                      originUrl={getImageUrl(attachment.sha256sum)}
-                      thumbnailUrl={getImageUrl(attachment.sha256sum, true)}
-                      fileName={attachment.fileName}
+                      payload={attachment}
                     />
                   );
                 })
             : null}
         </Panel>
         <Panel header="联系方式" key="contact">
+              <span>{record.phone}</span>
           <Alert message="正在考虑把联系方式做成：只有管理员，或接单之后才能查看. (保护隐私)" />
-        </Panel>
-        <Panel header="接单历史记录" key="history">
-          <OrderHistoryTimeline history={record.history}></OrderHistoryTimeline>
         </Panel>
       </Collapse>
     </div>
