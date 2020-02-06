@@ -15,8 +15,23 @@
   flex-direction: column;
 }
 
+.not-img-atech {
+  min-width: 50px;
+  min-height: 50px;
+  background-color: rgba(0, 0, 0, 0.03);
+  display: inline-block;
+  margin: 1em 0.4em;
+  padding: 6px;
+  text-align: center;
+}
 
+.not-img-icon {
+  font-size: 36px;
+}
+
+.reply-atech{
+  display: inline-block;
+}
 /*
 -------------------------------
 */
-

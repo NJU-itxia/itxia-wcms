@@ -15,7 +15,6 @@ export default class ReplyList extends React.Component {
         footer={null}
         centered
       >
-        <h3>评论区</h3>
         <List
           itemLayout="vertical"
           size="default"
@@ -31,14 +30,18 @@ export default class ReplyList extends React.Component {
                 <p>{item.content}</p>
               </div>
               {item.attachments.map(value => {
-                return <Attachment data={value} key={value._id} />;
+                return (
+                  <Attachment
+                    data={value}
+                    key={value._id}
+                    className="reply-atech"
+                  />
+                );
               })}
-              <br />
             </List.Item>
           )}
         ></List>
         <Divider />
-        <br />
         <h3>回复评论</h3>
         <ReplyEditor baseUrl={baseUrl} onReply={onReply} />
       </Modal>
