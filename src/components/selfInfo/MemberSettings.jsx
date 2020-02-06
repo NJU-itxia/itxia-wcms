@@ -12,7 +12,7 @@ class MemberSettings extends React.Component {
     });
     const { loginName } = this.props.payload;
     api
-      .put(`/user/${loginName}/info`, values)
+      .put(`/user/${loginName}`, values)
       .on("succ", () => {
         Modal.success({
           content: "更新成功",
@@ -66,8 +66,8 @@ class MemberSettings extends React.Component {
             initialValue: this.props.payload.campus
           })(
             <Select placeholder="请选择你的校区">
-              <Select.Option value={0}>仙林</Select.Option>
-              <Select.Option value={1}>鼓楼</Select.Option>
+              <Select.Option value={"仙林"}>仙林</Select.Option>
+              <Select.Option value={"鼓楼"}>鼓楼</Select.Option>
             </Select>
           )}
         </Form.Item>

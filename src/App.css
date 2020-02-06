@@ -3,6 +3,24 @@
   width: 100%;
   min-width: 360px;
 }
+@media (min-width: 768px) {
+  #main-content {
+    margin: 24px 16px;
+    padding: 24;
+    background: "#fff";
+    min-height: 280;
+    flex-shrink: 0;
+  }
+}
+@media (max-width: 768px) {
+  #main-content {
+    margin: 12px 8px;
+    padding: 12px;
+    background: #fff;
+    min-height: 280;
+    flex-shrink: 0;
+  }
+}
 /*
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
@@ -34,9 +52,9 @@
   }
 }
 */
-div#root{
+div#root {
   width: 100%;
-  height:100%;
+  height: 100%;
 }
 .trigger {
   font-size: 18px;

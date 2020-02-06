@@ -54,6 +54,11 @@ class Sider extends React.Component {
           管理标签
           <Link to={routePath.TAG_MANAGE}></Link>
         </Menu.Item>
+        <Menu.Item key={routePath.ANNOUNCE}>
+          <Icon type="form" />
+          发布公告
+          <Link to={routePath.ANNOUNCE}></Link>
+        </Menu.Item>
       </Menu>
     );
   }

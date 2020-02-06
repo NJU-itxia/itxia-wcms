@@ -12,6 +12,7 @@ const paths = Object.freeze({
   HANDLE_ORDER: "/home/handle",
   TAG_MANAGE: "/home/tag",
   DASHBOARD: "/home/dashboard",
+  ANNOUNCE: "/home/announce"
 });
 
 export default paths;

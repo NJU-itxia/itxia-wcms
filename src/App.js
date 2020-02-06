@@ -8,6 +8,7 @@ import { view as RequestOrder } from "./components/requestOrder";
 import { view as HandleOrder } from "./components/handleOrder";
 import { view as TagManage } from "./components/tagManage";
 import { view as DashBoard } from "./components/dashboard";
+import { AnnouncementEditor } from "./components/announcement";
 import {
   BrowserRouter as Router,
   Route,
@@ -81,15 +82,7 @@ class App extends React.Component {
                     </Button>
                   </div>
                 </Header>
-                <Content
-                  style={{
-                    margin: "24px 16px",
-                    padding: 24,
-                    background: "#fff",
-                    minHeight: 280,
-                    flexShrink: 0
-                  }}
-                >
+                <Content id="main-content">
                   <Switch>
                     <Route exact={true} path={routePath.HOME}>
                       <Redirect to={routePath.SELF_INFO}></Redirect>
@@ -114,6 +107,9 @@ class App extends React.Component {
                     </Route>
                     <Route path={routePath.DASHBOARD}>
                       <DashBoard></DashBoard>
+                    </Route>
+                    <Route path={routePath.ANNOUNCE}>
+                      <AnnouncementEditor />
                     </Route>
                     <Route path="*">
                       <span>page not found</span>

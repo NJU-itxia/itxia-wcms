@@ -101,7 +101,10 @@ function requestData(path, method, data, callback) {
       })
       .catch(e => {
         //请求失败，网络、json解析错误等原因...
-        reject(e.toString());
+        const reason = Object.assign(e, {
+          message: e.toString()
+        });
+        reject(reason);
       });
   });
   /**

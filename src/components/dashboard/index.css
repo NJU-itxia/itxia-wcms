@@ -1,4 +1,9 @@
 #dash-container {
   background: rgba(236, 236, 236, 0.3);
-  padding: 2em;
+  padding: 4px;
+}
+
+#announce-list {
+  background-color: white;
+  padding: 6px;
 }
