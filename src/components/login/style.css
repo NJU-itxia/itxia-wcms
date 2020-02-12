@@ -1,12 +1,9 @@
 .login-form {
-  max-width: 480px;
-  margin: auto;
-  position: relative;
-  bottom: 0;
-  top: 0;
-  height: auto;
-  padding: 40px;
+  width: 90%;
+  max-width: 600px;
+  padding: 40px 40px;
   background-color: white;
+  border-radius: 15px;
 }
 .login-form-forgot {
   float: right;
@@ -20,10 +17,17 @@
   height: 100%;
   align-items: center;
   display: flex;
-  background-color: rgb(240,242,245);
+  justify-content: center;
+  background-color: rgb(240, 242, 245);
 }
 
-#loginSystemName{
-    font-size: 120%;
-    text-align: center;
+#loginSystemName {
+  font-size: 120%;
+  text-align: center;
+}
+
+#itxia-logo {
+  display: flex;
+  margin: 1rem auto;
+  max-width: 50%;
 }

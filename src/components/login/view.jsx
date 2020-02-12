@@ -1,8 +1,16 @@
 import React from "react";
-import { Form, Icon, Input, Button, Checkbox, Modal } from "antd";
+import {
+  Form,
+  Icon,
+  Input,
+  Button,
+  Checkbox,
+  Modal,
+  Divider,
+  notification
+} from "antd";
 import "antd/dist/antd.css";
 import "./style.css";
-import config from "../../config/config";
 import * as api from "../../util/api";
 import { Redirect } from "react-router-dom";
 import routePath from "../../util/routePath";
@@ -20,11 +28,8 @@ class LoginForm extends React.Component {
     };
   }
 
-  componentWillMount() {
-    //退出登录
-    //在这写简直丑死了...
-    //TODO remove me
-    //api.get("/logout");
+  componentDidMount() {
+    this.autoLogin();
   }
 
   handleSubmit = e => {
@@ -50,26 +55,43 @@ class LoginForm extends React.Component {
     });
   };
 
-  handleLogin(username, password) {
-    api
-      .post("/login", { loginName: username, password })
-      .on("succ", () => {
-        this.setState({ isLogin: true });
-      })
-      .on("fail", message => {
-        Modal.error({
-          title: "登录失败",
-          content: message,
-          centered: true
-        });
-      })
-      .on("error", e => {
-        Modal.error({
-          title: "网络请求失败",
-          content: e.toString(),
-          centered: true
-        });
+  async handleLogin(username, password) {
+    try {
+      await api.POST("/login", { loginName: username, password });
+      this.setState({ isLogin: true });
+    } catch (error) {
+      Modal.error({
+        title: "登录失败",
+        content: error.message,
+        centered: true
       });
+    }
+  }
+
+  async autoLogin() {
+    const key = "autologin";
+    notification.info({
+      key,
+      message: "自动登录中...",
+      duration: 0
+    });
+    try {
+      await api.GET("/whoami");
+      setTimeout(() => {
+        notification.success({
+          key,
+          message: "自动登录成功.",
+          duration: 3
+        });
+      }, 500);
+      this.setState({
+        isLogin: true
+      });
+    } catch (error) {
+      setTimeout(() => {
+        notification.close(key);
+      }, 500);
+    }
   }
 
   render() {
@@ -77,14 +99,16 @@ class LoginForm extends React.Component {
       return <Redirect to={routePath.HOME}></Redirect>;
     }
     const { getFieldDecorator } = this.props.form;
+    const oAuthUrl =
+      "https://graph.qq.com/oauth2.0/authorize?response_type=token&client_id=101842907&redirect_uri=https%3A%2F%2Fapi.itxia.cn%2Foauth%2Fqq&scope=get_user_info";
     return (
       <div className="loginPage">
         <Form onSubmit={this.handleSubmit} className="login-form">
           <div id="loginSystemName">
-            <span>{String(config.etc.name)}</span>
-            <br></br>
-            <br></br>
+            <h3>IT侠后台管理系统</h3>
+            <Divider dashed />
           </div>
+          <img src="/img/itxia-logo.jpg" alt="itxia logo" id="itxia-logo"></img>
           <Form.Item>
             {getFieldDecorator("username", {
               initialValue: localStorage.getItem("rememberAccount")
@@ -96,7 +120,7 @@ class LoginForm extends React.Component {
                 prefix={
                   <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
                 }
-                placeholder=""
+                placeholder="账号"
               />
             )}
           </Form.Item>
@@ -104,12 +128,11 @@ class LoginForm extends React.Component {
             {getFieldDecorator("password", {
               rules: [{ required: true, message: "请输入密码" }]
             })(
-              <Input
+              <Input.Password
                 prefix={
                   <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
                 }
-                type="password"
-                placeholder=""
+                placeholder="密码"
               />
             )}
           </Form.Item>
@@ -130,6 +153,15 @@ class LoginForm extends React.Component {
               登录
             </Button>
           </Form.Item>
+          <Divider />
+          <p>其它登录方式:</p>
+          <a href={oAuthUrl} target="_blank" rel="noopener noreferrer">
+            <img
+              src="/img/loginViaQQ.png"
+              alt="QQ授权登录"
+              style={{ float: "right", maxHeight: "1.5rem" }}
+            ></img>
+          </a>
         </Form>
       </div>
     );

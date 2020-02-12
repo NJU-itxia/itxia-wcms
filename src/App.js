@@ -11,6 +11,7 @@ import { view as DashBoard } from "./components/dashboard";
 import { AnnouncementEditor } from "./components/announcement";
 import { HandleOrderNew } from "./components/handleOrderNew";
 import NotFound from "./components/notFound";
+import Logout from "./components/logout";
 import {
   BrowserRouter as Router,
   Route,
@@ -19,7 +20,7 @@ import {
   Link
 } from "react-router-dom";
 import "./App.css";
-import { Layout, Icon, Button } from "antd";
+import { Layout, Icon } from "antd";
 import routePath from "./util/routePath";
 import { view as Footer } from "./components/footer";
 
@@ -79,9 +80,7 @@ class App extends React.Component {
                       marginRight: "2em"
                     }}
                   >
-                    <Button type="danger">
-                      <Link to={routePath.LOGIN}>退出登录</Link>
-                    </Button>
+                    <Logout />
                   </div>
                 </Header>
                 <Content id="main-content">
