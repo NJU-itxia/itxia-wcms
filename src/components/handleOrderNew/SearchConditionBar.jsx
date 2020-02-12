@@ -1,25 +1,7 @@
 import React from "react";
-import { Form, Row, Col, Icon, Switch, Radio, Checkbox, Card } from "antd";
+import { Form, Row, Col, Switch, Radio, Checkbox, Card } from "antd";
 
 class SearchConditionBar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onToggle = this.onToggle.bind(this);
-  }
-  state = {
-    isExpend: false
-  };
-  getFormItems() {
-    const { getFieldDecorator } = this.props.form;
-    const itemArr = [];
-    //TODO 根据isExpand
-    return itemArr.map(value => {
-      return value;
-    });
-  }
-  onToggle() {
-    this.setState({ isExpend: true });
-  }
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -65,16 +47,6 @@ class SearchConditionBar extends React.Component {
                 </Checkbox.Group>
               )}
             </Form.Item>
-          </Row>
-          <Row>
-            <Col span={24} style={{ textAlign: "right" }}>
-              <a
-                style={{ marginLeft: 8, fontSize: 12 }}
-                onClick={this.onToggle}
-              >
-                Collapse <Icon type={this.state.isExpend ? "up" : "down"} />
-              </a>
-            </Col>
           </Row>
         </Form>
       </Card>
