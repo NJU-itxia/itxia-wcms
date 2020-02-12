@@ -37,8 +37,8 @@ class PasswordReset extends React.Component {
         {this.state.isBind ? (
           <Result
             status="success"
-            title="已绑定"
-            subTitle="可以使用QQ验证登录"
+            title="已绑定QQ登录"
+            subTitle="可以使用QQ验证登录后台系统."
           />
         ) : (
           <div>

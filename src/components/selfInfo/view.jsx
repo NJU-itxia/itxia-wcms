@@ -1,10 +1,11 @@
-import { Form, Spin, notification, Divider } from "antd";
+import { Form, notification, Divider, Card } from "antd";
 import React from "react";
 import * as api from "../../util/api";
 import MemberSettings from "./MemberSettings";
 import PasswordReset from "./PasswordReset";
 import OauthQQ from "./OauthQQ";
-
+import Loading from "../loading";
+import "./index.css";
 class SelfInfo extends React.Component {
   constructor(props) {
     super(props);
@@ -63,8 +64,7 @@ class SelfInfo extends React.Component {
 
   render() {
     if (this.state.selfInfo.isLoad !== true) {
-      //TODO 居中转圈圈
-      return <Spin></Spin>;
+      return <Loading />;
     }
     return (
       <WrappedSelfInfoForm
@@ -83,9 +83,8 @@ class SelfInfoForm extends React.Component {
     };
     const payload = this.props.selfInfoPayload;
     return (
-      <div>
-        <h1>基本信息</h1>
-        <section className="member-section">
+      <div id="selfinfo-container">
+        <Card title="基本信息">
           <Form {...formItemLayout}>
             <Form.Item label="姓名">
               <span>{String(payload.realName)}</span>
@@ -98,28 +97,25 @@ class SelfInfoForm extends React.Component {
             </Form.Item>
             <Form.Item label="账号身份">{String(payload.role)}</Form.Item>
           </Form>
-        </section>
-        <Divider dashed></Divider>
-        <h1>个人设置</h1>
-        <section>
+        </Card>
+        <Divider />
+        <Card title="个人信息设置">
           <MemberSettings
             payload={payload}
             onUpdateInfo={this.props.onUpdateInfo}
           />
-        </section>
-        <Divider dashed></Divider>
-        <h1>重置密码</h1>
-        <section>
+        </Card>
+        <Divider />
+        <Card title="绑定QQ登录">
+          <OauthQQ payload={payload} onUpdateInfo={this.props.onUpdateInfo} />
+        </Card>
+        <Divider />
+        <Card title="重置密码">
           <PasswordReset
             payload={payload}
             onUpdateInfo={this.props.onUpdateInfo}
           />
-        </section>
-        <Divider dashed></Divider>
-        <h1>绑定QQ登录</h1>
-        <section>
-          <OauthQQ payload={payload} onUpdateInfo={this.props.onUpdateInfo} />
-        </section>
+        </Card>
       </div>
     );
   }

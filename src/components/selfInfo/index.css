@@ -1,0 +1,10 @@
+#selfinfo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#selfinfo-container > * {
+  width: 100%;
+  max-width: 700px;
+}
