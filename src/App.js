@@ -9,6 +9,8 @@ import { view as HandleOrder } from "./components/handleOrder";
 import { view as TagManage } from "./components/tagManage";
 import { view as DashBoard } from "./components/dashboard";
 import { AnnouncementEditor } from "./components/announcement";
+import { HandleOrderNew } from "./components/handleOrderNew";
+import NotFound from "./components/notFound";
 import {
   BrowserRouter as Router,
   Route,
@@ -99,8 +101,8 @@ class App extends React.Component {
                     <Route path={routePath.REQUEST_ORDER}>
                       <RequestOrder></RequestOrder>
                     </Route>
-                    <Route path={routePath.HANDLE_ORDER}>
-                      <HandleOrder></HandleOrder>
+                    <Route path={routePath.HANDLE_ORDER_NEW}>
+                      <HandleOrderNew />
                     </Route>
                     <Route path={routePath.TAG_MANAGE}>
                       <TagManage></TagManage>
@@ -110,6 +112,12 @@ class App extends React.Component {
                     </Route>
                     <Route path={routePath.ANNOUNCE}>
                       <AnnouncementEditor />
+                    </Route>
+                    <Route path={routePath.HANDLE_ORDER}>
+                      <HandleOrder></HandleOrder>
+                    </Route>
+                    <Route path={routePath.IMG_HOST}>
+                      <NotFound />
                     </Route>
                     <Route path="*">
                       <span>page not found</span>

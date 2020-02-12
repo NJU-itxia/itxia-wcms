@@ -44,10 +44,10 @@ class Sider extends React.Component {
           发起预约
           <Link to={routePath.REQUEST_ORDER}></Link>
         </Menu.Item>
-        <Menu.Item key={routePath.HANDLE_ORDER}>
+        <Menu.Item key={routePath.HANDLE_ORDER_NEW}>
           <Icon type="table" />
           查看预约
-          <Link to={routePath.HANDLE_ORDER}></Link>
+          <Link to={routePath.HANDLE_ORDER_NEW}></Link>
         </Menu.Item>
         <Menu.Item key={routePath.TAG_MANAGE}>
           <Icon type="tags" />
@@ -58,6 +58,11 @@ class Sider extends React.Component {
           <Icon type="form" />
           发布公告
           <Link to={routePath.ANNOUNCE}></Link>
+        </Menu.Item>
+        <Menu.Item key={routePath.IMG_HOST}>
+          <Icon type="picture" />
+          图床服务
+          <Link to={routePath.IMG_HOST}></Link>
         </Menu.Item>
       </Menu>
     );

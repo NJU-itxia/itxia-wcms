@@ -10,9 +10,11 @@ const paths = Object.freeze({
   ADD_MEMBER: "/home/addMember",
   REQUEST_ORDER: "/home/request",
   HANDLE_ORDER: "/home/handle",
+  HANDLE_ORDER_NEW: "/home/handleOrder",
   TAG_MANAGE: "/home/tag",
   DASHBOARD: "/home/dashboard",
-  ANNOUNCE: "/home/announce"
+  ANNOUNCE: "/home/announce",
+  IMG_HOST: "/home/imgHost"
 });
 
 export default paths;
