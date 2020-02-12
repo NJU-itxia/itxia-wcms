@@ -6,6 +6,7 @@ import {
   Button,
   Checkbox,
   Modal,
+  Spin,
   Divider,
   notification
 } from "antd";
@@ -72,7 +73,8 @@ class LoginForm extends React.Component {
     const key = "autologin";
     notification.info({
       key,
-      message: "自动登录中...",
+      message: "检查登录状态中...",
+      icon: <Spin />,
       duration: 0
     });
     try {
@@ -80,7 +82,7 @@ class LoginForm extends React.Component {
       setTimeout(() => {
         notification.success({
           key,
-          message: "自动登录成功.",
+          message: "已登录, 自动跳转到主页.",
           duration: 3
         });
       }, 500);
