@@ -78,7 +78,21 @@ export default class OrderInfoCard extends React.Component {
         {status === "正在处理" && handler._id !== userID ? (
           <Alert
             type="info"
-            message={`正由 ${handler.realName} 处理中`}
+            message={
+              <span>
+                正由 <strong>{handler.realName}</strong> 处理中.
+              </span>
+            }
+          ></Alert>
+        ) : null}
+        {status === "已完成" && handler._id !== userID ? (
+          <Alert
+            type="success"
+            message={
+              <span>
+                已由 <strong>{handler.realName}</strong> 处理完成.
+              </span>
+            }
           ></Alert>
         ) : null}
         {status === "正在处理" && handler._id === userID ? (
