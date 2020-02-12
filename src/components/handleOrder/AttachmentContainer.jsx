@@ -2,7 +2,7 @@ import React from "react";
 import config from "../../config/config";
 
 export default function(props) {
-  const { md5, size, mimetype, fileName } = props.payload;
+  const { md5, mimetype, fileName } = props.payload;
   const getImageUrl = (md5, isThumbnail = false) => {
     let url =
       config.network.api.protocol +

@@ -1,5 +1,5 @@
 import React from "react";
-import { List, Icon, Card, notification, Spin, Modal } from "antd";
+import { List, Icon, Card, notification, Spin } from "antd";
 import * as api from "../../util/api";
 import ReplyList from "../reply";
 import * as timeUtil from "../../util/time";

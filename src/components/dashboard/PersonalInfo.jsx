@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Statistic, Row, Col, Divider } from "antd";
+import { Card, Statistic, Row, Col } from "antd";
 import * as api from "../../util/api";
 import Loading from "../loading";
 

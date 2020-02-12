@@ -61,7 +61,7 @@ export default class Action extends React.Component {
       );
     };
     const buttonList = [];
-    const { _id, status } = this.props;
+    const { status } = this.props;
     switch (status) {
       case "等待处理":
         buttonList.push(
