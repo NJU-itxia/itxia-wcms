@@ -1,10 +1,12 @@
 import React from "react";
-import "./style.css"
+import "./style.css";
 
 export default function Footer() {
+  const date = new Date();
+  const year = date.getFullYear();
   return (
     <footer>
-      <span>footer</span>
+      <span>© NJU-ITXIA {year}</span>
     </footer>
   );
 }
