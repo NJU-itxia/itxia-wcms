@@ -1,35 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { Popconfirm, Button, Modal } from "antd";
 import * as api from "../../util/api";
 
 const actions = [
   {
     actionName: "设为管理员",
-    condition: { role: 1 },
+    condition: { role: "普通成员" },
     buttonType: "default",
     urlPostfix: "role",
-    data: { role: 2 }
+    data: { role: "管理员" }
   },
   {
     actionName: "设为普通成员",
-    condition: { role: 2 },
+    condition: { role: "管理员" },
     buttonType: "default",
     urlPostfix: "role",
-    data: { role: 1 }
+    data: { role: "普通成员" }
   },
   {
     actionName: "启用账号",
-    condition: { status: 0 },
+    condition: { disable: true },
     buttonType: "primary",
-    urlPostfix: "status",
-    data: { status: 1 }
+    urlPostfix: "disable",
+    data: { disable: false }
   },
   {
     actionName: "禁用账号",
-    condition: { status: 1 },
+    condition: { disable: false },
     buttonType: "danger",
-    urlPostfix: "status",
-    data: { status: 0 }
+    urlPostfix: "disable",
+    data: { disable: true }
   },
   {
     actionName: "重置密码",
@@ -38,30 +38,28 @@ const actions = [
   }
 ];
 
-export default class Action extends React.Component {
-  state = {
-    loading: false
-  };
-  handleAction(action) {
+export default function Action(props) {
+  const [loading, setLoading] = useState(false);
+
+  function handleAction(action) {
     if (action.notImplemented) {
-      Modal.info({
+      return Modal.info({
         title: "操作失败",
         content: "功能尚未实现，请等待下个版本",
         centered: true
       });
-      return;
     }
-    this.setState({ loading: true });
-    const { record } = this.props;
+    setLoading(true);
+    const { record } = props;
     api
-      .put(`/member/${record.id}/${action.urlPostfix}`, action.data)
+      .put(`/user/${record.loginName}/${action.urlPostfix}`, action.data)
       .on("succ", () => {
         Modal.success({
           title: "操作成功",
           content: `已成功${action.actionName}.`,
           centered: true,
           onOk: () => {
-            this.props.onActionDone();
+            props.onActionDone();
           }
         });
       })
@@ -80,51 +78,49 @@ export default class Action extends React.Component {
         });
       })
       .on("any", () => {
-        this.setState({ loading: false });
+        setLoading(false);
       });
   }
 
-  render() {
-    const { record } = this.props;
-    const actionArr = actions.filter(value => {
-      const { condition } = value;
-      if (condition) {
-        for (const key in condition) {
-          if (condition[key] !== record[key]) {
-            return false;
-          }
+  const { record } = props;
+  const actionArr = actions.filter(value => {
+    const { condition } = value;
+    if (condition) {
+      for (const key in condition) {
+        if (condition[key] !== record[key]) {
+          return false;
         }
       }
-      return true;
-    });
+    }
+    return true;
+  });
 
-    return (
-      <div>
-        {actionArr.map((value, index) => {
-          return (
-            <Popconfirm
-              key={index}
-              title={`确定要${value.actionName}吗？`}
-              okText="确定"
-              cancelText="取消"
-              onConfirm={() => {
-                this.handleAction(value);
+  return (
+    <div>
+      {actionArr.map((value, index) => {
+        return (
+          <Popconfirm
+            key={index}
+            title={`确定要${value.actionName}吗？`}
+            okText="确定"
+            cancelText="取消"
+            onConfirm={() => {
+              handleAction(value);
+            }}
+          >
+            <Button
+              type={value.buttonType}
+              size="small"
+              style={{
+                margin: "0.5em"
               }}
+              disabled={loading}
             >
-              <Button
-                type={value.buttonType}
-                size="small"
-                style={{
-                  margin: "0.5em"
-                }}
-                disabled={this.state.loading}
-              >
-                {value.actionName}
-              </Button>
-            </Popconfirm>
-          );
-        })}
-      </div>
-    );
-  }
+              {value.actionName}
+            </Button>
+          </Popconfirm>
+        );
+      })}
+    </div>
+  );
 }
