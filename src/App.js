@@ -87,7 +87,7 @@ class App extends React.Component {
                 <Content id="main-content">
                   <Switch>
                     <Route exact={true} path={routePath.HOME}>
-                      <Redirect to={routePath.SELF_INFO}></Redirect>
+                      <Redirect to={routePath.DASHBOARD}></Redirect>
                     </Route>
                     <Route path={routePath.SELF_INFO}>
                       <SelfInfo></SelfInfo>

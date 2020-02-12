@@ -7,14 +7,13 @@ import routePath from "../../util/routePath";
 class Sider extends React.Component {
   state = {
     mode: "inline",
-    theme: "dark",
-    path: window.location.pathname
+    theme: "dark"
   };
 
   render() {
     return (
       <Menu
-        defaultSelectedKeys={[this.state.path]}
+        defaultSelectedKeys={[routePath.DASHBOARD]}
         mode={this.state.mode}
         theme={this.state.theme}
         onSelect={this.pageSelectHandler}
