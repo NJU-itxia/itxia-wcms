@@ -13,7 +13,7 @@ class Sider extends React.Component {
   render() {
     return (
       <Menu
-        defaultSelectedKeys={[routePath.DASHBOARD]}
+        defaultSelectedKeys={[window.location.pathname]}
         mode={this.state.mode}
         theme={this.state.theme}
         onSelect={this.pageSelectHandler}
