@@ -21,30 +21,23 @@ class NestedTable extends React.Component {
     this.updateData();
   }
 
-  updateData() {
+  async updateData() {
     this.setState({
       loading: true
     });
-    api
-      .get("/user")
-      .on("succ", payload => {
-        this.setState({
-          loading: false,
-          data: payload
-        });
-      })
-      .on("fail", json => {
-        Modal.error({
-          title: "获取成员列表失败",
-          content: json.errorMessage
-        });
-      })
-      .on("error", e => {
-        Modal.error({
-          title: "网络请求失败",
-          content: e.toString()
-        });
+    try {
+      const data = await api.GET("/user");
+      this.setState({
+        loading: false,
+        data
       });
+    } catch (error) {
+      Modal.error({
+        title: "获取成员列表失败",
+        content: error.message,
+        centered: true
+      });
+    }
   }
 
   render() {
