@@ -31,3 +31,19 @@
   margin: 1rem auto;
   max-width: 50%;
 }
+
+#other-login {
+  float: right;
+}
+#other-login > * {
+  display: block;
+  margin: 10px;
+}
+
+#qq-oauth-logo {
+  max-height: 1.5rem;
+}
+
+#recovery-btn {
+  float: right;
+}

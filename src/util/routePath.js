@@ -14,7 +14,8 @@ const paths = Object.freeze({
   TAG_MANAGE: "/home/tag",
   DASHBOARD: "/home/dashboard",
   ANNOUNCE: "/home/announce",
-  IMG_HOST: "/home/imgHost"
+  RECOVERY: "/recovery",
+  IMG_HOST: "/imghost"
 });
 
 export default paths;

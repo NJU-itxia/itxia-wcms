@@ -12,6 +12,7 @@ import { AnnouncementEditor } from "./components/announcement";
 import { HandleOrderNew } from "./components/handleOrderNew";
 import NotFound from "./components/notFound";
 import Logout from "./components/logout";
+import Recovery from "./components/recovery";
 import {
   BrowserRouter as Router,
   Route,
@@ -45,6 +46,9 @@ class App extends React.Component {
           </Route>
           <Route path={routePath.LOGIN}>
             <Login></Login>
+          </Route>
+          <Route path={routePath.RECOVERY}>
+            <Recovery />
           </Route>
           <Route path={routePath.HOME}>
             <Layout

@@ -13,7 +13,7 @@ import {
 import "antd/dist/antd.css";
 import "./style.css";
 import * as api from "../../util/api";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import routePath from "../../util/routePath";
 
 const localStorageKeys = {
@@ -147,6 +147,9 @@ class LoginForm extends React.Component {
                   ? true
                   : false
             })(<Checkbox>记住账号</Checkbox>)}
+            <Link to="/recovery" target="_blank" id="recovery-btn">
+              <Button type="link">恢复老系统账号</Button>
+            </Link>
             <Button
               type="primary"
               htmlType="submit"
@@ -157,13 +160,15 @@ class LoginForm extends React.Component {
           </Form.Item>
           <Divider />
           <p>其它登录方式:</p>
-          <a href={oAuthUrl} target="_blank" rel="noopener noreferrer">
-            <img
-              src="/img/loginViaQQ.png"
-              alt="QQ授权登录"
-              style={{ float: "right", maxHeight: "1.5rem" }}
-            ></img>
-          </a>
+          <div id="other-login">
+            <a href={oAuthUrl} target="_blank" rel="noopener noreferrer">
+              <img
+                src="/img/loginViaQQ.png"
+                alt="QQ授权登录"
+                id="qq-oauth-logo"
+              ></img>
+            </a>
+          </div>
         </Form>
       </div>
     );
