@@ -6,6 +6,9 @@ import PasswordReset from "./PasswordReset";
 import OauthQQ from "./OauthQQ";
 import Loading from "../loading";
 import "./index.css";
+import { UserInfoContext } from "../../context/UserInfo";
+import BasicInfo from "./BasicInfo";
+
 class SelfInfo extends React.Component {
   constructor(props) {
     super(props);
@@ -18,6 +21,8 @@ class SelfInfo extends React.Component {
     this.fetchSelfInfo = this.fetchSelfInfo.bind(this);
     this.handleUpdateSelfInfo = this.handleUpdateSelfInfo.bind(this);
   }
+
+  static contextType = UserInfoContext;
 
   componentDidMount() {
     this.fetchSelfInfo();
@@ -77,26 +82,11 @@ class SelfInfo extends React.Component {
 
 class SelfInfoForm extends React.Component {
   render() {
-    const formItemLayout = {
-      labelCol: { span: 6 },
-      wrapperCol: { span: 10 }
-    };
     const payload = this.props.selfInfoPayload;
     return (
       <div id="selfinfo-container">
         <Card title="基本信息">
-          <Form {...formItemLayout}>
-            <Form.Item label="姓名">
-              <span>{String(payload.realName)}</span>
-            </Form.Item>
-            <Form.Item label="登录名">
-              <span className="ant-form-text">{String(payload.loginName)}</span>
-            </Form.Item>
-            <Form.Item label="账号ID">
-              <span className="ant-form-text">{String(payload._id)}</span>
-            </Form.Item>
-            <Form.Item label="账号身份">{String(payload.role)}</Form.Item>
-          </Form>
+          <BasicInfo />
         </Card>
         <Divider />
         <Card title="个人信息设置">
