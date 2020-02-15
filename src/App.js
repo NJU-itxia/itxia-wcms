@@ -13,6 +13,7 @@ import { HandleOrderNew } from "./components/handleOrderNew";
 import NotFound from "./components/notFound";
 import Logout from "./components/logout";
 import Recovery from "./components/recovery";
+import { UserInfoProvider } from "./context/UserInfo";
 import {
   BrowserRouter as Router,
   Route,
@@ -51,86 +52,88 @@ class App extends React.Component {
             <Recovery />
           </Route>
           <Route path={routePath.HOME}>
-            <Layout
-              style={{
-                height: "100%"
-              }}
-            >
-              <Sider
-                trigger={null}
-                collapsible
-                collapsed={this.state.collapsed}
-                collapsedWidth="0"
-                breakpoint="md"
-                onCollapse={isCollapsed => {
-                  this.setState({ collapsed: isCollapsed });
+            <UserInfoProvider>
+              <Layout
+                style={{
+                  height: "100%"
                 }}
               >
-                <div id="sider-logo" />
-                <Navigate></Navigate>
-              </Sider>
-              <Layout>
-                <Header style={{ background: "#fff", padding: 0 }}>
-                  <Icon
-                    className="trigger"
-                    type={this.state.collapsed ? "menu-unfold" : "menu-fold"}
-                    onClick={this.toggle}
-                  />
-                  <div
-                    id="header-right"
-                    style={{
-                      display: "inline",
-                      float: "right",
-                      marginRight: "2em"
-                    }}
-                  >
-                    <Logout />
-                  </div>
-                </Header>
-                <Content id="main-content">
-                  <Switch>
-                    <Route exact={true} path={routePath.HOME}>
-                      <Redirect to={routePath.DASHBOARD}></Redirect>
-                    </Route>
-                    <Route path={routePath.SELF_INFO}>
-                      <SelfInfo></SelfInfo>
-                    </Route>
-                    <Route path={routePath.MEMBER_LIST}>
-                      <MemberList></MemberList>
-                    </Route>
-                    <Route path={routePath.ADD_MEMBER}>
-                      <AddMember></AddMember>
-                    </Route>
-                    <Route path={routePath.REQUEST_ORDER}>
-                      <RequestOrder></RequestOrder>
-                    </Route>
-                    <Route path={routePath.HANDLE_ORDER_NEW}>
-                      <HandleOrderNew />
-                    </Route>
-                    <Route path={routePath.TAG_MANAGE}>
-                      <TagManage></TagManage>
-                    </Route>
-                    <Route path={routePath.DASHBOARD}>
-                      <DashBoard></DashBoard>
-                    </Route>
-                    <Route path={routePath.ANNOUNCE}>
-                      <AnnouncementEditor />
-                    </Route>
-                    <Route path={routePath.HANDLE_ORDER}>
-                      <HandleOrder></HandleOrder>
-                    </Route>
-                    <Route path={routePath.IMG_HOST}>
-                      <NotFound />
-                    </Route>
-                    <Route path="*">
-                      <span>page not found</span>
-                      <Link to={routePath.SELF_INFO}>back</Link>
-                    </Route>
-                  </Switch>
-                </Content>
-                <Footer />
+                <Sider
+                  trigger={null}
+                  collapsible
+                  collapsed={this.state.collapsed}
+                  collapsedWidth="0"
+                  breakpoint="md"
+                  onCollapse={isCollapsed => {
+                    this.setState({ collapsed: isCollapsed });
+                  }}
+                >
+                  <div id="sider-logo" />
+                  <Navigate></Navigate>
+                </Sider>
+                <Layout>
+                  <Header style={{ background: "#fff", padding: 0 }}>
+                    <Icon
+                      className="trigger"
+                      type={this.state.collapsed ? "menu-unfold" : "menu-fold"}
+                      onClick={this.toggle}
+                    />
+                    <div
+                      id="header-right"
+                      style={{
+                        display: "inline",
+                        float: "right",
+                        marginRight: "2em"
+                      }}
+                    >
+                      <Logout />
+                    </div>
+                  </Header>
+                  <Content id="main-content">
+                    <Switch>
+                      <Route exact={true} path={routePath.HOME}>
+                        <Redirect to={routePath.DASHBOARD}></Redirect>
+                      </Route>
+                      <Route path={routePath.SELF_INFO}>
+                        <SelfInfo></SelfInfo>
+                      </Route>
+                      <Route path={routePath.MEMBER_LIST}>
+                        <MemberList></MemberList>
+                      </Route>
+                      <Route path={routePath.ADD_MEMBER}>
+                        <AddMember></AddMember>
+                      </Route>
+                      <Route path={routePath.REQUEST_ORDER}>
+                        <RequestOrder></RequestOrder>
+                      </Route>
+                      <Route path={routePath.HANDLE_ORDER_NEW}>
+                        <HandleOrderNew />
+                      </Route>
+                      <Route path={routePath.TAG_MANAGE}>
+                        <TagManage></TagManage>
+                      </Route>
+                      <Route path={routePath.DASHBOARD}>
+                        <DashBoard></DashBoard>
+                      </Route>
+                      <Route path={routePath.ANNOUNCE}>
+                        <AnnouncementEditor />
+                      </Route>
+                      <Route path={routePath.HANDLE_ORDER}>
+                        <HandleOrder></HandleOrder>
+                      </Route>
+                      <Route path={routePath.IMG_HOST}>
+                        <NotFound />
+                      </Route>
+                      <Route path="*">
+                        <span>page not found</span>
+                        <Link to={routePath.SELF_INFO}>back</Link>
+                      </Route>
+                    </Switch>
+                  </Content>
+                  <Footer />
+                </Layout>
               </Layout>
-            </Layout>
+            </UserInfoProvider>
           </Route>
           <Route>
             <span>Page not found.</span>
