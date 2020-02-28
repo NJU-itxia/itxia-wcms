@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Divider, Modal } from "antd";
+import { Row, Col, Divider, Modal, BackTop } from "antd";
 import OrderInfoCard from "./OrderInfoCard";
 import SearchConditionBar from "./SearchConditionBar";
 import OrderPagination from "./OrderPagination";
@@ -122,6 +122,7 @@ export class HandleOrderNew extends React.Component {
           </div>
         ) : (
           <Row gutter={[8, 0]} type="flex" justify="center" align="top">
+            <BackTop />
             <Col span={24}>{loading ? <Loading /> : null}</Col>
             <Col xs={24} sm={24} md={24} lg={12} xl={10}>
               {data

@@ -1,3 +1,3 @@
-import view from "./view";
+import { Navigate } from "./Navigate";
 
-export { view };
+export { Navigate };

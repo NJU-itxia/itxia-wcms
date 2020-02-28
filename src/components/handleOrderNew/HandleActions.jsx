@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { Button, Popconfirm, Modal, Alert } from "antd";
 import * as api from "../../util/api";
+import { UserInfoContext } from "../../context/UserInfo";
+import RequireRole from "../requireRole";
 
 export default class OrderInfoCard extends React.Component {
   state = {
@@ -54,10 +56,13 @@ export default class OrderInfoCard extends React.Component {
       }
     });
   };
+
+  static contextType = UserInfoContext;
+
   render() {
     const { handler, status } = this.props.data;
     const { submiting, submitType } = this.state;
-    const { _id: userID, role } = this.props.whoami;
+    const { _id: userID, role } = this.context;
     return (
       <div className="order-btn-container">
         {status === "等待处理" ? (
@@ -75,16 +80,24 @@ export default class OrderInfoCard extends React.Component {
             </Button>
           </Popconfirm>
         ) : null}
-        {status === "正在处理" && handler._id !== userID ? (
+        <RequireRole
+          custom={whoami => {
+            if (status === "正在处理" && handler._id !== whoami._id) {
+              console.log(handler.realName);
+              //console.log(whoami);
+              return true;
+            }
+          }}
+        >
           <Alert
             type="info"
             message={
               <span>
-                正由 <strong>{handler.realName}</strong> 处理中.
+                正由 <strong>{handler && handler.realName}</strong> 处理中.
               </span>
             }
           ></Alert>
-        ) : null}
+        </RequireRole>
         {status === "已完成" && handler._id !== userID ? (
           <Alert
             type="success"
@@ -117,7 +130,17 @@ export default class OrderInfoCard extends React.Component {
             </Button>
           </Popconfirm>
         ) : null}
-        {(role === "管理员" || role === "超级账号") && status === "等待处理" ? (
+
+        <RequireRole
+          custom={whoami => {
+            const { role } = whoami;
+            if (role === "管理员" || role === "超级账号") {
+              if (status === "等待处理") {
+                return true;
+              }
+            }
+          }}
+        >
           <Popconfirm
             title="确定要删除预约单吗?"
             okText="确定"
@@ -131,7 +154,7 @@ export default class OrderInfoCard extends React.Component {
               删除
             </Button>
           </Popconfirm>
-        ) : null}
+        </RequireRole>
       </div>
     );
   }

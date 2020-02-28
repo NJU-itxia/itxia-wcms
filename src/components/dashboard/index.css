@@ -2,3 +2,7 @@
   background-color: white;
   padding: 6px;
 }
+
+#dash-container {
+  overflow: hidden;
+}

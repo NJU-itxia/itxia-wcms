@@ -17,7 +17,7 @@ export default function Logout() {
     return null;
   }
   return (
-    <Button type="danger" onClick={handleLogout}>
+    <Button type="danger" onClick={handleLogout} id="logout-btn">
       退出登录
     </Button>
   );

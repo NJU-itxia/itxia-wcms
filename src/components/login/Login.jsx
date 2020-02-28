@@ -14,7 +14,7 @@ import "antd/dist/antd.css";
 import "./style.css";
 import * as api from "../../util/api";
 import { Redirect, Link } from "react-router-dom";
-import routePath from "../../util/routePath";
+import routePath from "../../route/routePath";
 
 const localStorageKeys = {
   isRememberAccount: "isRememberAccount",
@@ -175,6 +175,6 @@ class LoginForm extends React.Component {
   }
 }
 
-const WrappedNormalLoginForm = Form.create({ name: "normal_login" })(LoginForm);
+const Login = Form.create({ name: "normal_login" })(LoginForm);
 
-export default WrappedNormalLoginForm;
+export { Login };

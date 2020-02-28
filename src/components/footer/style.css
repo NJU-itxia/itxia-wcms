@@ -1,10 +1,11 @@
-footer {
+.home-footer {
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 8px;
+  margin-top: 24px;
 }
 
-footer > span {
+.home-footer > span {
   font-size: 0.5rem;
 }
