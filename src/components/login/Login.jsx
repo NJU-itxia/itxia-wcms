@@ -30,7 +30,23 @@ class LoginForm extends React.Component {
   }
 
   componentDidMount() {
-    this.autoLogin();
+    this.autoLogin().catch(() => {
+      if (!!!localStorage.getItem("needRecoverOldAccount")) {
+        Modal.confirm({
+          title: "第一次登录新系统嘛？",
+          content: "登录新系统前,需要将旧系统账号迁移过来.",
+          okText: "现在迁移",
+          cancelText: "不用了",
+          onOk: () => {
+            window.location = "/recovery";
+          },
+          onCancel: () => {
+            localStorage.setItem("needRecoverOldAccount", "nope");
+          },
+          centered: true
+        });
+      }
+    });
   }
 
   handleSubmit = e => {
@@ -93,6 +109,7 @@ class LoginForm extends React.Component {
       setTimeout(() => {
         notification.close(key);
       }, 500);
+      return Promise.reject(error);
     }
   }
 
@@ -148,7 +165,7 @@ class LoginForm extends React.Component {
                   : false
             })(<Checkbox>记住账号</Checkbox>)}
             <Link to="/recovery" target="_blank" id="recovery-btn">
-              <Button type="link">恢复老系统账号</Button>
+              <Button type="link">迁移旧系统账号</Button>
             </Link>
             <Button
               type="primary"
