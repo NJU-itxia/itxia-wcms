@@ -1,9 +1,10 @@
-import { Layout, BackTop } from "antd";
 import React from "react";
+import { Layout, BackTop } from "antd";
 import { Navigate } from "../navigate";
-import "./home.css";
-import { HomeRouter } from "../../route";
 import { view as MyFooter } from "../footer";
+import { HomeRouter } from "../../route";
+import "./home.css";
+
 const { Header, Content, Footer } = Layout;
 
 export function Home() {
