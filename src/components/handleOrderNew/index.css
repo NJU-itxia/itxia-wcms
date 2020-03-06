@@ -19,9 +19,15 @@
 }
 
 #sb-form-item-container > * {
-    margin: 4px 12px;
-    display: inline-block;
-  }
+  margin: 4px 12px;
+  display: inline-block;
+}
+
+.order-card-desc {
+  padding: 0.5rem;
+  padding-bottom: 1px;
+  background-color: rgba(0, 0, 0, 0.03);
+}
 /*
 #sb-form-item-container {
   display: flex;

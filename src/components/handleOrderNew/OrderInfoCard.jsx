@@ -3,6 +3,8 @@ import { Card, Divider, Icon, Input } from "antd";
 import * as timeUtil from "../../util/time";
 import Attachment from "../attachment";
 import HandleActions from "./HandleActions";
+import { ReactMarkdown } from "../../util/md2html";
+
 const getStatusIcon = status => {
   switch (status) {
     case "等待处理":
@@ -103,14 +105,9 @@ export default class OrderInfoCard extends React.Component {
         <p>
           <strong>问题描述: </strong>
         </p>
-
-        <Input.TextArea
-          value={description.replace(/<br\s?\/>/g, "")}
-          autoSize
-          spellCheck={false}
-          resize="none"
-          style={{ paddingBottom: "0.5em", marginBottom: "8px" }}
-        />
+        <div className="order-card-desc">
+          <ReactMarkdown source={description} />
+        </div>
         <br />
         {attachments.length === 0 ? null : (
           <div>
