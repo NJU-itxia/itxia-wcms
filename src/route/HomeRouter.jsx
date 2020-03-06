@@ -13,7 +13,7 @@ import { AnnouncementEditor } from "../components/announcement";
 import { HandleOrderNew } from "../components/handleOrderNew";
 import NotFound from "../components/notFound";
 
-function HomeRouter(props) {
+function HomeRouter() {
   return (
     <Switch>
       <Route exact={true} path={routePath.HOME}>

@@ -1,7 +1,6 @@
 #home {
   min-height: 100vh;
 }
-
 #home-header {
   display: flex;
   flex-direction: row;
@@ -23,7 +22,6 @@
   flex: 1 1 auto;
   overflow: hidden;
 }
-
 #home-content {
   padding: 20px 30px;
   flex: 1 0 auto;
