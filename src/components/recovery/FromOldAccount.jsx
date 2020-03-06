@@ -43,19 +43,19 @@ function FromOldAccount(props) {
       <h3>旧账号信息</h3>
       <Form.Item label="旧账号名">
         {getFieldDecorator("oldAccount", {
-          rules: [{ required: true, message: "请填写旧账号名" }]
-        })(<Input type="text" placeholder="旧账号名" />)}
+          rules: [{ required: true, message: "请填写旧系统账号名" }]
+        })(<Input type="text" placeholder="旧系统账号名" />)}
       </Form.Item>
       <Form.Item label="旧密码">
         {getFieldDecorator("oldPassword", {
-          rules: [{ required: true, message: "请填写旧密码" }]
-        })(<Input type="password" placeholder="旧密码" />)}
+          rules: [{ required: true, message: "请填写旧系统密码" }]
+        })(<Input type="password" placeholder="旧系统密码" />)}
       </Form.Item>
       <h3>新账号信息</h3>
       <Form.Item label="新账号名">
         {getFieldDecorator("loginName", {
           rules: [
-            { required: true, message: "请填写新账号名" },
+            { message: "请填写新账号名" },
             {
               pattern: /^\w{4,16}$/,
               message: "账号格式不正确"
@@ -71,14 +71,17 @@ function FromOldAccount(props) {
             autoComplete="new-password"
           />
         )}
-        <Alert message="用于登录系统，4-16位字母、数字组合." type="info" />
+        <Alert
+          message="(不填则沿用旧账号名) 用于登录系统，4-16位字母、数字组合."
+          type="info"
+        />
       </Form.Item>
       <Form.Item label="新密码">
         {getFieldDecorator("password", {
           rules: [
             { required: true, message: "请填写新密码" },
             {
-              pattern: /^\w{8,16}$/,
+              pattern: /^.{8,256}$/,
               message: "密码格式不正确"
             }
           ]
@@ -88,7 +91,7 @@ function FromOldAccount(props) {
             placeholder="新密码"
           />
         )}
-        <Alert message="密码格式：8-16位字母、数字组合." type="info" />
+        <Alert message="密码至少8个字符." type="info" />
       </Form.Item>
       <Form.Item wrapperCol={{ span: 12, offset: 9 }}>
         <Button type="primary" loading={loading} htmlType="submit">

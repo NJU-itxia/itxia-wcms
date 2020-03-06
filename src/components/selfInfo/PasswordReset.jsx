@@ -66,7 +66,7 @@ class PasswordReset extends React.Component {
             rules: [
               { required: true, message: "请填写密码" },
               {
-                pattern: /^\w{8,16}$/,
+                pattern: /^.{8,16}$/,
                 message: "密码格式不正确"
               }
             ]
