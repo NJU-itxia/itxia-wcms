@@ -8,7 +8,7 @@ import { view as AddMember } from "../components/addMember";
 import { view as RequestOrder } from "../components/requestOrder";
 import { view as HandleOrder } from "../components/handleOrder";
 import { view as TagManage } from "../components/tagManage";
-import { view as DashBoard } from "../components/dashboard";
+import { DashBoard } from "../components/dashboard";
 import { AnnouncementEditor } from "../components/announcement";
 import { HandleOrderNew } from "../components/handleOrderNew";
 import NotFound from "../components/notFound";
