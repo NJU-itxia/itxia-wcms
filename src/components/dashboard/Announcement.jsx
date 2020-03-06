@@ -4,6 +4,7 @@ import * as api from "../../util/api";
 import ReplyList from "../reply";
 import * as timeUtil from "../../util/time";
 import Attachment from "../attachment";
+import { ReactMarkdown } from "../../util/md2html";
 
 class Announcement extends React.Component {
   constructor(props) {
@@ -74,7 +75,7 @@ class Announcement extends React.Component {
                     item.postBy.realName
                   } 发布于 ${timeUtil.utcDateToText(item.createTime)}`}
                 />
-                {item.content}
+                <ReactMarkdown source={item.content}></ReactMarkdown>
                 <br />
                 {item.attachments.map(value => {
                   return <Attachment key={value._id} data={value} />;
