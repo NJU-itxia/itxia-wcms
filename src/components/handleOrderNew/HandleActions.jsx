@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import { Button, Popconfirm, Modal, Alert } from "antd";
 import * as api from "../../util/api";
 import { UserInfoContext } from "../../context/UserInfo";
@@ -62,7 +62,7 @@ export default class OrderInfoCard extends React.Component {
   render() {
     const { handler, status } = this.props.data;
     const { submiting, submitType } = this.state;
-    const { _id: userID, role } = this.context;
+    const { _id: userID } = this.context;
     return (
       <div className="order-btn-container">
         {status === "等待处理" ? (
@@ -83,8 +83,6 @@ export default class OrderInfoCard extends React.Component {
         <RequireRole
           custom={whoami => {
             if (status === "正在处理" && handler._id !== whoami._id) {
-              console.log(handler.realName);
-              //console.log(whoami);
               return true;
             }
           }}

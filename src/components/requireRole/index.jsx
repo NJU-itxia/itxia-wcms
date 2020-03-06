@@ -30,7 +30,6 @@ function RequireRole(props) {
     }
     return props.children;
   }
-  console.log("shit");
 }
 RequireRole.prototype = {
   role: PropTypes.string,

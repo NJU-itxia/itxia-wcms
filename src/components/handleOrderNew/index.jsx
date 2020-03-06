@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Divider, Modal, BackTop } from "antd";
-import OrderInfoCard from "./OrderInfoCard";
+import { OrderInfoCard } from "./OrderInfoCard";
 import SearchConditionBar from "./SearchConditionBar";
 import OrderPagination from "./OrderPagination";
 import Loading from "../loading";
