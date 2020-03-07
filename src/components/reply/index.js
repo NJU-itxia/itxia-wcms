@@ -1,2 +1,2 @@
-import ReplyList from "./ReplyList";
-export default ReplyList;
+import { ReplyList } from "./ReplyList";
+export { ReplyList };

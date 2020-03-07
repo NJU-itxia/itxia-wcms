@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { List, Icon } from "antd";
 import Attachment from "../attachment";
-import ReplyList from "../reply";
+import { ReplyList } from "../reply";
 import * as timeUtil from "../../util/time";
 import { ReactMarkdown } from "../../util/md2html";
 import { UserInfoContext } from "../../context/UserInfo";

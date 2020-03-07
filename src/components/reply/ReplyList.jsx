@@ -4,9 +4,8 @@ import ReplyEditor from "./ReplyEditor";
 import * as timeUtil from "../../util/time";
 import Attachment from "../attachment";
 
-export default class ReplyList extends React.Component {
-  render() {
-    const { visible, title, onCancel, data, baseUrl, onReply } = this.props;
+export function ReplyList(props) {
+    const { visible, title, onCancel, data, baseUrl, onReply } = props;
     return (
       <Modal
         visible={visible}
@@ -47,4 +46,3 @@ export default class ReplyList extends React.Component {
       </Modal>
     );
   }
-}
