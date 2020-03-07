@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Divider, Icon } from "antd";
 import * as timeUtil from "../../util/time";
 import Attachment from "../attachment";
-import HandleActions from "./HandleActions";
+import { HandleActions } from "./HandleActions";
 import { ReactMarkdown } from "../../util/md2html";
 
 const getStatusIcon = status => {
