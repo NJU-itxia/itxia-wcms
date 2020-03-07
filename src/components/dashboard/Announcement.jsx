@@ -82,7 +82,7 @@ export function Announcement(props) {
           setShowReply(false);
         }}
         data={reply}
-        baseUrl={`/announcement/${_id}`}
+        postUrl={`/announcement/${_id}/reply`}
         onReply={() => {
           handleUpdate();
         }}

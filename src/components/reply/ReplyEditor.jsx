@@ -10,7 +10,7 @@ class ReplyEditor extends React.Component {
   onSubmit = e => {
     e.preventDefault();
     const { validateFields, resetFields } = this.props.form;
-    const { baseUrl, onReply } = this.props;
+    const { postUrl, onReply } = this.props;
     validateFields(async (err, values) => {
       if (err) {
         //TODO
@@ -44,7 +44,7 @@ class ReplyEditor extends React.Component {
         submitting: true
       });
       try {
-        await api.POST(`${baseUrl}/reply`, values);
+        await api.POST(postUrl, values);
         this.setState({
           submitting: false
         });
