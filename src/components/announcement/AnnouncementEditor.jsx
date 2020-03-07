@@ -78,7 +78,13 @@ class AnnouncementEditor extends React.Component {
         <Form.Item label="公告内容">
           {getFieldDecorator("content", {
             rules: [{ required: true, message: "请填写公告内容" }]
-          })(<Input.TextArea autoSize={{ minRows: 3 }} allowClear={true} />)}
+          })(
+            <Input.TextArea
+              autoSize={{ minRows: 3 }}
+              allowClear={true}
+              placeholder="支持markdown格式"
+            />
+          )}
         </Form.Item>
         <Form.Item label="附件上传">
           {getFieldDecorator("attachments", {

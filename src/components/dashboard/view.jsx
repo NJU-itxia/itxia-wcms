@@ -1,6 +1,6 @@
 import { Divider } from "antd";
 import React from "react";
-import Announcement from "./Announcement";
+import { AnnouncementList } from "./AnnouncementList";
 import OrderStat from "./OrderStat";
 import PersonalInfo from "./PersonalInfo";
 import "./index.css";
@@ -15,7 +15,7 @@ export function DashBoard() {
       </div>
       <div id="dash-space" />
       <div id="dash-anno">
-        <Announcement />
+        <AnnouncementList />
         <Divider />
       </div>
     </div>

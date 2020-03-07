@@ -1,100 +1,92 @@
-import React from "react";
-import { List, Icon, Card, notification, Spin } from "antd";
-import * as api from "../../util/api";
+import React, { useState, useContext } from "react";
+import { List, Icon } from "antd";
+import Attachment from "../attachment";
 import ReplyList from "../reply";
 import * as timeUtil from "../../util/time";
-import Attachment from "../attachment";
 import { ReactMarkdown } from "../../util/md2html";
+import { UserInfoContext } from "../../context/UserInfo";
+import * as api from "../../util/api";
 
-class Announcement extends React.Component {
-  constructor(props) {
-    super(props);
-    this.toggleReplyList = this.toggleReplyList.bind(this);
-    this.handleReply = this.handleReply.bind(this);
-  }
-  state = {
-    loading: true,
-    showReply: "",
-    data: []
-  };
+/**
+ * 单个公告展示.
+ */
+export function Announcement(props) {
+  const { data, handleUpdate } = props;
+  const {
+    _id,
+    title,
+    content,
+    attachments,
+    createTime,
+    postBy,
+    likeBy,
+    reply
+  } = data;
 
-  componentDidMount() {
-    this.fetchData();
-  }
+  const [showReply, setShowReply] = useState(false);
 
-  async fetchData() {
+  const userInfoContext = useContext(UserInfoContext);
+
+  //是否已点赞
+  const isLiked =
+    likeBy.findIndex(likedUser => {
+      return likedUser._id === userInfoContext._id;
+    }) !== -1;
+
+  async function hitLikeButton() {
     try {
-      const data = await api.GET("/announcement?type=后台");
-      this.setState({ data, loading: false });
+      await api.PUT(`/announcement/${_id}/${isLiked ? "unlike" : "like"}`);
+      handleUpdate();
     } catch (error) {
-      notification.error({
-        message: "获取公告失败",
-        description: error.message,
-        duration: 0
-      });
+      //TODO
     }
   }
-  handleReply() {
-    this.fetchData();
-  }
 
-  toggleReplyList = (announcementID = "") => () => {
-    this.setState({
-      showReply: announcementID
-    });
-  };
-  render() {
-    const { showReply, loading, data } = this.state;
-    return (
-      <Card>
-        <h1>公告栏</h1>
-        {loading ? (
-          <Spin />
-        ) : (
-          <List
-            itemLayout="vertical"
-            size="default"
-            dataSource={data}
-            renderItem={item => (
-              <List.Item
-                key={item._id}
-                actions={[
-                  <span key={1}>
-                    <Icon type={"like-o"} style={{ marginRight: 8 }} />
-                    舒服了
-                  </span>,
-                  <span key={2} onClick={this.toggleReplyList(item._id)}>
-                    <Icon type={"message"} style={{ marginRight: 8 }} />
-                    {item.reply.length}
-                  </span>
-                ]}
-              >
-                <List.Item.Meta
-                  title={item.title}
-                  description={`由 ${
-                    item.postBy.realName
-                  } 发布于 ${timeUtil.utcDateToText(item.createTime)}`}
-                />
-                <ReactMarkdown source={item.content}></ReactMarkdown>
-                <br />
-                {item.attachments.map(value => {
-                  return <Attachment key={value._id} data={value} />;
-                })}
-                <ReplyList
-                  visible={showReply === item._id}
-                  title={`公告 ${item.title} 的评论区`}
-                  onCancel={this.toggleReplyList()}
-                  data={item.reply}
-                  baseUrl={`/announcement/${item._id}`}
-                  onReply={this.handleReply}
-                />
-              </List.Item>
-            )}
-          ></List>
-        )}
-      </Card>
-    );
-  }
+  return (
+    <List.Item
+      actions={[
+        <span key="1" onClick={hitLikeButton}>
+          <Icon
+            type="like"
+            theme={isLiked ? "twoTone" : "outlined"}
+            style={{ marginRight: 8 }}
+          />
+          {likeBy.length}
+        </span>,
+        <span
+          key="2"
+          onClick={() => {
+            setShowReply(true);
+          }}
+        >
+          <Icon type="message" style={{ marginRight: 8 }} />
+          {reply.length}
+        </span>
+      ]}
+    >
+      <List.Item.Meta
+        title={title}
+        description={`由 ${postBy.realName} 发布于 ${timeUtil.utcDateToText(
+          createTime
+        )}`}
+      />
+      <ReactMarkdown source={content}></ReactMarkdown>
+      <br />
+      {attachments.map(value => {
+        return <Attachment key={value._id} data={value} />;
+      })}
+      <ReplyList
+        visible={showReply}
+        title={`公告 ${title} 的评论区`}
+        onCancel={() => {
+          setShowReply(false);
+        }}
+        data={reply}
+        baseUrl={`/announcement/${_id}`}
+        onReply={() => {
+          handleUpdate();
+        }}
+      />
+    </List.Item>
+  );
 }
-
-export default Announcement;
