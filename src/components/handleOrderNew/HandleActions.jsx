@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Button, Popconfirm, Modal, Alert } from "antd";
 import * as api from "../../util/api";
 import { UserInfoContext } from "../../context/UserInfo";
-
+import { ReplyList } from "../reply";
 /**
  * 显示预约单卡片底下的按钮.(接单/放回...)
  */
@@ -11,9 +11,7 @@ export function HandleActions(props) {
   const { _id: userID, role } = userInfoContext; //当前登录用户的id
 
   const { data, onHandleOrder } = props;
-  const { _id, status, handler, discuss } = data;
-
-  const [submitType, setSubmitType] = useState(null);
+  const { _id, name, status, handler, discuss } = data;
 
   const isMyOrder = handler && userID === handler._id; //是否是自己的预约单
 
@@ -57,6 +55,8 @@ export function HandleActions(props) {
   if (role !== "管理员" && role !== "超级账号") {
     showList.delete = false;
   }
+
+  const [submitType, setSubmitType] = useState(null);
 
   /**
    * 提交更改.(接单/放回...)
@@ -102,11 +102,21 @@ export function HandleActions(props) {
     });
   };
 
+  const [showDiscuss, setShowDiscuss] = useState(false);
+
   const discussCount = discuss.length;
 
   return (
     <div className="order-btn-container">
-      {showList.discuss ? <Button>讨论区 ({discussCount}条)</Button> : null}
+      {showList.discuss ? (
+        <Button
+          onClick={() => {
+            setShowDiscuss(true);
+          }}
+        >
+          讨论区 ({discussCount}条)
+        </Button>
+      ) : null}
       {showList.accept ? (
         <Popconfirm
           title="确定要接单吗?"
@@ -185,6 +195,18 @@ export function HandleActions(props) {
           message={<span>此预约单已被标记删除.</span>}
         ></Alert>
       ) : null}
+      <ReplyList
+        visible={showDiscuss}
+        title={`${name} 的预约单の讨论区`}
+        onCancel={() => {
+          setShowDiscuss(false);
+        }}
+        data={discuss}
+        postUrl={`/order/${_id}/discuss`}
+        onReply={() => {
+          //TODO
+        }}
+      ></ReplyList>
     </div>
   );
 }
