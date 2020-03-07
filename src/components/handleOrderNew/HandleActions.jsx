@@ -173,6 +173,18 @@ export function HandleActions(props) {
           }
         ></Alert>
       ) : null}
+      {showList.canceled ? (
+        <Alert
+          type="warning"
+          message={<span>此预约单已被预约人取消.</span>}
+        ></Alert>
+      ) : null}
+      {showList.deleted ? (
+        <Alert
+          type="error"
+          message={<span>此预约单已被标记删除.</span>}
+        ></Alert>
+      ) : null}
     </div>
   );
 }
