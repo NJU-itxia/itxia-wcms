@@ -54,8 +54,8 @@ class PasswordResetForm extends React.Component {
             rules: [
               { required: true, message: "请填写密码" },
               {
-                pattern: /^.{8,16}$/,
-                message: "密码格式不正确"
+                pattern: /^\S{8,}$/,
+                message: " "
               }
             ]
           })(
@@ -64,11 +64,7 @@ class PasswordResetForm extends React.Component {
               placeholder="密码"
             />
           )}
-          <Alert
-            message="密码格式：8-16位字母、数字组合"
-            type="info"
-            closable
-          />
+          <Alert message="密码要求：至少8个字符" type="info" />
         </Form.Item>
         <Form.Item label="确认密码">
           {getFieldDecorator("confirmPassword", {
