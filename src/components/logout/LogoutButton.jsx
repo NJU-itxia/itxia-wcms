@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import * as api from "UTIL/api";
 import { Button } from "antd";
+import { useHistory } from "react-router-dom";
+import { routePath } from "ROUTE/routePath";
 
 function LogoutButton() {
   const [isLogout, setLogout] = useState(false);
@@ -12,8 +14,9 @@ function LogoutButton() {
       })
       .catch(error => {});
   };
+  const history = useHistory();
   if (isLogout) {
-    window.location.pathname = ""; //属实nt
+    history.push(routePath.LOGIN);
     return null;
   }
   return (
