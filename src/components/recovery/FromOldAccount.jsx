@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Input, Button, Icon, Alert, Modal } from "antd";
 import { useState } from "react";
-import * as api from "../../util/api";
+import * as api from "UTIL/api";
 
 function FromOldAccountForm(props) {
   const [loading, setLoading] = useState(false);

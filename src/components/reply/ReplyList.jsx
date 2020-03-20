@@ -1,8 +1,8 @@
 import { List, Divider, Modal } from "antd";
 import React from "react";
 import { ReplyEditor } from "./ReplyEditor";
-import * as timeUtil from "../../util/time";
-import { Attachment } from "../attachment/Attachment";
+import * as timeUtil from "UTIL/time";
+import { Attachment } from "COMPONENTS/attachment";
 
 function ReplyList(props) {
   const { visible, title, onCancel, data, postUrl, onReply } = props;

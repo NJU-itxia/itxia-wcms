@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Button, Result, Row, Col, Icon } from "antd";
-import * as api from "../../util/api";
+import * as api from "UTIL/api";
 import { config } from "CONFIG";
 
 class OAuthQQForm extends React.Component {

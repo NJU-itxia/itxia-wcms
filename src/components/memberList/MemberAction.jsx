@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Popconfirm, Button, Modal } from "antd";
-import * as api from "../../util/api";
+import * as api from "UTIL/api";
 
 const actions = [
   {

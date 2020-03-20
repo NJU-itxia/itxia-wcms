@@ -9,7 +9,7 @@ import {
   Radio
 } from "antd";
 import React from "react";
-import * as api from "../../util/api";
+import * as api from "UTIL/api";
 
 class AddMemberForm extends React.Component {
   state = {

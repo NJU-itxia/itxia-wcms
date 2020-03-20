@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Button, Modal, Input, Icon, Alert } from "antd";
-import * as api from "../../util/api";
+import * as api from "UTIL/api";
 
 class PasswordResetForm extends React.Component {
   state = {

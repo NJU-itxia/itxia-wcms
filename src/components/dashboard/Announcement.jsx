@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react";
 import { List, Icon } from "antd";
-import { Attachment } from "../attachment/Attachment";
-import { ReplyList } from "../reply";
-import * as timeUtil from "../../util/time";
-import { ReactMarkdown } from "../../util/md2html";
-import { UserInfoContext } from "../../context/UserInfo";
-import * as api from "../../util/api";
+import { Attachment } from "COMPONENTS/attachment";
+import { ReplyList } from "COMPONENTS/reply";
+import * as timeUtil from "UTIL/time";
+import { ReactMarkdown } from "UTIL/md2html";
+import { UserInfoContext } from "CONTEXT/UserInfo";
+import * as api from "UTIL/api";
 
 /**
  * 单个公告展示.

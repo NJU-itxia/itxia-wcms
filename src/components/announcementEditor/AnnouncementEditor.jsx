@@ -1,8 +1,8 @@
 import { Form, Input, Button, Upload, Modal, Radio } from "antd";
 import React, { useEffect, useState } from "react";
-import { config } from "../../config/config";
-import * as api from "../../util/api";
-import { ReactMarkdown } from "../../util/md2html";
+import { config } from "CONFIG";
+import * as api from "UTIL/api";
+import { ReactMarkdown } from "UTIL/md2html";
 import "./announcementEditor.css";
 
 /**

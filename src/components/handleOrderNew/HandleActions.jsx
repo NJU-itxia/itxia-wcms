@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import { Button, Popconfirm, Modal, Alert } from "antd";
-import * as api from "../../util/api";
-import { UserInfoContext } from "../../context/UserInfo";
-import { ReplyList } from "../reply";
+import * as api from "UTIL/api";
+import { UserInfoContext } from "CONTEXT/UserInfo";
+import { ReplyList } from "COMPONENTS/reply";
 /**
  * 显示预约单卡片底下的按钮.(接单/放回...)
  */

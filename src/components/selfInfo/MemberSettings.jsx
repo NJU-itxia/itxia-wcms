@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Select, Button, Modal } from "antd";
-import * as api from "../../util/api";
+import * as api from "UTIL/api";
 
 class MemberSettingsForm extends React.Component {
   state = {

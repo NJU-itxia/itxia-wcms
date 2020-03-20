@@ -1,7 +1,7 @@
 import { Table, Tag, Icon } from "antd";
 import React from "react";
 import { MemberAction } from "./MemberAction";
-import * as timeUtil from "../../util/time";
+import * as timeUtil from "UTIL/time";
 
 function MemberListTable(props) {
   return (

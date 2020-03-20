@@ -1,8 +1,8 @@
 import React from "react";
 import { Card, Statistic, Row, Col, Divider } from "antd";
-import * as api from "../../util/api";
-import { Loading } from "../loading/Loading";
-import * as timeUtil from "../../util/time";
+import * as api from "UTIL/api";
+import { Loading } from "COMPONENTS/loading";
+import * as timeUtil from "UTIL/time";
 
 class OrderStat extends React.Component {
   state = {

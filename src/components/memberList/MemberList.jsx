@@ -1,6 +1,6 @@
 import { Modal } from "antd";
 import React from "react";
-import * as api from "../../util/api";
+import * as api from "UTIL/api";
 import { MemberListTable } from "./MemberListTable";
 
 class MemberList extends React.Component {

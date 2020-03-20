@@ -1,7 +1,7 @@
 import { Table, Button, Form, Modal, Input, notification } from "antd";
 import React from "react";
-import * as timeUtil from "../../util/time";
-import * as api from "../../util/api";
+import * as timeUtil from "UTIL/time";
+import * as api from "UTIL/api";
 
 const columns = [
   {

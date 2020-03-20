@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { List, Card, notification, Spin } from "antd";
-import * as api from "../../util/api";
+import * as api from "UTIL/api";
 import { Announcement } from "./Announcement";
 
 function AnnouncementList() {
