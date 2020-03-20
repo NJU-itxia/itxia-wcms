@@ -12,8 +12,8 @@ class MemberSettingsForm extends React.Component {
     });
     const { loginName } = this.props.payload;
     api
-      .put(`/user/${loginName}`, values)
-      .on("succ", () => {
+      .PUT(`/user/${loginName}`, values)
+      .then(() => {
         Modal.success({
           content: "更新成功",
           centered: true,
@@ -22,23 +22,11 @@ class MemberSettingsForm extends React.Component {
           }
         });
       })
-      .on("fail", message => {
+      .catch(message => {
         Modal.error({
           title: "更新失败",
           content: message,
           centered: true
-        });
-      })
-      .on("error", e => {
-        Modal.error({
-          title: "网络请求失败",
-          content: e.toString(),
-          centered: true
-        });
-      })
-      .on("any", () => {
-        this.setState({
-          loading: false
         });
       });
   }

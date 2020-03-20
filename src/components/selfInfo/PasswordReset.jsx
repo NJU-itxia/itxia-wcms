@@ -13,8 +13,8 @@ class PasswordResetForm extends React.Component {
     const { loginName } = this.props.payload;
     let { password } = values;
     api
-      .put(`/user/${loginName}/password`, { newPassword: password })
-      .on("succ", () => {
+      .PUT(`/user/${loginName}/password`, { newPassword: password })
+      .then(() => {
         Modal.success({
           content: "更新成功",
           centered: true,
@@ -23,23 +23,11 @@ class PasswordResetForm extends React.Component {
           }
         });
       })
-      .on("fail", message => {
-        Modal.error({
-          title: "更新失败",
-          content: message,
-          centered: true
-        });
-      })
-      .on("error", e => {
+      .catch(e => {
         Modal.error({
           title: "网络请求失败",
           content: e.toString(),
           centered: true
-        });
-      })
-      .on("any", () => {
-        this.setState({
-          loading: false
         });
       });
   }

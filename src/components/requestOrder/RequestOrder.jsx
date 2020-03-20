@@ -36,21 +36,14 @@ class RequestOrderForm extends React.Component {
         values.attachments = uploadIDArr;
         //TODO 处理预约成功跳转
         api
-          .post("/order", values)
-          .on("succ", payload => {
+          .POST("/order", values)
+          .then(payload => {
             Modal.success({
               title: "预约成功",
               centered: true
             });
           })
-          .on("fail", message => {
-            Modal.error({
-              title: "请求失败",
-              content: message,
-              centered: true
-            });
-          })
-          .on("error", e => {
+          .catch(e => {
             Modal.error({
               title: "网络请求失败",
               content: e.toString(),
@@ -66,7 +59,7 @@ class RequestOrderForm extends React.Component {
   };
 
   componentDidMount() {
-    api.get("/tag").on("succ", payload => {
+    api.GET("/tag").then(payload => {
       //按名字排序
       Array.prototype.sort.call(payload, (t1, t2) => {
         return t1.tagName > t2.tagName;

@@ -51,8 +51,8 @@ class AddMemberForm extends React.Component {
         }
       });
       api
-        .post("/user", values)
-        .on("succ", payload => {
+        .POST("/user", values)
+        .then(payload => {
           this.setState({
             submit: {
               loading: false,
@@ -62,20 +62,7 @@ class AddMemberForm extends React.Component {
           localStorage.removeItem("addMember");
           this.props.form.setFieldsValue({});
         })
-        .on("fail", message => {
-          notification.error({
-            message: "添加成员失败",
-            description: message,
-            duration: 0
-          });
-          this.setState({
-            submit: {
-              loading: false,
-              error: message
-            }
-          });
-        })
-        .on("error", e => {
+        .catch("error", e => {
           notification.error({
             message: "网络请求失败",
             description: e.toString(),

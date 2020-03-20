@@ -52,8 +52,8 @@ function MemberAction(props) {
     setLoading(true);
     const { record } = props;
     api
-      .put(`/user/${record.loginName}/${action.urlPostfix}`, action.data)
-      .on("succ", () => {
+      .PUT(`/user/${record.loginName}/${action.urlPostfix}`, action.data)
+      .then(() => {
         Modal.success({
           title: "操作成功",
           content: `已成功${action.actionName}.`,
@@ -63,22 +63,12 @@ function MemberAction(props) {
           }
         });
       })
-      .on("fail", message => {
-        Modal.error({
-          title: "操作失败",
-          content: `${action.actionName}失败. ${message}`,
-          centered: true
-        });
-      })
-      .on("error", e => {
+      .catch(e => {
         Modal.error({
           title: "网络请求失败",
           content: e.toString(),
           centered: true
         });
-      })
-      .on("any", () => {
-        setLoading(false);
       });
   }
 

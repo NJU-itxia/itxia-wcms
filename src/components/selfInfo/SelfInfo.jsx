@@ -35,8 +35,8 @@ class SelfInfo extends React.Component {
       }
     });
     api
-      .get("/whoami")
-      .on("succ", payload => {
+      .GET("/whoami")
+      .then(payload => {
         this.setState({
           selfInfo: {
             isLoad: true,
@@ -44,14 +44,7 @@ class SelfInfo extends React.Component {
           }
         });
       })
-      .on("fail", message => {
-        notification.error({
-          message: "返回值错误",
-          description: message,
-          duration: 0
-        });
-      })
-      .on("error", e => {
+      .catch(e => {
         notification.error({
           message: "网络请求失败",
           description: e.toString(),

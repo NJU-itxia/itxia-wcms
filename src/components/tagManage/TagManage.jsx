@@ -55,20 +55,12 @@ class TagManage extends React.Component {
       loading: true,
       data: null
     });
-    api
-      .get("/tag")
-      .on("succ", payload => {
-        this.setState({
-          loading: false,
-          data: payload
-        });
-      })
-      .on("fail", () => {
-        //TODO
-      })
-      .on("error", e => {
-        //TODO
+    api.GET("/tag").then(payload => {
+      this.setState({
+        loading: false,
+        data: payload
       });
+    });
   }
 
   add() {
@@ -82,8 +74,8 @@ class TagManage extends React.Component {
         description: `添加标签"${tagName}"中...`
       });
       api
-        .post("/tag", { tagName })
-        .on("succ", () => {
+        .POST("/tag", { tagName })
+        .then(() => {
           notification.success({
             key,
             duration: 5,
@@ -92,7 +84,7 @@ class TagManage extends React.Component {
           });
           this.reload();
         })
-        .on("fail", message => {
+        .catch(message => {
           notification.error({
             key,
             duration: 0,
@@ -100,14 +92,6 @@ class TagManage extends React.Component {
             description: message
           });
           this.reload();
-        })
-        .on("error", e => {
-          notification.error({
-            key,
-            duration: 0,
-            message: "添加标签失败",
-            description: `添加标签"${tagName}"失败:${e.message}`
-          });
         });
     };
     Modal.confirm({
