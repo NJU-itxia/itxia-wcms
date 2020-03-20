@@ -103,7 +103,6 @@ function EditorForm(props) {
         clearTimeout(timer);
         delete values.attachments; //去掉attachments，这部分没法恢复...
         timer = setTimeout(() => {
-          console.log("saving...");
           localStorage.setItem(
             "announcementEditorDraft",
             JSON.stringify(values)
