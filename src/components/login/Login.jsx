@@ -15,6 +15,7 @@ import "./style.css";
 import * as api from "../../util/api";
 import { Redirect, Link } from "react-router-dom";
 import { routePath } from "../../route/routePath";
+import { config } from "CONFIG";
 
 const localStorageKeys = {
   isRememberAccount: "isRememberAccount",
@@ -118,8 +119,7 @@ class LoginForm extends React.Component {
       return <Redirect to={routePath.HOME}></Redirect>;
     }
     const { getFieldDecorator } = this.props.form;
-    const oAuthUrl =
-      "https://graph.qq.com/oauth2.0/authorize?response_type=token&client_id=101842907&redirect_uri=https%3A%2F%2Fapi.itxia.cn%2Foauth%2Fqq&scope=get_user_info";
+    const oAuthUrl = config.oauth.qq;
     return (
       <div className="loginPage">
         <Form onSubmit={this.handleSubmit} className="login-form">

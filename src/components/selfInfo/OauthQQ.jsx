@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Button, Result, Row, Col, Icon } from "antd";
 import * as api from "../../util/api";
+import { config } from "CONFIG";
 
 class OAuthQQForm extends React.Component {
   state = {
@@ -26,8 +27,7 @@ class OAuthQQForm extends React.Component {
   }
 
   openOAuthWindow() {
-    const url =
-      "https://graph.qq.com/oauth2.0/authorize?response_type=token&client_id=101842907&redirect_uri=https%3A%2F%2Fapi.itxia.cn%2Foauth%2Fqq&scope=get_user_info";
+    const url = config.oauth.qq;
     window.open(url, "_blank");
   }
 
