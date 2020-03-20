@@ -1,3 +1,3 @@
-import { DashBoard } from "./view";
+import { DashBoard } from "./DashBoard";
 
 export { DashBoard };

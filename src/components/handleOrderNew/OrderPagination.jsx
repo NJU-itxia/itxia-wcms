@@ -36,4 +36,4 @@ OrderPagination.propTypes = {
   onShowSizeChange: PropTypes.func
 };
 
-export default OrderPagination;
+export { OrderPagination };

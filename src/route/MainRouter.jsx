@@ -1,8 +1,8 @@
 import React from "react";
-import routePath from "./routePath";
+import { routePath } from "./routePath";
 import { Login } from "../components/login";
 import { Home } from "../components/home";
-import { Recovery } from "../components/recovery";
+import { Recovery } from "COMPONENTS/recovery";
 import { UserInfoProvider } from "../context/UserInfo";
 import {
   BrowserRouter as Router,

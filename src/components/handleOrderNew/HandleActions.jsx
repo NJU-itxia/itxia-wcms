@@ -6,7 +6,7 @@ import { ReplyList } from "../reply";
 /**
  * 显示预约单卡片底下的按钮.(接单/放回...)
  */
-export function HandleActions(props) {
+function HandleActions(props) {
   const userInfoContext = useContext(UserInfoContext);
   const { _id: userID, role } = userInfoContext; //当前登录用户的id
 
@@ -210,3 +210,5 @@ export function HandleActions(props) {
     </div>
   );
 }
+
+export { HandleActions };

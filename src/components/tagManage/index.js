@@ -1,3 +1,3 @@
-import view from "./view";
+import { TagManage } from "./TagManage";
 
-export { view };
+export { TagManage };

@@ -1,6 +1,6 @@
 import { Form, Input, Button, Upload, Modal, Radio } from "antd";
 import React, { useEffect, useState } from "react";
-import config from "../../config/config";
+import { config } from "../../config/config";
 import * as api from "../../util/api";
 import { ReactMarkdown } from "../../util/md2html";
 import "./announcementEditor.css";
@@ -213,4 +213,5 @@ function EditorForm(props) {
   );
 }
 
-export const AnnouncementEditor = Form.create()(EditorForm);
+const AnnouncementEditor = Form.create()(EditorForm);
+export { AnnouncementEditor };

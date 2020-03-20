@@ -7,7 +7,7 @@ import "./home.css";
 
 const { Header, Content, Footer } = Layout;
 
-export function Home() {
+function Home() {
   return (
     <Layout id="home">
       <Header id="home-header">
@@ -26,3 +26,5 @@ export function Home() {
     </Layout>
   );
 }
+
+export { Home };

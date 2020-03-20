@@ -1,2 +1,2 @@
-import * as config from "./config"
-export default config.default;
+import { config } from "./config";
+export { config };

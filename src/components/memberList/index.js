@@ -1,3 +1,3 @@
-import view from "./view";
+import { MemberList } from "./MemberList";
 
-export { view };
+export { MemberList };

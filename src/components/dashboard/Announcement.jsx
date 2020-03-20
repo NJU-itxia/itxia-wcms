@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { List, Icon } from "antd";
-import Attachment from "../attachment";
+import { Attachment } from "../attachment/Attachment";
 import { ReplyList } from "../reply";
 import * as timeUtil from "../../util/time";
 import { ReactMarkdown } from "../../util/md2html";
@@ -10,7 +10,7 @@ import * as api from "../../util/api";
 /**
  * 单个公告展示.
  */
-export function Announcement(props) {
+function Announcement(props) {
   const { data, handleUpdate } = props;
   const {
     _id,
@@ -90,3 +90,5 @@ export function Announcement(props) {
     </List.Item>
   );
 }
+
+export { Announcement };

@@ -173,4 +173,4 @@ class TagManage extends React.Component {
   }
 }
 
-export default TagManage;
+export { TagManage };

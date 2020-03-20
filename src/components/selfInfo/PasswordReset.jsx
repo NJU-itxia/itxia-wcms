@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Modal, Input, Icon, Alert } from "antd";
 import * as api from "../../util/api";
 
-class PasswordReset extends React.Component {
+class PasswordResetForm extends React.Component {
   state = {
     loading: false
   };
@@ -113,4 +113,6 @@ class PasswordReset extends React.Component {
   }
 }
 
-export default Form.create()(PasswordReset);
+const PasswordReset = Form.create()(PasswordResetForm);
+
+export { PasswordReset };

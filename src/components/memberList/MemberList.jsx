@@ -1,9 +1,9 @@
 import { Modal } from "antd";
 import React from "react";
 import * as api from "../../util/api";
-import MemberListTable from "./MemberListTable";
+import { MemberListTable } from "./MemberListTable";
 
-class NestedTable extends React.Component {
+class MemberList extends React.Component {
   constructor(props) {
     super(props);
     this.handleActionDone = this.handleActionDone.bind(this);
@@ -47,4 +47,4 @@ class NestedTable extends React.Component {
   }
 }
 
-export default NestedTable;
+export { MemberList };

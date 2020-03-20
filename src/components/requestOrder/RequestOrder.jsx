@@ -1,10 +1,10 @@
 import { Form, Select, Input, Button, Upload, Modal, Checkbox } from "antd";
 import React from "react";
-import config from "../../config/config";
+import { config } from "../../config/config";
 import * as api from "../../util/api";
 const { Option } = Select;
 
-class Demo extends React.Component {
+class RequestOrderForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -227,6 +227,6 @@ class Demo extends React.Component {
   }
 }
 
-const WrappedDemo = Form.create({ name: "validate_other" })(Demo);
+const RequestOrder = Form.create()(RequestOrderForm);
 
-export default WrappedDemo;
+export { RequestOrder };

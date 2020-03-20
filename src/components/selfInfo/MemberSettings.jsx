@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Select, Button, Modal } from "antd";
 import * as api from "../../util/api";
 
-class MemberSettings extends React.Component {
+class MemberSettingsForm extends React.Component {
   state = {
     loading: false
   };
@@ -85,4 +85,6 @@ class MemberSettings extends React.Component {
   }
 }
 
-export default Form.create()(MemberSettings);
+const MemberSettings = Form.create()(MemberSettingsForm);
+
+export { MemberSettings };

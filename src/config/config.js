@@ -1,4 +1,4 @@
-export default {
+const config = {
   network: {
     api: {
       protocol: "http",
@@ -18,3 +18,5 @@ export default {
     }
   }
 };
+
+export { config };

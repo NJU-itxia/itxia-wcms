@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import * as api from "../util/api";
-import Loading from "../components/loading";
+import { Loading } from "COMPONENTS/loading/Loading";
 
-export const UserInfoContext = React.createContext(null);
+const UserInfoContext = React.createContext(null);
 
 /**
  * 提供当前登录用户信息的context.
  */
-export function UserInfoProvider(props) {
+function UserInfoProvider(props) {
   const [whoami, setWhoami] = useState(null);
   const fetchWhoami = async () => {
     try {
@@ -31,3 +31,5 @@ export function UserInfoProvider(props) {
     </UserInfoContext.Provider>
   );
 }
+
+export { UserInfoContext, UserInfoProvider };

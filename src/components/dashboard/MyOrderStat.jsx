@@ -1,9 +1,9 @@
 import React from "react";
 import { Card, Statistic, Row, Col } from "antd";
 import * as api from "../../util/api";
-import Loading from "../loading";
+import { Loading } from "../loading/Loading";
 
-class PersonalInfo extends React.Component {
+class MyOrderStat extends React.Component {
   state = {
     loading: true,
     data: null
@@ -52,4 +52,4 @@ class PersonalInfo extends React.Component {
   }
 }
 
-export default PersonalInfo;
+export { MyOrderStat };

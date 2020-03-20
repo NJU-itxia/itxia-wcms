@@ -1,7 +1,7 @@
 import { Menu, Icon } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Logout } from "../logout";
+import { LogoutButton } from "../logout";
 import routePath from "../../route/routePath";
 import "./style.css";
 
@@ -85,7 +85,7 @@ function Navigate() {
         </Menu.Item>
       </SubMenu>
       <Menu.Item key="logout">
-        <Logout />
+        <LogoutButton />
       </Menu.Item>
     </Menu>
   );

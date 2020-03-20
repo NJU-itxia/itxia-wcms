@@ -1,7 +1,7 @@
 import { Result } from "antd";
 import React from "react";
 
-export default function() {
+function NotFound() {
   return (
     <Result
       status="wbnm$1"
@@ -11,3 +11,5 @@ export default function() {
     />
   );
 }
+
+export { NotFound };

@@ -2,7 +2,7 @@
  * 定义路由地址.
  */
 
-const paths = Object.freeze({
+const routePath = {
   LOGIN: "/login",
   HOME: "/home",
   SELF_INFO: "/home/self",
@@ -16,6 +16,6 @@ const paths = Object.freeze({
   ANNOUNCE: "/home/announce",
   RECOVERY: "/recovery",
   IMG_HOST: "/imghost"
-});
+};
 
-export default paths;
+export { routePath };

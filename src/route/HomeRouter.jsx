@@ -1,17 +1,16 @@
 import React from "react";
-import routePath from "./routePath";
+import { routePath } from "./routePath";
 import { Route, Redirect, Switch, Link } from "react-router-dom";
 
-import { view as SelfInfo } from "../components/selfInfo";
-import { view as MemberList } from "../components/memberList";
-import { view as AddMember } from "../components/addMember";
-import { view as RequestOrder } from "../components/requestOrder";
-import { view as HandleOrder } from "../components/handleOrder";
-import { view as TagManage } from "../components/tagManage";
+import { SelfInfo } from "../components/selfInfo";
+import { MemberList } from "../components/memberList";
+import { AddMember } from "../components/addMember";
+import { RequestOrder } from "../components/requestOrder";
+import { TagManage } from "../components/tagManage";
 import { DashBoard } from "../components/dashboard";
 import { AnnouncementEditor } from "../components/announcementEditor";
-import { HandleOrderNew } from "../components/handleOrderNew";
-import NotFound from "../components/notFound";
+import { HandleOrder } from "COMPONENTS/handleOrderNew";
+import { NotFound } from "COMPONENTS/notFound/NotFound";
 
 function HomeRouter() {
   return (
@@ -32,7 +31,7 @@ function HomeRouter() {
         <RequestOrder></RequestOrder>
       </Route>
       <Route path={routePath.HANDLE_ORDER_NEW}>
-        <HandleOrderNew />
+        <HandleOrder />
       </Route>
       <Route path={routePath.TAG_MANAGE}>
         <TagManage></TagManage>

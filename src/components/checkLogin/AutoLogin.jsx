@@ -9,7 +9,7 @@ import { Redirect, useLocation } from "react-router";
  * 实际上并不是自动登录.
  * 而是检查有没有登录.
  */
-export default class AutoLogin extends React.Component {
+class AutoLogin extends React.Component {
   state = {
     loading: true,
     isLogin: false
@@ -57,3 +57,5 @@ export default class AutoLogin extends React.Component {
     }
   }
 }
+
+export { AutoLogin };

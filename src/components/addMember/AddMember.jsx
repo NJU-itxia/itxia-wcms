@@ -11,7 +11,7 @@ import {
 import React from "react";
 import * as api from "../../util/api";
 
-class AddMember extends React.Component {
+class AddMemberForm extends React.Component {
   state = {
     submit: {
       loading: false,
@@ -242,8 +242,6 @@ class AddMember extends React.Component {
   }
 }
 
-const WrappedAddMember = Form.create({
-  name: "validate_other"
-})(AddMember);
+const AddMember = Form.create()(AddMemberForm);
 
-export default WrappedAddMember;
+export { AddMember };

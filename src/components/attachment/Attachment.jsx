@@ -4,7 +4,7 @@ import "./index.css";
 import { Modal, Divider, Icon } from "antd";
 const { host, protocol } = config.default.network.api;
 
-export default class Attachment extends React.Component {
+class Attachment extends React.Component {
   state = {
     showModal: false
   };
@@ -75,3 +75,5 @@ export default class Attachment extends React.Component {
     );
   }
 }
+
+export { Attachment };

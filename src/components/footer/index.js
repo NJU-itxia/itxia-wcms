@@ -1,3 +1,3 @@
-import view from "./view";
+import { Footer } from "./Footer";
 
-export { view };
+export { Footer };

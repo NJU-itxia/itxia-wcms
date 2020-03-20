@@ -1,9 +1,9 @@
 import { Button, Input, Form, Modal, Upload } from "antd";
 import React from "react";
 import * as api from "../../util/api";
-import config from "../../config/config";
+import { config } from "../../config/config";
 
-class ReplyEditor extends React.Component {
+class ReplyEditorForm extends React.Component {
   state = {
     submitting: false
   };
@@ -112,4 +112,6 @@ class ReplyEditor extends React.Component {
     );
   }
 }
-export default Form.create()(ReplyEditor);
+const ReplyEditor = Form.create()(ReplyEditorForm);
+
+export { ReplyEditor };

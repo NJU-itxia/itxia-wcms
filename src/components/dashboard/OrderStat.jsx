@@ -1,10 +1,10 @@
 import React from "react";
 import { Card, Statistic, Row, Col, Divider } from "antd";
 import * as api from "../../util/api";
-import Loading from "../loading";
+import Loading from "../loading/Loading";
 import * as timeUtil from "../../util/time";
 
-class OrderTotal extends React.Component {
+class OrderStat extends React.Component {
   state = {
     loading: true,
     data: null
@@ -84,4 +84,4 @@ class OrderTotal extends React.Component {
   }
 }
 
-export default OrderTotal;
+export { OrderStat };

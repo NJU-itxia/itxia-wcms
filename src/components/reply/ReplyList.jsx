@@ -1,10 +1,10 @@
 import { List, Divider, Modal } from "antd";
 import React from "react";
-import ReplyEditor from "./ReplyEditor";
+import { ReplyEditor } from "./ReplyEditor";
 import * as timeUtil from "../../util/time";
-import Attachment from "../attachment";
+import { Attachment } from "../attachment/Attachment";
 
-export function ReplyList(props) {
+function ReplyList(props) {
   const { visible, title, onCancel, data, postUrl, onReply } = props;
   return (
     <Modal
@@ -46,3 +46,5 @@ export function ReplyList(props) {
     </Modal>
   );
 }
+
+export { ReplyList };

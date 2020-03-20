@@ -1,17 +1,17 @@
 import { Divider } from "antd";
 import React from "react";
 import { AnnouncementList } from "./AnnouncementList";
-import OrderStat from "./OrderStat";
-import PersonalInfo from "./PersonalInfo";
+import { OrderStat } from "./OrderStat";
+import { MyOrderStat } from "./MyOrderStat";
 import "./index.css";
 
-export function DashBoard() {
+function DashBoard() {
   return (
     <div id="dash-container">
       <div id="dash-stat">
         <OrderStat />
         <Divider />
-        <PersonalInfo />
+        <MyOrderStat />
       </div>
       <div id="dash-space" />
       <div id="dash-anno">
@@ -21,3 +21,5 @@ export function DashBoard() {
     </div>
   );
 }
+
+export { DashBoard };

@@ -1,3 +1,3 @@
-import view from "./view";
+import { RequestOrder } from "./RequestOrder";
 
-export { view };
+export { RequestOrder };

@@ -3,7 +3,7 @@ import { List, Card, notification, Spin } from "antd";
 import * as api from "../../util/api";
 import { Announcement } from "./Announcement";
 
-export function AnnouncementList() {
+function AnnouncementList() {
   const [data, setData] = useState(null);
 
   async function fetchData() {
@@ -49,3 +49,5 @@ export function AnnouncementList() {
     </Card>
   );
 }
+
+export { AnnouncementList };

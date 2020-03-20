@@ -38,7 +38,7 @@ const actions = [
   }
 ];
 
-export default function Action(props) {
+function MemberAction(props) {
   const [loading, setLoading] = useState(false);
 
   function handleAction(action) {
@@ -124,3 +124,5 @@ export default function Action(props) {
     </div>
   );
 }
+
+export { MemberAction };

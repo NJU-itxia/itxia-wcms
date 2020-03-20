@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function(props) {
+function Preview(props) {
   const { imageUrl } = props;
   return (
     <div>
@@ -11,3 +11,5 @@ export default function(props) {
     </div>
   );
 }
+
+export { Preview };

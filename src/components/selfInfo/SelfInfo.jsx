@@ -1,13 +1,13 @@
 import { Form, notification, Divider, Card } from "antd";
 import React from "react";
 import * as api from "../../util/api";
-import MemberSettings from "./MemberSettings";
-import PasswordReset from "./PasswordReset";
-import OauthQQ from "./OauthQQ";
-import Loading from "../loading";
+import { MemberSettings } from "./MemberSettings";
+import { PasswordReset } from "./PasswordReset";
+import { OAuthQQ } from "./OauthQQ";
+import { Loading } from "../loading/Loading";
 import "./index.css";
 import { UserInfoContext } from "../../context/UserInfo";
-import BasicInfo from "./BasicInfo";
+import { BasicInfo } from "./BasicInfo";
 
 class SelfInfo extends React.Component {
   constructor(props) {
@@ -97,7 +97,7 @@ class SelfInfoForm extends React.Component {
         </Card>
         <Divider />
         <Card title="绑定QQ登录">
-          <OauthQQ payload={payload} onUpdateInfo={this.props.onUpdateInfo} />
+          <OAuthQQ payload={payload} onUpdateInfo={this.props.onUpdateInfo} />
         </Card>
         <Divider />
         <Card title="重置密码">
@@ -115,4 +115,4 @@ const WrappedSelfInfoForm = Form.create({
   name: "self_info"
 })(SelfInfoForm);
 
-export default SelfInfo;
+export { SelfInfo };

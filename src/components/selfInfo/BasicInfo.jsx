@@ -10,7 +10,7 @@ const formItemLayout = {
 /**
  * 个人基本信息.
  */
-export default function BasicInfo() {
+function BasicInfo() {
   const context = useContext(UserInfoContext);
   const { realName, loginName, _id, role } = context;
   return (
@@ -28,3 +28,5 @@ export default function BasicInfo() {
     </Form>
   );
 }
+
+export { BasicInfo };

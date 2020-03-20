@@ -3,7 +3,7 @@ import { Form, Input, Button, Icon, Alert, Modal } from "antd";
 import { useState } from "react";
 import * as api from "../../util/api";
 
-function FromOldAccount(props) {
+function FromOldAccountForm(props) {
   const [loading, setLoading] = useState(false);
   function handleSubmit(e) {
     e.preventDefault();
@@ -102,4 +102,6 @@ function FromOldAccount(props) {
   );
 }
 
-export default Form.create()(FromOldAccount);
+const FromOldAccount = Form.create()(FromOldAccountForm);
+
+export { FromOldAccount };

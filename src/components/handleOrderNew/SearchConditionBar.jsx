@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Row, Col, Switch, Radio, Checkbox, Card } from "antd";
 
-class SearchConditionBar extends React.Component {
+class SearchConditionBarRender extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -56,7 +56,7 @@ class SearchConditionBar extends React.Component {
 
 let myTimer = null;
 
-export default Form.create({
+const SearchConditionBar = Form.create({
   onFieldsChange: (props, changedFields, allFields) => {
     //将表单值转换为queryString
     let queryString = "";
@@ -75,4 +75,6 @@ export default Form.create({
       props.onConditionChange(queryString);
     }, 1000);
   }
-})(SearchConditionBar);
+})(SearchConditionBarRender);
+
+export { SearchConditionBar };

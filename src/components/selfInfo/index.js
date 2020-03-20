@@ -1,3 +1,3 @@
-import view from "./view";
+import { SelfInfo } from "./SelfInfo";
 
-export { view };
+export { SelfInfo };

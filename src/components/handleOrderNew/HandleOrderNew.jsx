@@ -1,13 +1,13 @@
 import React from "react";
 import { Row, Col, Divider, Modal, BackTop } from "antd";
 import { OrderInfoCard } from "./OrderInfoCard";
-import SearchConditionBar from "./SearchConditionBar";
-import OrderPagination from "./OrderPagination";
-import Loading from "../loading";
+import { SearchConditionBar } from "./SearchConditionBar";
+import { OrderPagination } from "./OrderPagination";
+import { Loading } from "../loading/Loading";
 import * as api from "../../util/api";
 import "./index.css";
 
-export class HandleOrderNew extends React.Component {
+class HandleOrderNew extends React.Component {
   constructor(props) {
     super(props);
     this.handlePageChange = this.handlePageChange.bind(this);
@@ -171,3 +171,5 @@ export class HandleOrderNew extends React.Component {
     );
   }
 }
+
+export { HandleOrderNew };

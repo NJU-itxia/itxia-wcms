@@ -37,4 +37,4 @@ RequireRole.prototype = {
   custom: PropTypes.func
 };
 
-export default RequireRole;
+export { RequireRole };

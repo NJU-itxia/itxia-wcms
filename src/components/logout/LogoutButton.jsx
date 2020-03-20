@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as api from "../../util/api";
 import { Button } from "antd";
 
-export function Logout() {
+function LogoutButton() {
   const [isLogout, setLogout] = useState(false);
   const handleLogout = () => {
     api
@@ -22,3 +22,5 @@ export function Logout() {
     </Button>
   );
 }
+
+export { LogoutButton };

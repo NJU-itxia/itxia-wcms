@@ -1,9 +1,9 @@
 import { Table, Tag, Icon } from "antd";
 import React from "react";
-import Action from "./Action";
+import { MemberAction } from "./MemberAction";
 import * as timeUtil from "../../util/time";
 
-export default function MemberListTable(props) {
+function MemberListTable(props) {
   return (
     <Table
       columns={getColumns(props)}
@@ -121,9 +121,14 @@ function getColumns(props) {
       title: "操作",
       render: record => {
         return (
-          <Action record={record} onActionDone={props.onActionDone}></Action>
+          <MemberAction
+            record={record}
+            onActionDone={props.onActionDone}
+          ></MemberAction>
         );
       }
     }
   ];
 }
+
+export { MemberListTable };

@@ -1,8 +1,8 @@
 import { Spin } from "antd";
 import React from "react";
-import "./index.css";
+import "./loading.css";
 
-export default function(props) {
+function Loading(props) {
   const { tip = "加载中...", delay = 500 } = props;
   return (
     <div className="loading">
@@ -10,3 +10,5 @@ export default function(props) {
     </div>
   );
 }
+
+export { Loading };

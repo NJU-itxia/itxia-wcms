@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button, Result, Row, Col, Icon } from "antd";
 import * as api from "../../util/api";
 
-class PasswordReset extends React.Component {
+class OAuthQQForm extends React.Component {
   state = {
     loading: true,
     isBind: false,
@@ -64,4 +64,6 @@ class PasswordReset extends React.Component {
   }
 }
 
-export default Form.create()(PasswordReset);
+const OAuthQQ = Form.create()(OAuthQQForm);
+
+export { OAuthQQ };
