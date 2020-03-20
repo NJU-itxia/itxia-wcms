@@ -1,6 +1,7 @@
 import React from "react";
-import "./App.css";
 import { MainRouter } from "ROUTE/MainRouter";
+import "antd/dist/antd.css"; //style 4 antd
+import "./App.css";
 
 function App() {
   return <MainRouter />;
