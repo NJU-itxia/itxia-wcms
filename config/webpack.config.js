@@ -292,6 +292,17 @@ module.exports = function(webpackEnv) {
         .map(ext => `.${ext}`)
         .filter(ext => useTypeScript || !ext.includes("ts")),
       alias: {
+        /**
+         * add by zhenxi.
+         * 添加一些常用alias.
+         */
+        "@": paths.appSrc,
+        COMPONENTS: paths.appSrc + "/components",
+        CONFIG: paths.appSrc + "/config",
+        CONTEXT: paths.appSrc + "/context",
+        ROUTE: paths.appSrc + "/route",
+        UTIL: paths.appSrc + "/util",
+
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         "react-native": "react-native-web",
