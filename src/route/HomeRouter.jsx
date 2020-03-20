@@ -1,6 +1,6 @@
 import React from "react";
 import { routePath } from "./routePath";
-import { Route, Redirect, Switch, Link } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 
 import { SelfInfo } from "COMPONENTS/selfInfo";
 import { MemberList } from "COMPONENTS/memberList";
