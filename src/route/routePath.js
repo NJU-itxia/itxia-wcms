@@ -15,7 +15,7 @@ const routePath = {
   DASHBOARD: "/home/dashboard",
   ANNOUNCE: "/home/announce",
   RECOVERY: "/recovery",
-  IMG_HOST: "/imghost"
+  IMG_HOST: "/home/imghost"
 };
 
 export { routePath };

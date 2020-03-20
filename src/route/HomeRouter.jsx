@@ -16,41 +16,40 @@ function HomeRouter() {
   return (
     <Switch>
       <Route exact={true} path={routePath.HOME}>
-        <Redirect to={routePath.DASHBOARD}></Redirect>
+        <Redirect to={routePath.DASHBOARD} />
       </Route>
       <Route path={routePath.SELF_INFO}>
-        <SelfInfo></SelfInfo>
+        <SelfInfo />
       </Route>
       <Route path={routePath.MEMBER_LIST}>
-        <MemberList></MemberList>
+        <MemberList />
       </Route>
       <Route path={routePath.ADD_MEMBER}>
-        <AddMember></AddMember>
+        <AddMember />
       </Route>
       <Route path={routePath.REQUEST_ORDER}>
-        <RequestOrder></RequestOrder>
+        <RequestOrder />
       </Route>
       <Route path={routePath.HANDLE_ORDER_NEW}>
         <HandleOrder />
       </Route>
       <Route path={routePath.TAG_MANAGE}>
-        <TagManage></TagManage>
+        <TagManage />
       </Route>
       <Route path={routePath.DASHBOARD}>
-        <DashBoard></DashBoard>
+        <DashBoard />
       </Route>
       <Route path={routePath.ANNOUNCE}>
         <AnnouncementEditor />
       </Route>
       <Route path={routePath.HANDLE_ORDER}>
-        <HandleOrder></HandleOrder>
+        <HandleOrder />
       </Route>
       <Route path={routePath.IMG_HOST}>
         <NotFound />
       </Route>
       <Route path="*">
-        <span>page not found</span>
-        <Link to={routePath.SELF_INFO}>back</Link>
+        <NotFound />
       </Route>
     </Switch>
   );
