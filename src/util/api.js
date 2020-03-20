@@ -1,79 +1,23 @@
-import { EventEmitter } from "events";
 import axios from "axios";
-import * as config from "../config/config";
+import { config } from "../config/config";
 
-const host = (() => {
-  const { host, protocol } = config.default.network.api;
+const urlPrefix = (() => {
+  const { host, protocol } = config.network.api;
   return protocol + "://" + host;
 })();
-/**
- * @deprecated
- */
-const request = (path, method, data) => {
-  const emitter = new EventEmitter();
-  axios({
-    method,
-    url: host + path,
-    data,
-    withCredentials: true
-  })
-    .then(res => {
-      const json = res.data;
-      if (json && json.errorCode === 0) {
-        //请求成功
-        emitter.emit("succ", json.payload);
-        emitter.emit("any");
-      } else {
-        //请求成功，但返回值错误
-        let message = json.errorMessage;
-        if (json.payload) {
-          message += ": " + json.payload.toString().substring(0, 32); //避免过长的错误信息.
-        }
-        emitter.emit("fail", message, json);
-        emitter.emit("any");
-      }
-    })
-    .catch(e => {
-      //请求失败，网络、json原因...
-      emitter.emit("error", e);
-      emitter.emit("any");
-    });
-  return emitter;
-};
-
-export const put = (path, data) => {
-  return request(path, "PUT", data);
-};
-
-export const post = (path, data) => {
-  return request(path, "POST", data);
-};
-
-export const get = path => {
-  return request(path, "GET");
-};
-
-//---------------------------------------------------------------
-
-export const GET = (path, callback) => {
-  return requestData(path, "GET", undefined, callback);
-};
-export const POST = (path, data, callback) => {
-  return requestData(path, "POST", data, callback);
-};
-export const PUT = (path, data, callback) => {
-  return requestData(path, "PUT", data, callback);
-};
 
 /**
- * 同时支持promise和callback的请求.
- * @param {*} callback
+ * 同时支持promise和callback的API请求方法.
+ * @param {String} path url path
+ * @param {String} method HTTP method
+ * @param {*} data request data
+ * @param {function?} callback
  */
 function requestData(path, method, data, callback) {
   const myPromise = new Promise((resolve, reject) => {
     axios({
       method,
-      url: host + path,
+      url: urlPrefix + path,
       data,
       withCredentials: true
     })
@@ -124,3 +68,15 @@ function requestData(path, method, data, callback) {
     return myPromise;
   }
 }
+
+const GET = (path, callback) => {
+  return requestData(path, "GET", undefined, callback);
+};
+const POST = (path, data, callback) => {
+  return requestData(path, "POST", data, callback);
+};
+const PUT = (path, data, callback) => {
+  return requestData(path, "PUT", data, callback);
+};
+
+export { GET, POST, PUT };
