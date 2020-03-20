@@ -2,7 +2,7 @@ import React from "react";
 import { Layout, BackTop } from "antd";
 import { Navigate } from "COMPONENTS/navigate";
 import { Footer as MyFooter } from "COMPONENTS/footer";
-import { HomeRouter } from "ROUTE/route";
+import { HomeRouter } from "ROUTE";
 import "./home.css";
 
 const { Header, Content, Footer } = Layout;
