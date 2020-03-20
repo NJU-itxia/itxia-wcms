@@ -1,10 +1,8 @@
 import React from "react";
-import { Row, Col, Divider, Modal, BackTop } from "antd";
-import { OrderInfoCard } from "./OrderInfoCard";
+import { Divider, Modal } from "antd";
 import { SearchConditionBar } from "./SearchConditionBar";
-import { OrderPagination } from "./OrderPagination";
-import { Loading } from "COMPONENTS/loading";
 import * as api from "UTIL/api";
+import { OrderList } from "./OrderList";
 import "./index.css";
 
 class HandleOrderNew extends React.Component {
@@ -97,76 +95,19 @@ class HandleOrderNew extends React.Component {
   }
 
   render() {
-    const {
-      loading,
-      data,
-      totalCount,
-      currentPage,
-      pageSize,
-      whoami
-    } = this.state;
+    const { loading, data, totalCount, currentPage, pageSize } = this.state;
     return (
       <div>
         <SearchConditionBar onConditionChange={this.handleConditionChange} />
         <Divider />
-        <OrderPagination
-          pageSize={pageSize}
-          totalCount={totalCount}
-          currentPage={currentPage}
-          onChange={this.handlePageChange}
+        <OrderList
+          loading={loading}
+          data={data}
+          paginationInfo={{ pageSize, totalCount, currentPage }}
+          onHandleOrder={this.handleHandleOrder}
+          onPageChange={this.handlePageChange}
           onShowSizeChange={this.handleShowSizeChange}
         />
-        {loading ? (
-          <div style={{ margin: "32px" }}>
-            <Loading delay={0} />
-          </div>
-        ) : (
-          <Row gutter={[8, 0]} type="flex" justify="center" align="top">
-            <BackTop />
-            <Col span={24}>{loading ? <Loading /> : null}</Col>
-            <Col xs={24} sm={24} md={24} lg={12} xl={10}>
-              {data
-                .filter((value, index) => {
-                  return index % 2 === 0;
-                })
-                .map(value => {
-                  return (
-                    <OrderInfoCard
-                      key={value._id}
-                      data={value}
-                      whoami={whoami}
-                      onHandleOrder={this.handleHandleOrder}
-                    />
-                  );
-                })}
-            </Col>
-            <Col xs={24} sm={24} md={24} lg={12} xl={10}>
-              {data
-                .filter((value, index) => {
-                  return index % 2 === 1;
-                })
-                .map(value => {
-                  return (
-                    <OrderInfoCard
-                      key={value._id}
-                      data={value}
-                      whoami={whoami}
-                      onHandleOrder={this.handleHandleOrder}
-                    />
-                  );
-                })}
-            </Col>
-            <Col span={24}>
-              <OrderPagination
-                pageSize={pageSize}
-                totalCount={totalCount}
-                currentPage={currentPage}
-                onChange={this.handlePageChange}
-                onShowSizeChange={this.handleShowSizeChange}
-              />
-            </Col>
-          </Row>
-        )}
       </div>
     );
   }
