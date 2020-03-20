@@ -4,26 +4,26 @@ import { Col, Row } from "antd";
 import { OrderPagination } from "./OrderPagination";
 import { Loading } from "COMPONENTS/loading";
 import { OrderInfoCard } from "./OrderInfoCard";
+import { NotFound } from "COMPONENTS/notFound";
 
 function OrderList(props) {
   const {
     loading,
     data,
     paginationInfo,
-    onPageChange,
-    onShowSizeChange,
+    onPaginationChange,
     onHandleOrder
   } = props;
 
   //加载中
   if (loading) {
-    return <Loading />;
+    return <Loading delay={0} />;
   }
 
   //数据为空
   if (data.length === 0) {
     //TODO 显示没数据
-    return null;
+    return <NotFound />;
   }
 
   //分页组件
@@ -33,8 +33,7 @@ function OrderList(props) {
       pageSize={pageSize}
       totalCount={totalCount}
       currentPage={currentPage}
-      onChange={onPageChange}
-      onShowSizeChange={onShowSizeChange}
+      onChange={onPaginationChange}
     />
   );
 
@@ -81,9 +80,8 @@ OrderList.propTypes = {
   loading: PropTypes.bool.isRequired,
   data: PropTypes.array,
   paginationInfo: PropTypes.object.isRequired,
-  onPageChange: PropTypes.func,
-  onShowSizeChange: PropTypes.func,
-  onHandleOrder: PropTypes.func
+  onPaginationChange: PropTypes.func.isRequired,
+  onHandleOrder: PropTypes.func.isRequired
 };
 
 export { OrderList };

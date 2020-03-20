@@ -16,10 +16,10 @@ class SearchConditionBarRender extends React.Component {
             </Form.Item>
             <Form.Item label="校区">
               {getFieldDecorator("campus", {
-                initialValue: "全部"
+                initialValue: ""
               })(
                 <Radio.Group>
-                  <Radio value="全部">全部</Radio>
+                  <Radio value="">全部</Radio>
                   <Radio value="仙林">仙林</Radio>
                   <Radio value="鼓楼">鼓楼</Radio>
                 </Radio.Group>
@@ -58,21 +58,14 @@ let myTimer = null;
 
 const SearchConditionBar = Form.create({
   onFieldsChange: (props, changedFields, allFields) => {
-    //将表单值转换为queryString
-    let queryString = "";
-    const { onlyMine, campus, status } = allFields;
-    if (onlyMine.value === true) {
-      queryString += "&onlyMine=1";
-    }
-    if (campus.value !== "全部") {
-      queryString += `&campus=${campus.value}`;
-    }
-    queryString += `&status=${status.value.join(",")}`;
-    if (myTimer) {
-      clearTimeout(myTimer);
+    const condition = {};
+    for (const fieldName in allFields) {
+      if (allFields.hasOwnProperty(fieldName)) {
+        condition[fieldName] = allFields[fieldName].value;
+      }
     }
     myTimer = setTimeout(() => {
-      props.onConditionChange(queryString);
+      props.onConditionChange(condition);
     }, 1000);
   }
 })(SearchConditionBarRender);

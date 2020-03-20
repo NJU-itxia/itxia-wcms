@@ -5,97 +5,122 @@ import * as api from "UTIL/api";
 import { OrderList } from "./OrderList";
 import "./index.css";
 
+/**
+ * 浮生日记.
+ * 2020.03.21
+ * 今天本想用hook重构这个函数的，可惜弄了俩小时，最后还是用了class组件.
+ * 原因在多个hook setState没法合并更新，不然会频繁重复更新子组件.
+ * 这个组件(这整个文件夹的)的复杂度还是蛮高的，没法写得很简洁.
+ * 但尽量保证可维护性吧...
+ * */
+
+/**
+ * 接单页.
+ * */
 class HandleOrderNew extends React.Component {
   constructor(props) {
     super(props);
-    this.handlePageChange = this.handlePageChange.bind(this);
-    this.handleShowSizeChange = this.handleShowSizeChange.bind(this);
     this.handleConditionChange = this.handleConditionChange.bind(this);
     this.handleHandleOrder = this.handleHandleOrder.bind(this);
+    this.handlePaginationChange = this.handlePaginationChange.bind(this);
   }
-
   state = {
+    //加载的状态
     loading: true,
-    currentPage: 1,
-    totalCount: 0,
-    pageSize: 20,
-    conditionQuery: "&status=等待处理,正在处理",
+    //预约单数据
     data: null,
-    whoami: null
+    //分页状态
+    pagination: {
+      currentPage: 1,
+      totalCount: 0,
+      pageSize: 20
+    },
+    //查询条件
+    condition: {
+      onlyMine: false,
+      campus: "",
+      status: ["等待处理", "正在处理"]
+    }
   };
 
   componentDidMount() {
     this.fetchData();
   }
 
+  getConditionFromQueryString() {
+    //TODO 从query string获取上次查询的条件
+    return {
+      onlyMine: false,
+      campus: "",
+      status: ["等待处理", "正在处理"]
+    };
+  }
+
+  /**
+   * 生成获取预约单的url.
+   * @return {String} url.
+   * */
+  buildUrl() {
+    let queryString = "/order?";
+    //查询条件
+    const { onlyMine, campus, status } = this.state.condition;
+    if (onlyMine) {
+      queryString += "&onlyMine=1";
+    }
+    if (campus) {
+      queryString += `&campus=${campus}`;
+    }
+    queryString += `&status=${status.join(",")}`;
+    //分页
+    const { currentPage, pageSize } = this.state.pagination;
+    queryString += `&page=${currentPage}&limit=${pageSize}`;
+
+    return queryString;
+  }
+
+  /**
+   * 获取数据.
+   * */
   async fetchData() {
-    this.setState({
-      loading: true
-    });
     try {
-      const { currentPage, pageSize, conditionQuery } = this.state;
-      const totalCount = await api.GET(`/order/count?${conditionQuery}`);
-      const data = await api.GET(
-        `/order?page=${currentPage - 1}&limit=${pageSize}${conditionQuery}`
-      );
-      const whoami = await api.GET("/whoami");
+      this.setState({ loading: true });
+      const rawData = await api.GET(this.buildUrl());
       this.setState({
         loading: false,
-        data,
-        whoami,
-        totalCount
+        data: rawData.data,
+        pagination: rawData.pagination
       });
-    } catch (error) {
+    } catch (message) {
       Modal.error({
-        title: "查询预约单失败",
-        content: error.message,
+        title: "获取预约单失败",
+        content: message,
         centered: true
       });
     }
   }
 
-  handlePageChange(page, pageSize) {
-    this.setState(
-      {
-        currentPage: page,
-        pageSize
-      },
-      () => {
-        this.fetchData();
-      }
-    );
-  }
-
-  handleShowSizeChange(currentPage, pageSize) {
-    this.setState(
-      {
-        currentPage,
-        pageSize
-      },
-      () => {
-        this.fetchData();
-      }
-    );
-  }
-
-  handleConditionChange(queryString) {
-    this.setState(
-      {
-        conditionQuery: queryString,
-        currentPage: 1 //每次改变条件都把页码重置为1
-      },
-      () => {
-        this.fetchData();
-      }
-    );
-  }
-
-  handleHandleOrder() {
+  handleConditionChange(condition) {
+    //TODO 解析条件，获取数据
+    this.setState({ condition });
     this.fetchData();
   }
 
+  handlePaginationChange(newCurrentPage, newPageSize) {
+    const newPagination = Object.assign(this.state.pagination, {
+      currentPage: newCurrentPage,
+      pageSize: newPageSize
+    });
+    this.setState({ pagination: newPagination });
+    //刷新数据
+    this.fetchData();
+  }
+
+  handleHandleOrder() {
+    //TODO 用于处理单子后刷新数据
+  }
+
   render() {
-    const { loading, data, totalCount, currentPage, pageSize } = this.state;
+    const { loading, data, pagination } = this.state;
     return (
       <div>
         <SearchConditionBar onConditionChange={this.handleConditionChange} />
@@ -103,10 +128,9 @@ class HandleOrderNew extends React.Component {
         <OrderList
           loading={loading}
           data={data}
-          paginationInfo={{ pageSize, totalCount, currentPage }}
+          paginationInfo={pagination}
           onHandleOrder={this.handleHandleOrder}
-          onPageChange={this.handlePageChange}
-          onShowSizeChange={this.handleShowSizeChange}
+          onPaginationChange={this.handlePaginationChange}
         />
       </div>
     );

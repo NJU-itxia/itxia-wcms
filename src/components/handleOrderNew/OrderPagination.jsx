@@ -22,7 +22,7 @@ function OrderPagination(props) {
         current={currentPage}
         total={totalCount}
         onChange={onChange}
-        onShowSizeChange={onShowSizeChange}
+        onShowSizeChange={onChange}
       />
     </div>
   );
