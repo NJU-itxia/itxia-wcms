@@ -1,6 +1,12 @@
 import React from "react";
+
+/**
+ * antd的样式.
+ * 放在import前面，避免覆盖自己写的style.
+ * */
+import "antd/dist/antd.css";
+
 import { MainRouter } from "ROUTE/MainRouter";
-import "antd/dist/antd.css"; //style 4 antd
 import "./App.css";
 
 function App() {
