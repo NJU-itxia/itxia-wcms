@@ -2,13 +2,13 @@ import React from "react";
 import { routePath } from "./routePath";
 import { Route, Redirect, Switch, Link } from "react-router-dom";
 
-import { SelfInfo } from "../components/selfInfo";
-import { MemberList } from "../components/memberList";
-import { AddMember } from "../components/addMember";
-import { RequestOrder } from "../components/requestOrder";
-import { TagManage } from "../components/tagManage";
-import { DashBoard } from "../components/dashboard";
-import { AnnouncementEditor } from "../components/announcementEditor";
+import { SelfInfo } from "COMPONENTS/selfInfo";
+import { MemberList } from "COMPONENTS/memberList";
+import { AddMember } from "COMPONENTS/addMember";
+import { RequestOrder } from "COMPONENTS/requestOrder";
+import { TagManage } from "COMPONENTS/tagManage";
+import { DashBoard } from "COMPONENTS/dashboard";
+import { AnnouncementEditor } from "COMPONENTS/announcementEditor";
 import { HandleOrder } from "COMPONENTS/handleOrderNew";
 import { NotFound } from "COMPONENTS/notFound/NotFound";
 

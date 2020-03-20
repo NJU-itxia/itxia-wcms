@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import * as api from "../util/api";
-import { Loading } from "COMPONENTS/loading/Loading";
+import * as api from "UTIL/api";
+import { Loading } from "COMPONENTS/loading";
 
 const UserInfoContext = React.createContext(null);
 

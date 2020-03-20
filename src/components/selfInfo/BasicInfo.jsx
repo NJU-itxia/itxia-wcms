@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Form } from "antd";
-import { UserInfoContext } from "../../context/UserInfo";
+import { UserInfoContext } from "CONTEXT/UserInfo";
 
 const formItemLayout = {
   labelCol: { span: 6 },

@@ -1,12 +1,12 @@
 import { Form, notification, Divider, Card } from "antd";
 import React from "react";
-import * as api from "../../util/api";
+import * as api from "UTIL/api";
 import { MemberSettings } from "./MemberSettings";
 import { PasswordReset } from "./PasswordReset";
 import { OAuthQQ } from "./OauthQQ";
-import { Loading } from "../loading/Loading";
+import { Loading } from "COMPONENTS/loading";
 import "./index.css";
-import { UserInfoContext } from "../../context/UserInfo";
+import { UserInfoContext } from "CONTEXT/UserInfo";
 import { BasicInfo } from "./BasicInfo";
 
 class SelfInfo extends React.Component {

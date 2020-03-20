@@ -1,7 +1,8 @@
 import { Form, Select, Input, Button, Upload, Modal, Checkbox } from "antd";
 import React from "react";
-import { config } from "../../config/config";
-import * as api from "../../util/api";
+import { config } from "CONFIG";
+import * as api from "UTIL/api";
+
 const { Option } = Select;
 
 class RequestOrderForm extends React.Component {

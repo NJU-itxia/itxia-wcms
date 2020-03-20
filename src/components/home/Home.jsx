@@ -1,8 +1,8 @@
 import React from "react";
 import { Layout, BackTop } from "antd";
-import { Navigate } from "../navigate";
-import { Footer as MyFooter } from "../footer";
-import { HomeRouter } from "../../route";
+import { Navigate } from "COMPONENTS/navigate";
+import { Footer as MyFooter } from "COMPONENTS/footer";
+import { HomeRouter } from "ROUTE/route";
 import "./home.css";
 
 const { Header, Content, Footer } = Layout;

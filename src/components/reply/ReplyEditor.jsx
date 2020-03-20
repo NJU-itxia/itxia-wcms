@@ -1,7 +1,7 @@
 import { Button, Input, Form, Modal, Upload } from "antd";
 import React from "react";
-import * as api from "../../util/api";
-import { config } from "../../config/config";
+import * as api from "UTIL/api";
+import { config } from "CONFIG";
 
 class ReplyEditorForm extends React.Component {
   state = {

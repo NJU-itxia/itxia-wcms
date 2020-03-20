@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as api from "../../util/api";
+import * as api from "UTIL/api";
 import { Button } from "antd";
 
 function LogoutButton() {

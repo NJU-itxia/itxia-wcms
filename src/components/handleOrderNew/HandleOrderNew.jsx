@@ -3,8 +3,8 @@ import { Row, Col, Divider, Modal, BackTop } from "antd";
 import { OrderInfoCard } from "./OrderInfoCard";
 import { SearchConditionBar } from "./SearchConditionBar";
 import { OrderPagination } from "./OrderPagination";
-import { Loading } from "../loading/Loading";
-import * as api from "../../util/api";
+import { Loading } from "COMPONENTS/loading";
+import * as api from "UTIL/api";
 import "./index.css";
 
 class HandleOrderNew extends React.Component {
