@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Statistic, Row, Col, Divider } from "antd";
 import * as api from "../../util/api";
-import Loading from "../loading/Loading";
+import { Loading } from "../loading/Loading";
 import * as timeUtil from "../../util/time";
 
 class OrderStat extends React.Component {

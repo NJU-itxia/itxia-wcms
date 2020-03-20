@@ -2,7 +2,7 @@ import { Menu, Icon } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import { LogoutButton } from "../logout";
-import routePath from "../../route/routePath";
+import { routePath } from "../../route/routePath";
 import "./style.css";
 
 const { SubMenu } = Menu;

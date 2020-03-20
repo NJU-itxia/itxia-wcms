@@ -14,7 +14,7 @@ import "antd/dist/antd.css";
 import "./style.css";
 import * as api from "../../util/api";
 import { Redirect, Link } from "react-router-dom";
-import routePath from "../../route/routePath";
+import { routePath } from "../../route/routePath";
 
 const localStorageKeys = {
   isRememberAccount: "isRememberAccount",

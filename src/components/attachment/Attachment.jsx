@@ -1,8 +1,8 @@
 import React from "react";
-import * as config from "../../config";
+import { config } from "../../config";
 import "./index.css";
 import { Modal, Divider, Icon } from "antd";
-const { host, protocol } = config.default.network.api;
+const { host, protocol } = config.network.api;
 
 class Attachment extends React.Component {
   state = {

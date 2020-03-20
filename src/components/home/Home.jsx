@@ -1,7 +1,7 @@
 import React from "react";
 import { Layout, BackTop } from "antd";
 import { Navigate } from "../navigate";
-import { view as MyFooter } from "../footer";
+import { Footer as MyFooter } from "../footer";
 import { HomeRouter } from "../../route";
 import "./home.css";
 
