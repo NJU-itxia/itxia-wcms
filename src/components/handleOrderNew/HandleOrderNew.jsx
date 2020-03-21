@@ -43,19 +43,6 @@ class HandleOrderNew extends React.Component {
     }
   };
 
-  componentDidMount() {
-    this.fetchData();
-  }
-
-  getConditionFromQueryString() {
-    //TODO 从query string获取上次查询的条件
-    return {
-      onlyMine: false,
-      campus: "",
-      status: ["等待处理", "正在处理"]
-    };
-  }
-
   /**
    * 生成获取预约单的url.
    * @return {String} url.
@@ -100,7 +87,6 @@ class HandleOrderNew extends React.Component {
   }
 
   handleConditionChange(condition) {
-    //TODO 解析条件，获取数据
     this.setState({ condition });
     this.fetchData();
   }
