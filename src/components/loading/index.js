@@ -1,2 +1,4 @@
 import { Loading } from "./Loading";
-export { Loading };
+import { EmbeddableLoading } from "./EmbeddableLoading";
+
+export { Loading, EmbeddableLoading };
