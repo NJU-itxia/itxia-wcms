@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Col, Row } from "antd";
 import { OrderPagination } from "./OrderPagination";
-import { Loading } from "COMPONENTS/loading";
+import { EmbeddableLoading, Loading } from "COMPONENTS/loading";
 import { OrderInfoCard } from "./OrderInfoCard";
-import { NotFound } from "COMPONENTS/notFound";
+import { OrderNotFound } from "COMPONENTS/notFound";
 
 function OrderList(props) {
   const {
@@ -16,14 +16,8 @@ function OrderList(props) {
   } = props;
 
   //加载中
-  if (loading) {
+  if (loading && !!!data) {
     return <Loading delay={0} />;
-  }
-
-  //数据为空
-  if (data.length === 0) {
-    //TODO 显示没数据
-    return <NotFound />;
   }
 
   //分页组件
@@ -39,40 +33,47 @@ function OrderList(props) {
 
   //渲染
   return (
-    <Row gutter={[8, 0]} type="flex" justify="center" align="top">
-      <Col span={24}>{orderPagination}</Col>
-      <Col xs={24} sm={24} md={24} lg={12} xl={10}>
-        {data
-          .filter((value, index) => {
-            return index % 2 === 0;
-          })
-          .map(value => {
-            return (
-              <OrderInfoCard
-                key={value._id}
-                data={value}
-                onHandleOrder={onHandleOrder}
-              />
-            );
-          })}
-      </Col>
-      <Col xs={24} sm={24} md={24} lg={12} xl={10}>
-        {data
-          .filter((value, index) => {
-            return index % 2 === 1;
-          })
-          .map(value => {
-            return (
-              <OrderInfoCard
-                key={value._id}
-                data={value}
-                onHandleOrder={onHandleOrder}
-              />
-            );
-          })}
-      </Col>
-      <Col span={24}>{orderPagination}</Col>
-    </Row>
+    <EmbeddableLoading loading={loading}>
+      <Row gutter={[8, 0]} type="flex" justify="center" align="top">
+        <Col span={24}>{orderPagination}</Col>
+        {data.length > 0 ? null : (
+          <Col span={24}>
+            <OrderNotFound />
+          </Col>
+        )}
+        <Col xs={24} sm={24} md={24} lg={12} xl={10}>
+          {data
+            .filter((value, index) => {
+              return index % 2 === 0;
+            })
+            .map(value => {
+              return (
+                <OrderInfoCard
+                  key={value._id}
+                  data={value}
+                  onHandleOrder={onHandleOrder}
+                />
+              );
+            })}
+        </Col>
+        <Col xs={24} sm={24} md={24} lg={12} xl={10}>
+          {data
+            .filter((value, index) => {
+              return index % 2 === 1;
+            })
+            .map(value => {
+              return (
+                <OrderInfoCard
+                  key={value._id}
+                  data={value}
+                  onHandleOrder={onHandleOrder}
+                />
+              );
+            })}
+        </Col>
+        <Col span={24}>{orderPagination}</Col>
+      </Row>
+    </EmbeddableLoading>
   );
 }
 
